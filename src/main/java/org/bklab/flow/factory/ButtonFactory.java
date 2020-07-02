@@ -1,14 +1,28 @@
+/*
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2020-06-17 20:42:39
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.factory.ButtonFactory
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ */
+
 package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import org.bklab.flow.FlowFactory;
+import org.bklab.flow.base.GeneratedVaadinButtonFactory;
 import org.bklab.flow.base.HasEnabledFactory;
 import org.bklab.flow.base.HasSizeFactory;
 
 public class ButtonFactory extends FlowFactory<Button, ButtonFactory> implements
+        GeneratedVaadinButtonFactory<Button, ButtonFactory>,
         HasSizeFactory<Button, ButtonFactory>,
         HasEnabledFactory<Button, ButtonFactory> {
 
@@ -43,6 +57,11 @@ public class ButtonFactory extends FlowFactory<Button, ButtonFactory> implements
 
     public ButtonFactory icon(Component icon) {
         get().setIcon(icon);
+        return this;
+    }
+
+    public ButtonFactory icon(VaadinIcon icon) {
+        get().setIcon(icon.create());
         return this;
     }
 

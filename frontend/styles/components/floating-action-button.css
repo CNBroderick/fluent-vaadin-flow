@@ -1,0 +1,22 @@
+/*
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2020-07-02 09:33:44
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：D:/broderick/develop/vaadin/16/fluent-vaadin-flow/frontend/styles/components/floating-action-button.css
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ */
+
+:host([theme~="fab"]) {
+    --lumo-button-size: var(--lumo-size-xl);
+    border-radius: 50%;
+    bottom: var(--lumo-space-m);
+    box-shadow: var(--lumo-box-shadow-m);
+    font-size: var(--lumo-font-size-l);
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: var(--lumo-space-m);
+}

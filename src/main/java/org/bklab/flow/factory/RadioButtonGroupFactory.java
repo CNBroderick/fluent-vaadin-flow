@@ -1,17 +1,28 @@
+/*
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2020-07-01 12:53:31
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.factory.RadioButtonGroupFactory
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ */
+
 package org.bklab.flow.factory;
 
+import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.function.SerializablePredicate;
 import org.bklab.flow.FlowFactory;
-import org.bklab.flow.base.HasDataProviderFactory;
-import org.bklab.flow.base.HasItemsAndComponentsFactory;
-import org.bklab.flow.base.HasValidationFactory;
-import org.bklab.flow.base.SingleSelectFactory;
+import org.bklab.flow.base.*;
 
 public class RadioButtonGroupFactory<T> extends FlowFactory<RadioButtonGroup<T>, RadioButtonGroupFactory<T>> implements
+        GeneratedVaadinRadioGroupFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
         HasItemsAndComponentsFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
         SingleSelectFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
         HasDataProviderFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
@@ -65,4 +76,15 @@ public class RadioButtonGroupFactory<T> extends FlowFactory<RadioButtonGroup<T>,
         return this;
     }
 
+    @Override
+    public RadioButtonGroupFactory<T> value(T value) {
+        get().setValue(value);
+        return this;
+    }
+
+    @Override
+    public RadioButtonGroupFactory<T> valueChangeListener(HasValue.ValueChangeListener<? super AbstractField.ComponentValueChangeEvent<RadioButtonGroup<T>, T>> valueChangeListener) {
+        get().addValueChangeListener(valueChangeListener);
+        return this;
+    }
 }

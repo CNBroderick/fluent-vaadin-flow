@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2020-06-18 21:13:18
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.factory.HorizontalLayoutFactory
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ */
+
 package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.Component;
@@ -102,6 +113,36 @@ public class HorizontalLayoutFactory extends FlowFactory<HorizontalLayout, Horiz
 
     public HorizontalLayoutFactory alignItems(FlexComponent.Alignment alignItems) {
         get().setAlignItems(alignItems);
+        return this;
+    }
+
+    public HorizontalLayoutFactory alignItemsStart() {
+        get().setAlignItems(FlexComponent.Alignment.START);
+        return this;
+    }
+
+    public HorizontalLayoutFactory alignItemsEnd() {
+        get().setAlignItems(FlexComponent.Alignment.END);
+        return this;
+    }
+
+    public HorizontalLayoutFactory alignItemsCenter() {
+        get().setAlignItems(FlexComponent.Alignment.CENTER);
+        return this;
+    }
+
+    public HorizontalLayoutFactory alignItemsStretch() {
+        get().setAlignItems(FlexComponent.Alignment.STRETCH);
+        return this;
+    }
+
+    public HorizontalLayoutFactory alignItemsBaseline() {
+        get().setAlignItems(FlexComponent.Alignment.BASELINE);
+        return this;
+    }
+
+    public HorizontalLayoutFactory alignItemsAuto() {
+        get().setAlignItems(FlexComponent.Alignment.AUTO);
         return this;
     }
 

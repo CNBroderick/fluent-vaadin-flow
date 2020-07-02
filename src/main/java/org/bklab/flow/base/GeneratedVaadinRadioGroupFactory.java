@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2020-07-01 12:53:31
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.base.GeneratedVaadinRadioGroupFactory
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ */
+
 package org.bklab.flow.base;
 
 import com.vaadin.flow.component.radiobutton.GeneratedVaadinRadioGroup;
@@ -10,12 +21,12 @@ public interface GeneratedVaadinRadioGroupFactory<T, C extends GeneratedVaadinRa
         HasStyleFactory<C, E>,
         HasThemeFactory<C, E> {
 
-    default E themeVariants(RadioGroupVariant[] themeVariants) {
+    default E themeVariants(RadioGroupVariant... themeVariants) {
         get().addThemeVariants(themeVariants);
         return (E) this;
     }
 
-    default E removeThemeVariants(RadioGroupVariant[] removeThemeVariants) {
+    default E removeThemeVariants(RadioGroupVariant... removeThemeVariants) {
         get().removeThemeVariants(removeThemeVariants);
         return (E) this;
     }

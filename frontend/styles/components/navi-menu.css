@@ -1,0 +1,23 @@
+/*
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2020-07-02 09:33:44
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：D:/broderick/develop/vaadin/16/fluent-vaadin-flow/frontend/styles/components/navi-menu.css
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ */
+
+.navi-menu {
+    box-shadow: inset 0 -1px var(--lumo-contrast-10pct);
+    flex: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.navi-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: var(--lumo-space-s) 0;
+}

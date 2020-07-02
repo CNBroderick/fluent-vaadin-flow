@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2020-06-25 19:42:34
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.factory.NotificationFactory
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ */
+
 package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.AttachEvent;
@@ -91,6 +102,10 @@ public class NotificationFactory extends FlowFactory<Notification, NotificationF
     }
 
     public NotificationFactory duration(int duration) {
+        if (duration < 10) {
+            System.err.printf("NotificationFactory.duration: 单位毫秒，当前值[%d]，已自动乘以1000 调整为[%d]毫秒。%n", duration, duration *= 1000);
+            duration *= 1000;
+        }
         get().setDuration(duration);
         return this;
     }
@@ -114,6 +129,51 @@ public class NotificationFactory extends FlowFactory<Notification, NotificationF
 
     public NotificationFactory position(Notification.Position position) {
         get().setPosition(position);
+        return this;
+    }
+
+    public NotificationFactory positionTopStretch() {
+        get().setPosition(Notification.Position.TOP_STRETCH);
+        return this;
+    }
+
+    public NotificationFactory positionTopStart() {
+        get().setPosition(Notification.Position.TOP_START);
+        return this;
+    }
+
+    public NotificationFactory positionTopCenter() {
+        get().setPosition(Notification.Position.TOP_CENTER);
+        return this;
+    }
+
+    public NotificationFactory positionTopEnd() {
+        get().setPosition(Notification.Position.TOP_END);
+        return this;
+    }
+
+    public NotificationFactory positionMiddle() {
+        get().setPosition(Notification.Position.MIDDLE);
+        return this;
+    }
+
+    public NotificationFactory positionBottomStart() {
+        get().setPosition(Notification.Position.BOTTOM_START);
+        return this;
+    }
+
+    public NotificationFactory positionBottomCenter() {
+        get().setPosition(Notification.Position.BOTTOM_CENTER);
+        return this;
+    }
+
+    public NotificationFactory positionBottomEnd() {
+        get().setPosition(Notification.Position.BOTTOM_END);
+        return this;
+    }
+
+    public NotificationFactory positionBottomStretch() {
+        get().setPosition(Notification.Position.BOTTOM_STRETCH);
         return this;
     }
 
