@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2020. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-02 09:33:40
+ * Modify date：2020-07-06 16:22:38
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.dialog.MessageDialog
@@ -11,8 +11,11 @@
 
 package org.bklab.flow.dialog;
 
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -26,6 +29,7 @@ import org.bklab.flow.factory.VerticalLayoutFactory;
 import org.bklab.flow.layout.LmrHorizontalLayout;
 import org.bklab.flow.layout.TmbVerticalLayout;
 
+import java.util.Collection;
 import java.util.function.Consumer;
 
 public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>, HasSizeFactory<MessageDialog, MessageDialog> {
@@ -34,7 +38,7 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
     private final LmrHorizontalLayout bottom;
     private Icon icon;
     private String header;
-    private String message;
+    private final Span message = new Span();
 
     public MessageDialog() {
         setMinHeight("185px");
@@ -62,7 +66,30 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
     }
 
     public MessageDialog message(String message) {
-        this.message = message;
+        this.message.add(message);
+        return this;
+    }
+
+    public MessageDialog message(String... message) {
+        Div div = new Div();
+        for (String s : message) {
+            div.add(new Html("<div>" + s + "</div>"));
+        }
+        this.message.add(div);
+        return this;
+    }
+
+    public MessageDialog message(Collection<String> message) {
+        Div div = new Div();
+        for (String s : message) {
+            div.add(new Html("<div>" + s + "</div>"));
+        }
+        this.message.add(div);
+        return this;
+    }
+
+    public MessageDialog content(Component content) {
+        this.message.add(content);
         return this;
     }
 
@@ -90,11 +117,10 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
 
         bottom.right(confirm);
         if (header == null) return buildNoHeader();
-
-        Span message = new Span(this.message);
         Span header = new Span(this.header);
         header.getStyle().set("font-weight", "600").set("font-size", "var(--lumo-font-size-m)");
-        message.getStyle().set("font-size", "var(--lumo-font-size-s)").set("padding-left", "3.2em");
+        message.getStyle().set("font-size", "var(--lumo-font-size-s)").set("padding-left", "3.2em")
+                .set("display", "flex").set("align-self", "flex-start");
 
         TmbVerticalLayout main = new TmbVerticalLayout().noBorder();
         main.top(new HorizontalLayoutFactory(icon, header).expand(header).widthFull().get());
@@ -112,9 +138,8 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
     }
 
     private MessageDialog buildNoHeader() {
-        Span span = new Span(message);
-        span.getStyle().set("font-size", "var(--lumo-font-size-s)");
-        HorizontalLayout content = new HorizontalLayoutFactory(icon, span).expand(span).widthFull().get();
+        message.getStyle().set("font-size", "var(--lumo-font-size-s)").set("display", "flex").set("align-self", "flex-start");
+        HorizontalLayout content = new HorizontalLayoutFactory(icon, message).expand(message).widthFull().get();
         VerticalLayout main = new VerticalLayoutFactory(content, bottom).expand(content).widthFull().get();
         main.getStyle().set("padding", "1.5em 1.5em 1em 1.5em");
         add(main);

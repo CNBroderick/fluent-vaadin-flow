@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2020-07-06 09:39:17
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.factory.DateTimePickerFactory
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ */
+
 package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.AbstractField;
@@ -20,12 +31,13 @@ public class DateTimePickerFactory extends FlowFactory<DateTimePicker, DateTimeP
         FocusableFactory<DateTimePicker, DateTimePickerFactory> {
 
     public DateTimePickerFactory() {
-        super(new DateTimePicker());
+        this(new DateTimePicker());
     }
 
     public DateTimePickerFactory(DateTimePicker component) {
         super(component);
         component.setLocale(Locale.CHINA);
+        get().setDatePickerI18n(building.ui.view.sms.ChineseDatePickerI18n.getInstance());
     }
 
     public DateTimePickerFactory(String label) {

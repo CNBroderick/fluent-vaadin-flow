@@ -1,11 +1,24 @@
+/*
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2020-07-06 09:39:17
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.factory.DatePickerFactory
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ */
+
 package org.bklab.flow.factory;
 
+import building.ui.view.sms.ChineseDatePickerI18n;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.datepicker.GeneratedVaadinDatePicker;
 import org.bklab.flow.FlowFactory;
+import org.bklab.flow.base.GeneratedVaadinDatePickerFactory;
 import org.bklab.flow.base.HasSizeFactory;
 import org.bklab.flow.base.HasValidationFactory;
 
@@ -13,6 +26,7 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 public class DatePickerFactory extends FlowFactory<DatePicker, DatePickerFactory> implements
+        GeneratedVaadinDatePickerFactory<LocalDate, DatePicker, DatePickerFactory>,
         HasSizeFactory<DatePicker, DatePickerFactory>,
         HasValidationFactory<DatePicker, DatePickerFactory> {
 
@@ -56,6 +70,7 @@ public class DatePickerFactory extends FlowFactory<DatePicker, DatePickerFactory
     public DatePickerFactory(DatePicker component) {
         super(component);
         get().setLocale(Locale.CHINA);
+        get().setI18n(ChineseDatePickerI18n.getInstance());
     }
 
     public DatePickerFactory name(String name) {

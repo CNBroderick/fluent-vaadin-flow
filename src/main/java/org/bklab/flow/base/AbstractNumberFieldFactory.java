@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2020-07-03 13:54:51
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.base.AbstractNumberFieldFactory
+ * Copyright (c) 2008 - 2020. - Broderick Labs.
+ */
+
 package org.bklab.flow.base;
 
 import com.vaadin.flow.component.textfield.AbstractNumberField;
@@ -6,6 +17,7 @@ import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
 public interface AbstractNumberFieldFactory<T extends Number, C extends AbstractNumberField<C, T>, E extends AbstractNumberFieldFactory<T, C, E>> extends IFlowFactory<C>,
+        GeneratedVaadinNumberFieldFactory<T, C, E>,
         HasSizeFactory<C, E>,
         HasValidationFactory<C, E>,
         HasValueChangeModeFactory<C, E>,

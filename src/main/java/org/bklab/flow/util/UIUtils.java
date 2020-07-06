@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2020. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-06-30 16:19:43
+ * Modify date：2020-07-06 10:05:22
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.util.UIUtils
@@ -11,19 +11,26 @@
 
 package org.bklab.flow.util;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
+import org.bklab.flow.components.mix.Badge;
 import org.bklab.flow.layout.FlexBoxLayout;
 import org.bklab.flow.layout.size.Right;
 import org.bklab.flow.util.css.*;
+import org.bklab.flow.util.css.lumo.BadgeColor;
+import org.bklab.flow.util.css.lumo.BadgeShape;
+import org.bklab.flow.util.css.lumo.BadgeSize;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -616,4 +623,10 @@ public class UIUtils {
 		}
 	}
 
+	public static Badge createBadge(String text, ComponentEventListener<ClickEvent<Span>> listener) {
+		Badge badge = new Badge(text, BadgeColor.NORMAL_PRIMARY, BadgeSize.S, BadgeShape.PILL);
+		badge.addClickListener(listener);
+		badge.addClassName(LumoStyles.Margin.Left.S);
+		return badge;
+	}
 }

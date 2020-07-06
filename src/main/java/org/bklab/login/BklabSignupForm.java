@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2020. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-02 09:33:44
+ * Modify date：2020-07-06 16:22:14
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.login.BklabSignupForm
@@ -31,8 +31,8 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 @JsModule("./src/login/bklab-signup-form.js")
 public class BklabSignupForm extends PolymerTemplate<BklabSignupForm.BklabSignupFormModel> {
 
-    @Id("email")
-    private EmailField email;
+    @Id("mail")
+    private EmailField mail;
     @Id("account")
     private TextField account;
     @Id("password")
@@ -58,5 +58,68 @@ public class BklabSignupForm extends PolymerTemplate<BklabSignupForm.BklabSignup
      */
     public interface BklabSignupFormModel extends TemplateModel {
         // Add setters and getters for template properties here.
+    }
+
+    public EmailField getMail() {
+        return mail;
+    }
+
+    public BklabSignupForm setMail(EmailField mail) {
+        this.mail = mail;
+        return this;
+    }
+
+    public TextField getAccount() {
+        return account;
+    }
+
+    public BklabSignupForm setAccount(TextField account) {
+        this.account = account;
+        return this;
+    }
+
+    public PasswordField getPassword() {
+        return password;
+    }
+
+    public BklabSignupForm setPassword(PasswordField password) {
+        this.password = password;
+        return this;
+    }
+
+    public TextField getCode() {
+        return code;
+    }
+
+    public BklabSignupForm setCode(TextField code) {
+        this.code = code;
+        return this;
+    }
+
+    public Button getSendCode() {
+        return sendCode;
+    }
+
+    public BklabSignupForm setSendCode(Button sendCode) {
+        this.sendCode = sendCode;
+        return this;
+    }
+
+    public Button getSignup() {
+        return signup;
+    }
+
+    public BklabSignupForm setSignup(Button signup) {
+        this.signup = signup;
+        return this;
+    }
+
+    public Button getGoLogin() {
+        return goLogin;
+    }
+
+    public BklabSignupForm setGoLogin(Button goLogin) {
+        this.goLogin = goLogin;
+        return this;
     }
 }
