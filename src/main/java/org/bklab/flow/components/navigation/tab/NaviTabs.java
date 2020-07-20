@@ -40,6 +40,7 @@ public class NaviTabs extends Tabs {
 	 * will cause the app to navigate to that tab's navigation target (if any).
 	 * This constructor allows you to add the tabs before the event listener is
 	 * set.
+	 * @param naviTabs tabs
 	 */
 	public NaviTabs(NaviTab... naviTabs) {
 		this();
@@ -48,6 +49,8 @@ public class NaviTabs extends Tabs {
 
 	/**
 	 * Creates a regular tab without any click listeners.
+	 * @param text text
+	 * @return tab
 	 */
 	public Tab addTab(String text) {
 		Tab tab = new Tab(text);
@@ -57,6 +60,10 @@ public class NaviTabs extends Tabs {
 
 	/**
 	 * Creates a tab that when clicked navigates to the specified target.
+	 *
+	 * @param text text
+	 * @param navigationTarget Class? extends Component navigationTarget
+	 * @return tab
 	 */
 	public Tab addTab(String text,
 					  Class<? extends Component> navigationTarget) {
@@ -68,6 +75,9 @@ public class NaviTabs extends Tabs {
 	/**
 	 * Creates a (closable) tab that when clicked navigates to the specified
 	 * target.
+	 * @param text text
+	 * @param navigationTarget  Class? extends Component navigationTarget
+	 * @return tab
 	 */
 	public Tab addClosableTab(String text,
 							  Class<? extends Component> navigationTarget) {
@@ -106,7 +116,7 @@ public class NaviTabs extends Tabs {
 		}
 	}
 
-	/**
+	/*
 	 * Updates the current tab's name and navigation target.
 	 */
 	public void updateSelectedTab(String text,
@@ -125,7 +135,7 @@ public class NaviTabs extends Tabs {
 		navigateToSelectedTab();
 	}
 
-	/**
+	/*
 	 * Returns the number of tabs.
 	 */
 	public int getTabCount() {

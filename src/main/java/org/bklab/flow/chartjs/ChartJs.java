@@ -37,7 +37,8 @@ public class ChartJs extends PolymerTemplate<ChartJsModel> {
      * Enables to add a listener on frontend click event.
      * This is invoked only when a dataset is clicked.
      *
-     * @param listener
+     * @param listener listener on frontend click event.
+     * @return Registration
      */
     public Registration addClickListener(ComponentEventListener<ClickEvent> listener) {
         return addListener(ClickEvent.class, listener);
@@ -55,7 +56,7 @@ public class ChartJs extends PolymerTemplate<ChartJsModel> {
     /**
      * Enables to update datasets.
      *
-     * @param data
+     * @param data Enables to update datasets.
      */
     public void updateData(String data) {
         getModel().setChartData(data);
@@ -64,7 +65,7 @@ public class ChartJs extends PolymerTemplate<ChartJsModel> {
     /**
      * Enables to update chart options.
      *
-     * @param options
+     * @param options Enables to update chart options.
      */
     public void updateOptions(String options) {
         getModel().setChartOptions(options);

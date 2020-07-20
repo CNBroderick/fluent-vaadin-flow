@@ -1,0 +1,21 @@
+.fluent-crud-view {
+    padding: 0.5em;
+    background-color: white;
+    border-radius: 2px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.fluent-crud-view__header {
+    vertical-align: middle;
+}
+
+.fluent-crud-view__content {
+    overflow-y: scroll;
+    flex-grow: 1;
+}
+
+.fluent-crud-view__footer {
+    vertical-align: middle;
+}

@@ -40,6 +40,9 @@ public class ModalDialog extends Dialog {
                 .spacing(false)
                 .sizeFull();
         toolBar.left(title).right(createCloseButton());
+        setDraggable(true);
+        setModal(true);
+        setResizable(true);
     }
 
     private void createContainerStyle(Style style) {

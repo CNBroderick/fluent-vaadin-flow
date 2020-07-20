@@ -69,7 +69,8 @@ public class Pagination extends ToolBar {
     /**
      * 自定义翻页组件布局
      *
-     * @param customPaginationLayout @see CustomPaginationLayout
+     * @param customPaginationLayout CustomPaginationLayout
+     * @see org.bklab.flow.components.pagination.CustomPaginationLayout
      * @return this
      */
     public Pagination customLayout(CustomPaginationLayout customPaginationLayout) {
@@ -91,8 +92,8 @@ public class Pagination extends ToolBar {
 
     /**
      * @param limit 最大拥有翻页按钮数量，默认5，例如选择 5：
-     *              精简模式：< 1 2 3 4 5 >
-     *              普通模式：< 1 << 5 6 7 8 9 >> 100 >
+     *              精简模式：＜ 1 2 3 4 5 ＞
+     *              普通模式：＜ 1 ＜＜ 5 6 7 8 9 ＞＞ 100 ＞
      * @return this;
      */
     public Pagination limit(int limit) {

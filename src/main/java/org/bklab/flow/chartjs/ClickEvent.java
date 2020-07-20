@@ -22,7 +22,7 @@ public class ClickEvent extends ComponentEvent<ChartJs> {
     /**
      * Corresponds to value on x axis of vertical chart.
      *
-     * @return
+     * @return Corresponds to value on x axis of vertical chart.
      */
     public String getLabel() {
         return label;
@@ -31,7 +31,7 @@ public class ClickEvent extends ComponentEvent<ChartJs> {
     /**
      * Corresponds to value on y axis of vertical chart.
      *
-     * @return
+     * @return Corresponds to value on y axis of vertical chart.
      */
     public String getValue() {
         return value;
@@ -40,7 +40,7 @@ public class ClickEvent extends ComponentEvent<ChartJs> {
     /**
      * Label the dataset, it;s value corresponds to values in the legend.
      *
-     * @return
+     * @return Label the dataset, it;s value corresponds to values in the legend.
      */
     public String getDatasetLabel() {
         return datasetLabel;

@@ -37,7 +37,7 @@ public class PaginationButton extends Button {
     /**
      * 翻页按钮
      *
-     * @param forward  true：> 向后翻页  false：< 向前翻页
+     * @param forward  true：＞ 向后翻页  false：＜ 向前翻页
      * @param listener 点击事件
      */
     public PaginationButton(boolean forward, ComponentEventListener<ClickEvent<Button>> listener) {
@@ -49,7 +49,7 @@ public class PaginationButton extends Button {
     /**
      * 切换页码按钮
      *
-     * @param forward  true：>> 向后切换  false：<< 向前切换
+     * @param forward  true：＞＞　向后切换  false：＜＜ 向前切换
      * @param listener 点击事件
      */
     public PaginationButton(ComponentEventListener<ClickEvent<Button>> listener,boolean forward) {
