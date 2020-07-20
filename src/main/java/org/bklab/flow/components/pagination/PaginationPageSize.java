@@ -15,9 +15,10 @@ public class PaginationPageSize extends ComboBox<Integer> {
 
     public PaginationPageSize() {
         items(10, 20, 50, 100);
-        labelGenerator("%d条/页");
+        labelGenerator("%d 条/页");
         addClassName(CLASS_NAME);
         setAllowCustomValue(true);
+        setClearButtonVisible(false);
     }
 
     public PaginationPageSize tinySize() {

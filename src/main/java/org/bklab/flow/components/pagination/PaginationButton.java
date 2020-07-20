@@ -13,6 +13,10 @@ public class PaginationButton extends Button {
 
     private final static String CLASS_NAME = "pagination-button";
 
+    private Boolean jump;
+    private Boolean forward;
+    private Integer pageNo;
+
     {
         addClassName(CLASS_NAME);
         border(false);
@@ -26,6 +30,8 @@ public class PaginationButton extends Button {
      */
     public PaginationButton(int pageNumber, ComponentEventListener<ClickEvent<Button>> listener) {
         super(String.valueOf(pageNumber), listener);
+        this.pageNo = pageNumber;
+        setDescription("第 " + pageNumber + " 页");
     }
 
     /**
@@ -36,6 +42,8 @@ public class PaginationButton extends Button {
      */
     public PaginationButton(boolean forward, ComponentEventListener<ClickEvent<Button>> listener) {
         super(createIcon(forward), listener);
+        this.forward = forward;
+        setDescription(forward ? "下一页" : "上一页");
     }
 
     /**
@@ -45,12 +53,16 @@ public class PaginationButton extends Button {
      * @param listener 点击事件
      */
     public PaginationButton(ComponentEventListener<ClickEvent<Button>> listener,boolean forward) {
+        this.jump = forward;
         Icon focus = forward ? VaadinIcon.ANGLE_DOUBLE_RIGHT.create() : VaadinIcon.ANGLE_DOUBLE_LEFT.create();
         toggleBlurMode();
         addFocusListener(e -> toggleFocusMode(focus));
         addBlurListener(e -> toggleBlurMode());
         getElement().addEventListener("mouseover", e -> toggleFocusMode(focus));
+        getElement().addEventListener("mouseout", e -> toggleBlurMode());
+        addClickListener(listener);
         addClassName(CLASS_NAME + "__jump");
+        setDescription(forward ? "向后" : "向前");
     }
 
     private static Icon createIcon(boolean forward) {
@@ -105,6 +117,11 @@ public class PaginationButton extends Button {
         return this;
     }
 
+    public PaginationButton enable(boolean enable) {
+        if (enable) return enable();
+        else return disable();
+    }
+
     public PaginationButton enable() {
         setEnabled(true);
         setDisableOnClick(false);
@@ -112,4 +129,33 @@ public class PaginationButton extends Button {
         return this;
     }
 
+    public PaginationButton setDescription(String description) {
+        getElement().setProperty("title", description)
+                .setProperty("aria-label", description);
+        return this;
+    }
+
+    public boolean isPageNo() {
+        return pageNo != null;
+    }
+
+    public boolean isNext() {
+        return forward != null && forward;
+    }
+
+    public boolean isPrev() {
+        return forward != null && !forward;
+    }
+
+    public boolean isNextJump() {
+        return jump != null && jump;
+    }
+
+    public boolean isPrevJump() {
+        return jump != null && !jump;
+    }
+
+    public Integer getPageNo() {
+        return pageNo;
+    }
 }
