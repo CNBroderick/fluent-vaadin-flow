@@ -19,10 +19,10 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import org.bklab.flow.layout.FlexBoxLayout;
 import org.bklab.flow.layout.size.Left;
 import org.bklab.flow.layout.size.Right;
-import org.bklab.flow.util.FontSize;
-import org.bklab.flow.util.LumoStyles;
-import org.bklab.flow.util.TextColor;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.FontSize;
+import org.bklab.flow.util.lumo.LumoStyles;
+import org.bklab.flow.util.lumo.TextColor;
+import org.bklab.flow.util.lumo.UIUtils;
 import org.bklab.flow.util.css.BorderRadius;
 import org.bklab.flow.util.css.Display;
 

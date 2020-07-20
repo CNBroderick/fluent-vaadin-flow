@@ -3,14 +3,17 @@ package org.bklab.flow.base;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
 public interface FlexComponentFactory<T extends Component & FlexComponent, E extends FlexComponentFactory<T, E>>
         extends IFlowFactory<T>,
-        HasOrderedComponentsFactory<T, FlexComponentFactory<T, E>>,
-        HasStyleFactory<T, FlexComponentFactory<T, E>>,
-        HasSizeFactory<T, FlexComponentFactory<T, E>> {
+        HasOrderedComponentsFactory<T, E>,
+        HasStyleFactory<T, E>,
+        HasSizeFactory<T, E> {
+
+    @Override
     default E replace(Component oldComponent, Component newComponent) {
         get().replace(oldComponent, newComponent);
         return (E) this;

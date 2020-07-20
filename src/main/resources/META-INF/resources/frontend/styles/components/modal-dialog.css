@@ -1,0 +1,139 @@
+[part="content"] {
+    padding: 0;
+}
+
+.modal-dialog-container {
+    -webkit-tap-highlight-color: transparent;
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
+    color: rgba(0,0,0,.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 3px 6px -4px rgba(0,0,0,.12),0 6px 16px 0 rgba(0,0,0,.08),0 9px 28px 8px rgba(0,0,0,.05);
+    pointer-events: auto;
+}
+
+.modal-dialog-toolbar {
+    -webkit-tap-highlight-color: transparent;
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    pointer-events: auto;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 16px 24px;
+    color: rgba(0,0,0,.65);
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 2px 2px 0 0;
+}
+
+.modal-dialog-content {
+    -webkit-tap-highlight-color: transparent;
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
+    color: rgba(0,0,0,.65);
+    font-variant: tabular-nums;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    pointer-events: auto;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 24px;
+    font-size: 14px;
+    line-height: 1.5715;
+}
+
+.modal-dialog-footer {
+    -webkit-tap-highlight-color: transparent;
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
+    color: rgba(0,0,0,.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    pointer-events: auto;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 10px 16px;
+    text-align: right;
+    background: 0 0;
+    border-top: 1px solid #f0f0f0;
+    border-radius: 0 0 2px 2px;
+}
+
+.dialog-modal-close-button{
+    background: transparent !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent;
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    pointer-events: auto;
+    touch-action: manipulation;
+    font-size: inherit;
+    font-family: inherit;
+    overflow: visible;
+    text-transform: none;
+    margin: 0;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    padding: 0;
+    font-weight: 700;
+    line-height: 1;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: color .3s;
+    -webkit-appearance: button;
+    color: rgba(0,0,0,.75);
+    text-decoration: none;
+}
+
+.dialog-modal-close-button .dialog-modal-close-button-x {
+    -webkit-tap-highlight-color: transparent;
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    pointer-events: auto;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 16px;
+    box-sizing: border-box;
+    display: inline-block;
+    color: inherit;
+    font-style: normal;
+    line-height: 0;
+    text-align: center;
+    text-transform: none;
+    vertical-align: -.125em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}

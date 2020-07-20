@@ -1,0 +1,37 @@
+:host {
+    padding: 0 !important;
+}
+
+.vaadin-text-field-container {
+    max-height: 29px;
+    max-height: -webkit-fill-available !important;
+}
+
+.pagination-page-size__normal [part="input-field"] {
+    height: 22px !important;
+}
+
+[part="input-field"] {
+    margin: auto 0;
+    height: 14px;
+    font-size: 14px;
+    text-align: center !important;
+    background-color: white !important;
+    display: flex;
+    border-radius: 2px;
+    transition: all .3s cubic-bezier(.645, .045, .355, 1);
+    width: 100%;
+    padding: 0 11px;
+}
+
+[part="clear-button"] {
+    color: var(--text-color);
+}
+
+[part="label"] {
+    color: var(--text-color);
+}
+
+:host(:hover:not([readonly]):not([focused])) [part="label"] {
+    color: var(--text-color);
+}

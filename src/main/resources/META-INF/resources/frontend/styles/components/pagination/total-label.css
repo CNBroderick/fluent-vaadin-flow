@@ -1,0 +1,19 @@
+.pagination-total-label {
+    -webkit-tap-highlight-color: transparent;
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
+    -webkit-box-direction: normal;
+    color: rgba(0,0,0,.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    padding: 0;
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0 8px 0 0;
+    vertical-align: middle;
+    height: 24px;
+    line-height: 24px;
+}

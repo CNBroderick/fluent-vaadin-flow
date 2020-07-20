@@ -3,6 +3,9 @@ package org.bklab.flow.factory;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.grid.*;
+import com.vaadin.flow.component.grid.dataview.GridDataView;
+import com.vaadin.flow.component.grid.dataview.GridLazyDataView;
+import com.vaadin.flow.component.grid.dataview.GridListDataView;
 import com.vaadin.flow.component.grid.dnd.GridDragEndEvent;
 import com.vaadin.flow.component.grid.dnd.GridDragStartEvent;
 import com.vaadin.flow.component.grid.dnd.GridDropEvent;
@@ -23,7 +26,9 @@ import java.util.Map;
 
 public class GridFactory<T> extends FlowFactory<Grid<T>, GridFactory<T>> implements
         HasStyleFactory<Grid<T>, GridFactory<T>>,
-        HasDataProviderFactory<T, Grid<T>, GridFactory<T>>,
+        HasListDataViewFactory<T, GridListDataView<T>, Grid<T>, GridFactory<T>>,
+        HasDataViewFactory<T, GridDataView<T>, Grid<T>, GridFactory<T>>,
+        HasLazyDataViewFactory<T, GridLazyDataView<T>, Grid<T>, GridFactory<T>>,
         HasSizeFactory<Grid<T>, GridFactory<T>>,
         FocusableFactory<Grid<T>, GridFactory<T>>,
         HasThemeFactory<Grid<T>, GridFactory<T>>,
@@ -60,6 +65,7 @@ public class GridFactory<T> extends FlowFactory<Grid<T>, GridFactory<T>> impleme
         return this;
     }
 
+    @Deprecated
     public GridFactory<T> dataProvider(DataProvider<T, ?> dataProvider) {
         get().setDataProvider(dataProvider);
         return this;

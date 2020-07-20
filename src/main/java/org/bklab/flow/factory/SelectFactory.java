@@ -5,6 +5,8 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.select.Select;
+import com.vaadin.flow.component.select.data.SelectDataView;
+import com.vaadin.flow.component.select.data.SelectListDataView;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.function.SerializablePredicate;
@@ -13,9 +15,9 @@ import org.bklab.flow.base.*;
 
 public class SelectFactory<T> extends FlowFactory<Select<T>, SelectFactory<T>> implements
         GeneratedVaadinSelectFactory<T, Select<T>, SelectFactory<T>>,
-        HasDataProviderFactory<T, Select<T>, SelectFactory<T>>,
-        HasItemsAndComponentsFactory<T, Select<T>, SelectFactory<T>>,
         HasSizeFactory<Select<T>, SelectFactory<T>>,
+        HasListDataViewFactory<T, SelectListDataView<T>, Select<T>, SelectFactory<T>>,
+        HasDataViewFactory<T, SelectDataView<T>, Select<T>, SelectFactory<T>>,
         HasValidationFactory<Select<T>, SelectFactory<T>>,
         SingleSelectFactory<T, Select<T>, SelectFactory<T>> {
 
@@ -94,6 +96,7 @@ public class SelectFactory<T> extends FlowFactory<Select<T>, SelectFactory<T>> i
         return this;
     }
 
+    @Deprecated
     public SelectFactory<T> dataProvider(DataProvider<T, ?> dataProvider) {
         get().setDataProvider(dataProvider);
         return this;

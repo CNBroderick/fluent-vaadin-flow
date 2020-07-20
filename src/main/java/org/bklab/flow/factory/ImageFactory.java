@@ -13,15 +13,22 @@ package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.server.AbstractStreamResource;
+import com.vaadin.flow.server.StreamResource;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.ClickNotifierFactory;
 import org.bklab.flow.base.HtmlContainerFactory;
+import org.bklab.flow.image.ImageBase;
 
 public class ImageFactory extends FlowFactory<Image, ImageFactory>
         implements ClickNotifierFactory<Image, ImageFactory>, HtmlContainerFactory<Image, ImageFactory> {
 
     public ImageFactory() {
         this(new Image());
+    }
+
+    public ImageFactory(Class<?> base, String name) {
+        this();
+        get().setSrc(new StreamResource(name, () -> base.getResourceAsStream(name)));
     }
 
     public ImageFactory(Image component) {

@@ -16,7 +16,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.UIUtils;
 import org.bklab.flow.util.css.Overflow;
 
 import java.util.function.Consumer;

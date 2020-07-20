@@ -15,8 +15,8 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import org.bklab.flow.util.FontSize;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.FontSize;
+import org.bklab.flow.util.lumo.UIUtils;
 
 public class ClosableNaviTab extends NaviTab {
 

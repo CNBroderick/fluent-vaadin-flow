@@ -22,6 +22,8 @@ public class TitleLabel extends Span {
                 .set("font-weight", "600")
                 .set("font-size", "16px")
                 .set("line-height", "22px")
-                .set("word-wrap", "break-word");
+                .set("word-wrap", "break-word")
+                .set("display", "flex")
+        ;
     }
 }

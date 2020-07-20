@@ -23,8 +23,8 @@ import org.bklab.flow.layout.FlexBoxLayout;
 import org.bklab.flow.layout.size.Horizontal;
 import org.bklab.flow.layout.size.Right;
 import org.bklab.flow.layout.size.Vertical;
-import org.bklab.flow.util.BoxShadowBorders;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.BoxShadowBorders;
+import org.bklab.flow.util.lumo.UIUtils;
 
 public class DetailsDrawerHeader extends FlexBoxLayout {
 

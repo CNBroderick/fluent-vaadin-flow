@@ -16,8 +16,8 @@ import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import org.bklab.flow.layout.FlexBoxLayout;
-import org.bklab.flow.util.LumoStyles;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.LumoStyles;
+import org.bklab.flow.util.lumo.UIUtils;
 
 public class Divider extends FlexBoxLayout implements HasSize, HasStyle {
 

@@ -20,9 +20,9 @@ import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.UIUtils;
 
-import static org.bklab.flow.util.UIUtils.IMG_PATH;
+import static org.bklab.flow.util.lumo.UIUtils.IMG_PATH;
 
 @CssImport("./styles/components/account-switcher.css")
 public class AccountSwitcher extends Div {

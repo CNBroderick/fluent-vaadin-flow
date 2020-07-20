@@ -24,7 +24,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +84,7 @@ public class NaviItem extends ListItem {
 	}
 
 	private void updateAriaLabel() {
-		String action = (subItemsVisible ? "Collapse " : "Expand ") + text;
+		String action = (subItemsVisible ? "收起 " : "展开 ") + text;
 		UIUtils.setAriaLabel(action, expandCollapse);
 	}
 

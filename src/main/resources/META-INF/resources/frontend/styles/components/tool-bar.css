@@ -1,0 +1,11 @@
+.tool-bar-left > *:not(:last-child) {
+    margin-right: 0 !important;
+}
+
+.tool-bar-middle > *:not(:last-child) {
+    margin-right: 0.5em;
+}
+
+.tool-bar-right > *:not(:first-child) {
+    margin-left: 0.5em;
+}

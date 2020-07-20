@@ -10,26 +10,14 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 @SuppressWarnings("unchecked")
-public interface HasHierarchicalDataProviderFactory<T, C extends Component & HasHierarchicalDataProvider<T>, E extends HasHierarchicalDataProviderFactory<T, C, E>> extends IFlowFactory<C>,
-        HasDataProviderFactory<T, C, E> {
+public interface HasHierarchicalDataProviderFactory<
+        T,
+        C extends Component & HasHierarchicalDataProvider<T>,
+        E extends HasHierarchicalDataProviderFactory<T, C, E>
+        > extends IFlowFactory<C> {
 
     default E items(Collection<T> rootItems, ValueProvider<T, Collection<T>> childItemProvider) {
         get().setItems(rootItems, childItemProvider);
-        return (E) this;
-    }
-
-    default E items(T... items) {
-        get().setItems(items);
-        return (E) this;
-    }
-
-    default E items(Collection<T> items) {
-        get().setItems(items);
-        return (E) this;
-    }
-
-    default E items(Stream<T> items) {
-        get().setItems(items);
         return (E) this;
     }
 

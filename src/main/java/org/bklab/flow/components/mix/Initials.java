@@ -13,10 +13,10 @@ package org.bklab.flow.components.mix;
 
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import org.bklab.flow.layout.FlexBoxLayout;
-import org.bklab.flow.util.FontSize;
-import org.bklab.flow.util.FontWeight;
-import org.bklab.flow.util.LumoStyles;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.FontSize;
+import org.bklab.flow.util.lumo.FontWeight;
+import org.bklab.flow.util.lumo.LumoStyles;
+import org.bklab.flow.util.lumo.UIUtils;
 import org.bklab.flow.util.css.BorderRadius;
 
 public class Initials extends FlexBoxLayout {

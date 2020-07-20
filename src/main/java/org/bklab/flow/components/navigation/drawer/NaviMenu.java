@@ -79,9 +79,10 @@ public class NaviMenu extends Nav {
 	}
 
 	public List<NaviItem> getNaviItems() {
-		List<NaviItem> items = (List) list.getChildren()
+		return list.getChildren()
+				.filter(NaviItem.class::isInstance)
+				.map(NaviItem.class::cast)
 				.collect(Collectors.toList());
-		return items;
 	}
 
 }

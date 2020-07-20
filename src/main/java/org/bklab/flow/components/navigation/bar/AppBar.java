@@ -21,22 +21,21 @@ import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.shared.Registration;
+import com.vaadin.flow.theme.lumo.Lumo;
 import org.bklab.flow.components.navigation.tab.NaviTab;
 import org.bklab.flow.components.navigation.tab.NaviTabs;
+import org.bklab.flow.image.ImageBase;
 import org.bklab.flow.layout.FlexBoxLayout;
-import org.bklab.flow.util.LumoStyles;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.LumoStyles;
+import org.bklab.flow.util.lumo.UIUtils;
 
 import java.util.ArrayList;
 import java.util.Optional;
-
-import static org.bklab.flow.util.UIUtils.IMG_PATH;
 
 @CssImport("./styles/components/app-bar.css")
 public class AppBar extends Header {
@@ -49,6 +48,8 @@ public class AppBar extends Header {
 	private Button contextIcon;
 
 	private H1 title;
+	private FlexBoxLayout leftActionItems;
+	private FlexBoxLayout middleActionItems;
 	private FlexBoxLayout actionItems;
 	private Image avatar;
 
@@ -84,6 +85,16 @@ public class AppBar extends Header {
 		initActionItems();
 		initContainer();
 		initTabs(defaultNavigate, tabs);
+	}
+
+	public AppBar lightTheme() {
+		UIUtils.setTheme(Lumo.LIGHT, this);
+		return this;
+	}
+
+	public AppBar darkTheme() {
+		UIUtils.setTheme(Lumo.DARK, this);
+		return this;
 	}
 
 	public void setNaviMode(NaviMode mode) {
@@ -130,31 +141,35 @@ public class AppBar extends Header {
 		search.setVisible(false);
 	}
 
+	private ContextMenu userIconMenu;
+
 	private void initAvatar() {
-		avatar = new Image();
+		avatar = ImageBase.getImage("default-user-icon.svg");
 		avatar.setClassName(CLASS_NAME + "__avatar");
-		avatar.setSrc(IMG_PATH + "avatar.png");
 		avatar.setAlt("User menu");
 
-		ContextMenu contextMenu = new ContextMenu(avatar);
-		contextMenu.setOpenOnClick(true);
-		contextMenu.addItem("Settings",
-				e -> Notification.show("Not implemented yet.", 3000,
-						Notification.Position.BOTTOM_CENTER));
-		contextMenu.addItem("Log Out",
-				e -> Notification.show("Not implemented yet.", 3000,
-						Notification.Position.BOTTOM_CENTER));
+		this.userIconMenu = new ContextMenu(avatar);
+		userIconMenu.setOpenOnClick(true);
+	}
+
+	public ContextMenu getUserIconMenu() {
+		return userIconMenu;
 	}
 
 	private void initActionItems() {
 		actionItems = new FlexBoxLayout();
 		actionItems.addClassName(CLASS_NAME + "__action-items");
 		actionItems.setVisible(false);
+		leftActionItems = new FlexBoxLayout();
+		leftActionItems.addClassName(CLASS_NAME + "__left-action-items");
+		leftActionItems.setVisible(false);
+		middleActionItems = new FlexBoxLayout();
+		middleActionItems.addClassName(CLASS_NAME + "__middle-action-items");
 	}
 
 	private void initContainer() {
-		container = new FlexBoxLayout(menuIcon, contextIcon, this.title, search,
-				actionItems, avatar);
+		container = new FlexBoxLayout(menuIcon, contextIcon, this.title,
+				leftActionItems, middleActionItems, search, actionItems, avatar);
 		container.addClassName(CLASS_NAME + "__container");
 		container.setAlignItems(FlexComponent.Alignment.CENTER);
 		container.setFlexGrow(1, search);
@@ -219,6 +234,18 @@ public class AppBar extends Header {
 		return component;
 	}
 
+	public Component addLeftActionItem(Component component) {
+		leftActionItems.add(component);
+		updateActionItemsVisibility();
+		return component;
+	}
+
+	public Component addMiddleActionItem(Component component) {
+		middleActionItems.add(component);
+		updateActionItemsVisibility();
+		return component;
+	}
+
 	/* === ACTION ITEMS === */
 
 	public Button addActionItem(VaadinIcon icon) {
@@ -228,7 +255,23 @@ public class AppBar extends Header {
 		return button;
 	}
 
+	public Button addLeftActionItem(VaadinIcon icon) {
+		Button button = UIUtils.createButton(icon, ButtonVariant.LUMO_SMALL,
+				ButtonVariant.LUMO_TERTIARY);
+		addLeftActionItem(button);
+		return button;
+	}
+
+	public Button addMiddleActionItem(VaadinIcon icon) {
+		Button button = UIUtils.createButton(icon, ButtonVariant.LUMO_SMALL,
+				ButtonVariant.LUMO_TERTIARY);
+		addMiddleActionItem(button);
+		return button;
+	}
+
 	public void removeAllActionItems() {
+		leftActionItems.removeAll();
+		middleActionItems.removeAll();
 		actionItems.removeAll();
 		updateActionItemsVisibility();
 	}
@@ -361,6 +404,7 @@ public class AppBar extends Header {
 
 	private void updateActionItemsVisibility() {
 		actionItems.setVisible(actionItems.getComponentCount() > 0);
+		leftActionItems.setVisible(actionItems.getComponentCount() > 0);
 	}
 
 	/* === UPDATE VISIBILITY === */

@@ -1,18 +1,34 @@
-# Skeleton Starter for Vaadin
+# Paper Slider
 
-This project can be used as a starting point to create your own Vaadin application.
-It has the necessary dependencies and files to help you get started.
+Vaadin 14 Java integration of @polymer/paper-slider
 
-The best way to use it is via [vaadin.com/start](https://vaadin.com/start) - you can get only the necessary parts and choose the package naming you want to use.
-There is also a [getting started tutorial](https://vaadin.com/tutorials/getting-started-with-flow) based on this project.
+When creating a starter project from vaadin.com/start, a "npm module name"
+should be specified to create a Java component for it. If "npm module name" is left empty, a Java
+component is created for Polymer paper-slider component.
 
-To access it directly from github, clone the repository and import the project to the IDE of your choice as a Maven project. You need to have Java 8 or 11 installed.
+## Development instructions
 
-Run using `mvn jetty:run` and open [http://localhost:8080](http://localhost:8080) in the browser.
+JavaScript modules can either be published as an NPM package or be kept as local 
+files in your project. The local JavaScript modules should be put in 
+`src/main/resources/META-INF/frontend` so that they are automatically found and 
+used in the using application.
 
-If you want to run your app locally in the production mode, run `mvn jetty:run -Pproduction`.
+If the modules are published then the package should be noted in the component 
+using the `@NpmPackage` annotation in addition to using `@JsModule` annotation.
 
-To run Integration Tests, execute `mvn verify -Pit`.
 
-For a full Vaadin application example, there are more choices available also from [vaadin.com/start](https://vaadin.com/start) page.
+Starting the test/demo server:
+1. Run `mvn jetty:run`.
+2. Open http://localhost:8080 in the browser.
 
+## Publishing to Vaadin Directory
+
+You can create the zip package needed for [Vaadin Directory](https://vaadin.com/directory/) using
+```
+mvn versions:set -DnewVersion=1.0.0 # You cannot publish snapshot versions 
+mvn install -Pdirectory
+```
+
+The package is created as `target/paper-slider-1.0.0.zip`
+
+For more information or to upload the package, visit https://vaadin.com/directory/my-components?uploadNewComponent

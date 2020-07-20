@@ -12,8 +12,9 @@
 package org.bklab.flow.components.navigation.drawer;
 
 import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ClientCallable;
-import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -24,7 +25,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import elemental.json.JsonObject;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.UIUtils;
 
 @CssImport("./styles/components/navi-drawer.css")
 @JsModule("./swipe-away.js")
@@ -32,7 +33,7 @@ public class NaviDrawer extends Div
 		implements AfterNavigationObserver {
 
 	private final String CLASS_NAME = "navi-drawer";
-	private final String RAIL = "rail";
+	private final static String RAIL = "rail";
 	private final String OPEN = "open";
 
 	private Div scrim;
@@ -41,9 +42,12 @@ public class NaviDrawer extends Div
 	private TextField search;
 
 	private Button railButton;
+	private final BrandExpression iconBrand;
 	private NaviMenu menu;
+	private Button logout;
 
 	public NaviDrawer() {
+		this.iconBrand = new BrandExpression("");
 		setClassName(CLASS_NAME);
 
 		initScrim();
@@ -57,13 +61,17 @@ public class NaviDrawer extends Div
 		initFooter();
 	}
 
+	public BrandExpression getIconBrand() {
+		return iconBrand;
+	}
+
 	@Override
 	protected void onAttach(AttachEvent attachEvent) {
 		super.onAttach(attachEvent);
-		UI ui = attachEvent.getUI();
-		ui.getPage().executeJavaScript("window.addSwipeAway($0,$1,$2,$3)",
+		getUI().ifPresent(ui -> ui.getPage().executeJs(
+				"window.addSwipeAway($0,$1,$2,$3)",
 				mainContent.getElement(), this, "onSwipeAway",
-				scrim.getElement());
+				scrim.getElement()));
 	}
 
 	@ClientCallable
@@ -86,15 +94,16 @@ public class NaviDrawer extends Div
 	}
 
 	private void initHeader() {
-		mainContent.add(new BrandExpression("vaadin17business"));
+		mainContent.add(iconBrand);
 	}
 
 	private void initSearch() {
 		search = new TextField();
 		search.addValueChangeListener(e -> menu.filter(search.getValue()));
 		search.setClearButtonVisible(true);
-		search.setPlaceholder("Search");
+		search.setPlaceholder("搜索菜单");
 		search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
+		search.setVisible(false);
 		mainContent.add(search);
 	}
 
@@ -104,31 +113,63 @@ public class NaviDrawer extends Div
 	}
 
 	private void initFooter() {
-		railButton = UIUtils.createSmallButton("Collapse", VaadinIcon.CHEVRON_LEFT_SMALL);
+		railButton = UIUtils.createSmallButton("收起菜单", VaadinIcon.CHEVRON_LEFT_SMALL);
 		railButton.addClassName(CLASS_NAME + "__footer");
 		railButton.addClickListener(event -> toggleRailMode());
-		railButton.getElement().setAttribute("aria-label", "Collapse menu");
-		mainContent.add(railButton);
+		railButton.getElement().setAttribute("aria-label", "收起菜单");
+
+		logout = UIUtils.createSmallButton("退出登录", VaadinIcon.SIGN_OUT);
+		logout.addClassNames(CLASS_NAME + "__logout", CLASS_NAME + "__footer");
+		logout.getElement().setAttribute("aria-label", "退出登录");
+		logout.setVisible(false);
+
+		mainContent.add(logout, railButton);
+	}
+
+	public Button getLogout() {
+		return logout;
+	}
+
+	public void whenLogoutClick(ComponentEventListener<ClickEvent<Button>> listener) {
+		logout.addClickListener(listener);
+		logout.setVisible(true);
 	}
 
 	private void toggleRailMode() {
 		if (getElement().hasAttribute(RAIL)) {
-			getElement().setAttribute(RAIL, false);
-			railButton.setIcon(new Icon(VaadinIcon.CHEVRON_LEFT_SMALL));
-			railButton.setText("Collapse");
-			UIUtils.setAriaLabel("Collapse menu", railButton);
-
+			toggleRailModeExpand();
 		} else {
-			getElement().setAttribute(RAIL, true);
-			railButton.setIcon(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
-			railButton.setText("Expand");
-			UIUtils.setAriaLabel("Expand menu", railButton);
-			getUI().get().getPage().executeJavaScript(
-					"var originalStyle = getComputedStyle($0).pointerEvents;" //
-							+ "$0.style.pointerEvents='none';" //
-							+ "setTimeout(function() {$0.style.pointerEvents=originalStyle;}, 170);",
-					getElement());
+			toggleRailModeCollapse();
 		}
+		getElement().setAttribute(RAIL, !getElement().hasAttribute(RAIL));
+	}
+
+	private void toggleRailModeExpand() {
+		railButton.setIcon(new Icon(VaadinIcon.CHEVRON_LEFT_SMALL));
+		railButton.setText("收起菜单");
+		UIUtils.setAriaLabel("收起菜单", railButton);
+
+		logout.setIcon(new Icon(VaadinIcon.SIGN_OUT));
+		logout.setText("退出登录");
+		UIUtils.setAriaLabel("退出登录", logout);
+		iconBrand.toggle(true);
+	}
+
+	private void toggleRailModeCollapse() {
+		railButton.setIcon(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
+		railButton.setText("展开");
+		UIUtils.setAriaLabel("展开菜单", railButton);
+
+		logout.setIcon(new Icon(VaadinIcon.SIGN_OUT));
+		logout.setText("退出");
+		UIUtils.setAriaLabel("退出登录", logout);
+
+		getUI().ifPresent(ui -> ui.getPage().executeJs(
+				"var originalStyle = getComputedStyle($0).pointerEvents;" //
+						+ "$0.style.pointerEvents='none';" //
+						+ "setTimeout(function() {$0.style.pointerEvents=originalStyle;}, 170);",
+				getElement()));
+		iconBrand.toggle(false);
 	}
 
 	public void toggle() {
@@ -152,10 +193,10 @@ public class NaviDrawer extends Div
 		// iOS 12.2 sometimes fails to animate the menu away.
 		// It should be gone after 240ms
 		// This will make sure it disappears even when the browser fails.
-		getUI().get().getPage().executeJavaScript(
+		getUI().ifPresent(ui -> ui.getPage().executeJs(
 				"var originalStyle = getComputedStyle($0).transitionProperty;" //
 						+ "setTimeout(function() {$0.style.transitionProperty='padding'; requestAnimationFrame(function() {$0.style.transitionProperty=originalStyle})}, 250);",
-				mainContent.getElement());
+				mainContent.getElement()));
 	}
 
 	public NaviMenu getMenu() {

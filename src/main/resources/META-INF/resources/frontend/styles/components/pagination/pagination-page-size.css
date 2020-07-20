@@ -1,0 +1,62 @@
+.pagination-page-size {
+    -webkit-tap-highlight-color: transparent;
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    font-family: -apple-system, BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
+    -webkit-box-direction: normal;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, .65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    width: auto;
+    margin-right: 8px;
+
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    border-right-width: 1px !important;
+    min-width: 4em;
+    max-width: 10em;
+}
+
+.vaadin-text-field-container [part="input-field"]{
+
+}
+
+.pagination-page-size[part="input-field"] {
+    background-color: white;
+}
+
+.vaadin-text-field-container [part="input-field"]{
+    background-color: white;
+    height: 24px;
+}
+
+vaadin-select-text-field:hover {
+    border-color: #40a9ff;
+}
+
+vaadin-select-text-field:focus {
+    border-color: #40a9ff;
+}
+
+.vaadin-text-field-container {
+
+}
+
+.pagination-page-size__tiny {
+    top: 0;
+    height: 24px;
+}
+
+.pagination-page-size__normal {
+    height: 32px;
+}

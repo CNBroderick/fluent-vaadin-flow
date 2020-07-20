@@ -22,12 +22,13 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.theme.lumo.Lumo;
 import org.bklab.flow.components.navigation.tab.NaviTabs;
 import org.bklab.flow.layout.FlexBoxLayout;
-import org.bklab.flow.util.LumoStyles;
-import org.bklab.flow.util.UIUtils;
+import org.bklab.flow.util.lumo.LumoStyles;
+import org.bklab.flow.util.lumo.UIUtils;
 
-import static org.bklab.flow.util.UIUtils.IMG_PATH;
+import static org.bklab.flow.util.lumo.UIUtils.IMG_PATH;
 
 @CssImport("./styles/components/tab-bar.css")
 public class TabBar extends FlexBoxLayout {
@@ -66,6 +67,17 @@ public class TabBar extends FlexBoxLayout {
 		tabs.setClassName(CLASS_NAME + "__tabs");
 
 		add(menuIcon, tabs, addTab, avatar);
+	}
+
+
+	public TabBar lightTheme() {
+		UIUtils.setTheme(Lumo.LIGHT, this);
+		return this;
+	}
+
+	public TabBar darkTheme() {
+		UIUtils.setTheme(Lumo.DARK, this);
+		return this;
 	}
 
 	public TabBar whenAddTabClicked(ComponentEventListener<ClickEvent<Button>> listener) {
