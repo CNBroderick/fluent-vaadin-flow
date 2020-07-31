@@ -1,12 +1,15 @@
 package org.bklab.flow.dialog;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Html;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.dom.Style;
+import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.factory.DialogFactory;
 import org.bklab.flow.factory.VerticalLayoutFactory;
@@ -97,7 +100,7 @@ public class ModalDialog extends Dialog {
                 .set("pointer-events", "auto")
                 .set("margin", "0")
                 .set("box-sizing", "border-box")
-                .set("padding", "24px")
+                .set("padding", "1em 24px")
                 .set("font-size", "14px")
                 .set("line-height", "1.5715")
         ;
@@ -171,6 +174,16 @@ public class ModalDialog extends Dialog {
         return this;
     }
 
+    public ModalDialog addSaveButton(ComponentEventListener<ClickEvent<Button>> listener) {
+        footerRight(FluentButton.saveButton().primary().asFactory().clickListener(listener).get());
+        return this;
+    }
+
+    public ModalDialog addUpdateButton(ComponentEventListener<ClickEvent<Button>> listener) {
+        footerRight(FluentButton.updateButton().primary().asFactory().clickListener(listener).get());
+        return this;
+    }
+
     public ModalDialog addCloseButton() {
         return addCloseButton("关闭");
     }
@@ -186,15 +199,11 @@ public class ModalDialog extends Dialog {
     }
 
     public ModalDialog addCancelButton() {
-        return addCloseButton("取消");
+        return footerRight(FluentButton.cancelButton().asFactory().clickListener(event -> close()).get());
     }
 
     public ModalDialog addCloseButton(String text) {
-        return footerRight(new ButtonFactory().text(text).lumoSmall().clickListener(event -> close()).get());
-    }
-
-    public ModalDialog addIconCloseButton(String text) {
-        return footerRight(new ButtonFactory().text(text).icon(VaadinIcon.CLOSE).lumoSmall().clickListener(event -> close()).get());
+        return footerRight(FluentButton.cancelButton().asFactory().text(text).clickListener(event -> close()).get());
     }
 
     public ModalDialog toolBarRight(Component... components) {

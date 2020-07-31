@@ -3,6 +3,7 @@
     position: relative;
     display: inline-block;
     font-weight: 400;
+    font-family: "Microsoft YaHei", serif;
     white-space: nowrap;
     text-align: center;
     background-image: none;
@@ -18,7 +19,7 @@
     user-select: none;
     -ms-touch-action: manipulation;
     touch-action: manipulation;
-    height: 24px;
+    height: 20px;
     padding: 4px 15px;
     font-size: 14px;
     border-radius: 2px;
@@ -33,10 +34,16 @@
     border-color: #096dd9;
 }
 
-.fluent-button:hover, .fluent-button:focus {
-    background: rgba(64, 169, 255, 0.75);
+fluent-button.fluent-button.fluent-button__primary:hover {
+    background: #40a9ff;
     border-color: #40a9ff;
     color: #fff;
+}
+
+.fluent-button:hover, .fluent-button:focus {
+    background: #fff;
+    border-color: #40a9ff;
+    color: #40a9ff;
 }
 
 .fluent-button, .fluent-button:active, .fluent-button:focus {
@@ -60,6 +67,7 @@
     color: #096dd9;
     background: #fff;
     border-color: #096dd9;
+    border-style: dashed;
 }
 
 .fluent-button__dashed:active {
@@ -69,7 +77,7 @@
 }
 
 .fluent-button__dashed:hover, .fluent-button__dashed:focus {
-    color: #fff;
+    color: #40a9ff;
     background: #fff;
     border-color: #40a9ff;
 }
@@ -84,21 +92,43 @@
 }
 
 .fluent-button__error {
-    color: #d9363e;
+    color: #ff4d4f;
     background: #fff;
-    border-color: #d9363e;
+    border-color: #ff4d4f;
 }
 
 .fluent-button__error:active {
-    color: #d9363e;
+    color: #ff7875;
     background: #fff;
-    border-color: #d9363e;
+    border-color: #ff7875;
+}
+
+.fluent-button.fluent-button.fluent-button__primary.fluent-button__error:hover {
+    color: #fff;
+    background: #ff7875;
+    border-color: #ff7875;
 }
 
 .fluent-button__error:hover, .fluent-button__error:focus {
-    color: #fff;
-    background: rgba(255, 120, 117, 0.75);
+    color: #ff7875;
+    background: #fff;
     border-color: #ff7875;
+}
+
+.fluent-button__link {
+    color: #1890ff;
+    background: 0 0;
+    border-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.fluent-button__link:hover, .fluent-button__link:focus {
+    color: #40a9ff;
+    background: 0 0;
+    border-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .fluent-button:not([disabled]):active {
@@ -109,4 +139,11 @@
 
 .fluent-button:not([disabled]):hover {
     text-decoration: none;
+}
+
+.fluent-button iron-icon {
+    height: 16px;
+    width: 16px;
+    padding-right: 0.5em;
+    padding-bottom: 2px;
 }

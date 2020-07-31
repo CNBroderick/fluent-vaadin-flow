@@ -8,7 +8,15 @@ import org.bklab.flow.IFlowFactory;
 public interface HasStyleFactory<C extends Component & HasStyle, E extends HasStyleFactory<C, E>> extends IFlowFactory<C> {
 
     default E displayFlex() {
-        get().getStyle().set("display", "flex");
+        return display("flex");
+    }
+
+    default E displayGrid() {
+        return display("grid");
+    }
+
+    default E display(String display) {
+        get().getStyle().set("display", display);
         return (E) this;
     }
 

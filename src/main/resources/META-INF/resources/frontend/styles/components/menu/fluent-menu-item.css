@@ -1,0 +1,3 @@
+fluent-menu-item:host([tabindex])::before {
+    font-size: var(--lumo-font-size-s);
+}

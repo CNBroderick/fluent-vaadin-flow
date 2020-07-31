@@ -44,6 +44,7 @@
     text-overflow: ellipsis;
     padding-right: var(--lumo-space-l);
     white-space: nowrap;
+    font-weight: 500;
 }
 
 .app-bar__title:not(:empty) {

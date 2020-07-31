@@ -6,10 +6,13 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.pagination.Pagination;
 import org.bklab.flow.factory.DivFactory;
 import org.bklab.flow.layout.select.DragSelectLayout;
@@ -42,6 +45,17 @@ public class PaginationView extends VerticalLayout {
 
         add(new Pagination().totalData(1000).limit(10).tinyMode().init().build());
 
+
+        add(new HorizontalLayout(
+                new FluentButton(VaadinIcon.LIST, "普通按钮"),
+                new FluentButton(VaadinIcon.CHECK_CIRCLE, "主要按钮").primary(),
+                new FluentButton(VaadinIcon.CHECK_CIRCLE, "主要按钮").primary().error(),
+                new FluentButton(VaadinIcon.INFO_CIRCLE, "错误按钮").error(),
+                new FluentButton(VaadinIcon.INFO_CIRCLE, "错误按钮").error().dashed(),
+                new FluentButton(VaadinIcon.DASHBOARD, "虚线按钮").dashed(),
+                new FluentButton(VaadinIcon.LINK, "连接按钮").link()
+
+        ));
 
         Span selectArea = new Span("已选择：0㎡");
 

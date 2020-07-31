@@ -24,7 +24,7 @@ import java.util.function.Function;
 public class DragSelectLayout<T> extends Div implements MultiSelect<DragSelectLayout<T>, T> {
 
     private final Div candidateContainer = new DivFactory().displayFlex().heightFull().get();
-    private final Div selectedContainer = new DivFactory().displayFlex().heightFull().minWidth("150px").get();
+    private final Div selectedContainer = new DivFactory().displayFlex().heightFull().get();
 
     private final ToolBar candidateToolBar = new ToolBar();
     private final ToolBar selectedToolBar = new ToolBar();
@@ -46,8 +46,8 @@ public class DragSelectLayout<T> extends Div implements MultiSelect<DragSelectLa
     {
         add(candidateLayout, selectedLayout);
 
-        candidateLayout.getStyle().set("flex-grow", "8").set("min-width", "150px").set("width", "80%");
-        selectedLayout.getStyle().set("flex-grow", "2").set("min-width", "150px").set("width", "20%").set("margin-left", "var(--lumo-space-m)");
+        candidateLayout.getStyle().set("flex-grow", "1").set("min-width", "150px");
+        selectedLayout.getStyle().set("width", "150px").set("margin-left", "var(--lumo-space-m)");
 
         candidateLayout.getContent().getStyle().set("flex-wrap", "wrap");
         selectedLayout.getContent().getStyle().set("flex-wrap", "wrap");
@@ -59,7 +59,7 @@ public class DragSelectLayout<T> extends Div implements MultiSelect<DragSelectLa
         selectedContainer.addClassName(LumoStyles.Spacing.Right.M);
 
         addClassName(LumoStyles.Spacing.Right.M);
-        getElement().getStyle().set("display", "flex");
+        getElement().getStyle().set("display", "flex").set("padding-right", "var(--lumo-space-l)");
     }
 
     public DragSelectLayout() {
