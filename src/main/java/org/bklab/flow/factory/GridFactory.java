@@ -55,6 +55,47 @@ public class GridFactory<T> extends FlowFactory<Grid<T>, GridFactory<T>> impleme
         this(beanType, true);
     }
 
+    public GridFactory<T> columnAutoWidth() {
+        get().getColumns().forEach(c -> c.setAutoWidth(true));
+        return this;
+    }
+
+    public GridFactory<T> columnAlignCenter() {
+        get().getColumns().forEach(c -> c.setTextAlign(ColumnTextAlign.CENTER));
+        return this;
+    }
+
+    public GridFactory<T> columnAlignEnd() {
+        get().getColumns().forEach(c -> c.setTextAlign(ColumnTextAlign.END));
+        return this;
+    }
+
+    public GridFactory<T> columnAlignStart() {
+        get().getColumns().forEach(c -> c.setTextAlign(ColumnTextAlign.START));
+        return this;
+    }
+
+    public GridFactory<T> columnAlignStart(String... keys) {
+        for (String key : keys) {
+            get().getColumnByKey(key).setTextAlign(ColumnTextAlign.START);
+        }
+        return this;
+    }
+
+    public GridFactory<T> columnAlignCenter(String... keys) {
+        for (String key : keys) {
+            get().getColumnByKey(key).setTextAlign(ColumnTextAlign.CENTER);
+        }
+        return this;
+    }
+
+    public GridFactory<T> columnAlignEnd(String... keys) {
+        for (String key : keys) {
+            get().getColumnByKey(key).setTextAlign(ColumnTextAlign.END);
+        }
+        return this;
+    }
+
     public GridFactory<T> sort(List<GridSortOrder<T>> sort) {
         get().sort(sort);
         return this;

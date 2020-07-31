@@ -52,9 +52,9 @@
     "@vaadin/vaadin-time-picker": "2.3.0-alpha4",
     "@vaadin/vaadin-upload": "4.4.0-alpha1",
     "@webcomponents/webcomponentsjs": "^2.2.10",
-    "chart.js": "2.9.3",
     "lit-element": "2.3.1",
     "lit-html": "^1.1.2",
+    "chart.js": "2.9.3",
     "moment": "2.24.0"
   },
   "devDependencies": {

@@ -77,7 +77,12 @@ public class SelectFactory<T> extends FlowFactory<Select<T>, SelectFactory<T>> i
     }
 
     public SelectFactory<T> itemLabelGenerator(ItemLabelGenerator<T> itemLabelGenerator) {
-        get().setItemLabelGenerator(itemLabelGenerator);
+        get().setItemLabelGenerator(i -> i == null ? get().getEmptySelectionCaption() : itemLabelGenerator.apply(i));
+        return this;
+    }
+
+    public SelectFactory<T> itemLabelGenerator(ItemLabelGenerator<T> itemLabelGenerator, String DefaultValue) {
+        get().setItemLabelGenerator(i -> i == null ? DefaultValue : itemLabelGenerator.apply(i));
         return this;
     }
 
@@ -152,4 +157,16 @@ public class SelectFactory<T> extends FlowFactory<Select<T>, SelectFactory<T>> i
         return this;
     }
 
+    public SelectFactory<T> lumoSmall() {
+        get().getElement().setAttribute("theme", "small");
+        get().getStyle().set("margin-top", "auto 0").set("margin-bottom", "auto 0");
+        return this;
+    }
+
+    public SelectFactory<T> lumoSmall30pxHeight() {
+        get().getElement().setAttribute("theme", "small");
+        get().getStyle().set("height", "30px")
+                .set("margin-top", "auto 0").set("margin-bottom", "auto 0");
+        return this;
+    }
 }

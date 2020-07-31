@@ -19,6 +19,7 @@ public class PaginationPageSize extends ComboBox<Integer> {
         addClassName(CLASS_NAME);
         setAllowCustomValue(true);
         setClearButtonVisible(false);
+        getElement().setAttribute("theme", "pagination");
     }
 
     public PaginationPageSize tinySize() {
@@ -54,4 +55,5 @@ public class PaginationPageSize extends ComboBox<Integer> {
         this.setValue(sizes[0]);
         return this;
     }
+
 }

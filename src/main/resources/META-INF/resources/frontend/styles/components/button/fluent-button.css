@@ -1,0 +1,112 @@
+.fluent-button {
+    line-height: 1.5715;
+    position: relative;
+    display: inline-block;
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: center;
+    background-image: none;
+    border: 1px solid transparent;
+    -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, .015);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, .015);
+    cursor: pointer;
+    -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
+    transition: all .3s cubic-bezier(.645, .045, .355, 1);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    height: 24px;
+    padding: 4px 15px;
+    font-size: 14px;
+    border-radius: 2px;
+    color: rgba(0, 0, 0, .65);
+    background: #fff;
+    border-color: #d9d9d9
+}
+
+.fluent-button:active {
+    color: #096dd9;
+    background: #fff;
+    border-color: #096dd9;
+}
+
+.fluent-button:hover, .fluent-button:focus {
+    background: rgba(64, 169, 255, 0.75);
+    border-color: #40a9ff;
+    color: #fff;
+}
+
+.fluent-button, .fluent-button:active, .fluent-button:focus {
+    outline: 0;
+}
+
+.fluent-button__primary {
+    color: #fff;
+    background: #1890ff;
+    border-color: #1890ff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .12);
+    -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, .045);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, .045);
+}
+
+.fluent-button__error {
+
+}
+
+.fluent-button__dashed {
+    color: #096dd9;
+    background: #fff;
+    border-color: #096dd9;
+}
+
+.fluent-button__dashed:active {
+    color: #096dd9;
+    background: #fff;
+    border-color: #096dd9;
+}
+
+.fluent-button__dashed:hover, .fluent-button__dashed:focus {
+    color: #fff;
+    background: #fff;
+    border-color: #40a9ff;
+}
+
+.fluent-button__error.fluent-button__primary {
+    color: #fff;
+    background: #ff4d4f;
+    border-color: #ff4d4f;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .12);
+    -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, .045);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, .045);
+}
+
+.fluent-button__error {
+    color: #d9363e;
+    background: #fff;
+    border-color: #d9363e;
+}
+
+.fluent-button__error:active {
+    color: #d9363e;
+    background: #fff;
+    border-color: #d9363e;
+}
+
+.fluent-button__error:hover, .fluent-button__error:focus {
+    color: #fff;
+    background: rgba(255, 120, 117, 0.75);
+    border-color: #ff7875;
+}
+
+.fluent-button:not([disabled]):active {
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.fluent-button:not([disabled]):hover {
+    text-decoration: none;
+}

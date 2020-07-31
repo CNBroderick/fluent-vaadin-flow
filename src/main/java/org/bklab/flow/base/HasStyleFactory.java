@@ -6,13 +6,49 @@ import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
 public interface HasStyleFactory<C extends Component & HasStyle, E extends HasStyleFactory<C, E>> extends IFlowFactory<C> {
+
     default E displayFlex() {
         get().getStyle().set("display", "flex");
         return (E) this;
     }
 
+    default E flexWrap() {
+        get().getStyle().set("flex-wrap", "wrap");
+        return (E) this;
+    }
+
+    default E flexGrow(int grow) {
+        get().getStyle().set("flex-grow", "" + grow);
+        return (E) this;
+    }
+
+    default E hasSpacingDivContainer() {
+        get().addClassName("has-spacing-div-container");
+        return (E) this;
+    }
+
+    default E hasSpacingDivContainerForRight() {
+        get().addClassName("has-spacing-div-container-r");
+        return (E) this;
+    }
+
     default E backgroundColor(String color) {
         get().getStyle().set("background-color", color);
+        return (E) this;
+    }
+
+    default E textAlign(String textAlign) {
+        get().getStyle().set("text-align", textAlign);
+        return (E) this;
+    }
+
+    default E margin(int margin) {
+        get().getStyle().set("margin", margin == 0 ? "0" : margin + "px");
+        return (E) this;
+    }
+
+    default E margin(String margin) {
+        get().getStyle().set("margin", margin);
         return (E) this;
     }
 
@@ -23,6 +59,40 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
 
     default E margin(String top, String right, String bottom, String left) {
         get().getStyle().set("margin", top + " " + right + " " + bottom + " " + left);
+        return (E) this;
+    }
+
+    default E border() {
+        get().getStyle().set("border", "1px solid #d9d9d9");
+        return border("1px", "solid", "#d9d9d9");
+    }
+
+    default E border(String width) {
+        return border(width, "solid", "#d9d9d9");
+    }
+
+    default E border(String width, String color) {
+        get().getStyle().set("border", width + " solid " + color);
+        return border(width, "solid", color);
+    }
+
+    default E border(String width, String style, String color) {
+        get().getStyle().set("border", width + " " + style + " " + color);
+        return (E) this;
+    }
+
+    default E padding(String padding) {
+        get().getStyle().set("padding", padding);
+        return (E) this;
+    }
+
+    default E padding(String vertical, String horizontal) {
+        get().getStyle().set("padding", vertical + " " + horizontal);
+        return (E) this;
+    }
+
+    default E padding(String top, String right, String bottom, String left) {
+        get().getStyle().set("padding", top + " " + right + " " + bottom + " " + left);
         return (E) this;
     }
 

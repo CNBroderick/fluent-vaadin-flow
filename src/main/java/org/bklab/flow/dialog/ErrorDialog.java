@@ -50,7 +50,7 @@ public class ErrorDialog extends MessageDialog {
     public ErrorDialog(String message, String detail) {
         message(message);
         copyButton.addClickListener(e -> new NotificationFactory("复制成功")
-                .positionTopEnd().duration(3).lumoSuccess().open()
+                .positionTopEnd().duration(1500).lumoSuccess().open()
         );
         getBottom().right(new ClipboardHelper(detail, copyButton));
     }

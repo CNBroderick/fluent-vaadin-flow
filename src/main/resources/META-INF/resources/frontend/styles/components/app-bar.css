@@ -10,17 +10,22 @@
  */
 .app-bar {
     background-color: var(--lumo-base-color);
-    box-shadow: var(--lumo-box-shadow-s);
+    box-shadow: var(--lumo-box-shadow-xs);
     flex-direction: column;
     position: relative;
     z-index: 1;
+    min-height: 60px;
 }
 
 /* Container */
 .app-bar__container {
     padding-left: var(--lumo-space-r-l);
-    padding-right: var(--lumo-space-r-l);
+    padding-right: var(--lumo-space-r-s);
     transition: padding var(--transition-duration-m);
+}
+
+.app-bar__container:not(:first-child) {
+    margin-left: var(--lumo-space-m);
 }
 
 /* Navi icon */

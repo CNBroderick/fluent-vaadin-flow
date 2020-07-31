@@ -1,8 +1,5 @@
 package org.bklab.flow.components.pagination;
 
-import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.textfield.TextFieldVariant;
-import com.vaadin.flow.data.value.ValueChangeMode;
 import org.bklab.flow.layout.ToolBar;
 
 import java.util.*;
@@ -18,19 +15,17 @@ public class Pagination extends ToolBar {
     private final GeneratePagesContainer generatePagesContainer = new GeneratePagesContainer();
 
     private PageSwitchEvent pageSwitchEvent;
-    private CustomPaginationLayout customPaginationLayout;
+    private ICustomPaginationLayout ICustomPaginationLayout;
     private Consumer<PaginationButton> paginationButtonConsumer;
     private boolean tinyMode = false;
     private boolean compactMode = false;
     private int total = 1;
     private int totalData;
     private int limit = 5;
-    private int onePageSize = 20;
     private int currentPage = 1;
     private boolean hasInit = false;
 
     public Pagination() {
-
     }
 
     /**
@@ -69,14 +64,14 @@ public class Pagination extends ToolBar {
     /**
      * 自定义翻页组件布局
      *
-     * @param customPaginationLayout CustomPaginationLayout
-     * @see org.bklab.flow.components.pagination.CustomPaginationLayout
+     * @param ICustomPaginationLayout CustomPaginationLayout
      * @return this
+     * @see ICustomPaginationLayout
      */
-    public Pagination customLayout(CustomPaginationLayout customPaginationLayout) {
-        if (this.customPaginationLayout != null) throw new RuntimeException("禁止重复调用");
-        customPaginationLayout.apply(this, totalLabel, pagesContainer, jumpField, pageSize);
-        this.customPaginationLayout = customPaginationLayout;
+    public Pagination customLayout(ICustomPaginationLayout ICustomPaginationLayout) {
+        if (this.ICustomPaginationLayout != null) throw new RuntimeException("禁止重复调用");
+        ICustomPaginationLayout.apply(this, totalLabel, pagesContainer, jumpField, pageSize);
+        this.ICustomPaginationLayout = ICustomPaginationLayout;
         return this;
     }
 
@@ -106,7 +101,7 @@ public class Pagination extends ToolBar {
      * @return this;
      */
     public Pagination onePageSize(int onePageSize) {
-        this.onePageSize = onePageSize;
+        this.pageSize.setValue(onePageSize);
         return this;
     }
 
@@ -151,10 +146,14 @@ public class Pagination extends ToolBar {
         if (hasInit) return this;
         if (tinyMode) initTiny();
         else initNormal();
-        if (customPaginationLayout == null) {
-            left(totalLabel);
-            middle(pagesContainer, jumpField);
-            right(pageSize);
+        if (ICustomPaginationLayout == null) {
+            if (compactMode) {
+                left(totalLabel, pagesContainer, pageSize, jumpField);
+            } else {
+                left(totalLabel);
+                middle(pagesContainer, jumpField);
+                right(pageSize);
+            }
         }
 
         pageSize.addValueChangeListener(e -> build());
@@ -179,9 +178,13 @@ public class Pagination extends ToolBar {
         if (!hasInit) init();
         this.total = (int) Math.ceil(1d * totalData / pageSize.getValue());
         if (this.currentPage > total) this.currentPage = 1;
-        jumpField.getNumberField().setMax(total);
-        jumpField.getNumberField().setErrorMessage("请确认页码为 1 - " + total + " 之间的正整数");
+        jumpField.setMax(total);
         generatePagesContainer.bind();
+        return this;
+    }
+
+    public Pagination pageSwitchEvent(PageSwitchEvent pageSwitchEvent) {
+        this.pageSwitchEvent = pageSwitchEvent;
         return this;
     }
 
@@ -204,17 +207,17 @@ public class Pagination extends ToolBar {
             prevJump = apply(new PaginationButton(e -> goPrevJump(e.isFromClient()), false)).setDescription("向前 " + (limit / 2) + "页");
             nextJump = apply(new PaginationButton(e -> goNextJump(e.isFromClient()), true)).setDescription("向后 " + (limit / 2) + "页");
 
-            IntStream.rangeClosed(1, total).forEachOrdered(current ->
+            IntStream.rangeClosed(1, Math.max(total, 1)).forEachOrdered(current ->
                     pageMap.put(current, apply(new PaginationButton(current, e -> go(e.isFromClient(), current)))));
 
             addToContainer();
             checkAbilities(false);
-            go(false, currentPage);
+            go(true, currentPage);
         }
 
         private void addToContainer() {
             pagesContainer.setPrev(prev).setFirstPage(pageMap.get(1)).setPrevJump(prevJump)
-                    .setNextJump(nextJump).setLastPage(pageMap.get(total)).setNext(next).init();
+                    .setNextJump(nextJump).setLastPage(pageMap.get(Math.max(total, 1))).setNext(next).init();
             int start = (int) (currentPage - (limit / 2.0d));
             if (start < 0) {
                 start = 0;
@@ -238,8 +241,6 @@ public class Pagination extends ToolBar {
         }
 
         private void go(boolean isFromClient, int i) {
-            if(i == lastPage) return;
-
             deselectAll();
             lastPage = currentPage;
             currentPage = i;

@@ -120,10 +120,10 @@ public class PaginationButtonContainer extends Div {
     }
 
     public int getContainerFirst() {
-        return deque.getFirst().getPageNo();
+        return deque.isEmpty() ? 1 : deque.getFirst().getPageNo();
     }
 
     public int getContainerLast() {
-        return deque.getLast().getPageNo();
+        return deque.isEmpty() ? 1 : deque.getLast().getPageNo();
     }
 }

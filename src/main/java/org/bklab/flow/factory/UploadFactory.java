@@ -3,6 +3,7 @@ package org.bklab.flow.factory;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.upload.*;
+import elemental.json.Json;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.GeneratedVaadinUploadFactory;
 import org.bklab.flow.base.HasSizeFactory;
@@ -19,6 +20,11 @@ public class UploadFactory extends FlowFactory<Upload, UploadFactory> implements
 
     public UploadFactory(Upload component) {
         super(component);
+    }
+
+    public UploadFactory clearUploadFiles() {
+        get().getElement().setPropertyJson("files", Json.createArray());
+        return this;
     }
 
     public UploadFactory dropAllowed(boolean dropAllowed) {

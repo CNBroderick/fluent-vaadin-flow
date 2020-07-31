@@ -1,0 +1,134 @@
+.badge-tag {
+    font: 14px Helvetica Neue, Helvetica, PingFang SC, Tahoma, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, 'PingFang SC', 'Source Han Sans CN', 'Source Han Sans', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    position: relative;
+    display: inline-block;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 2px;
+    padding: 0 9px;
+    line-height: 20px;
+}
+
+.badge-tag-green {
+    color: #52c41a;
+    background: #f6ffed;
+    border: 1px solid #b7eb8f
+}
+
+.badge-tag-magenta {
+    color: #eb2f96;
+    background: #fff0f6;
+    border: 1px solid #ffadd2
+}
+
+.badge-tag-orange {
+    color: #fa8c16;
+    background: #fff7e6;
+    border: 1px solid #ffd591
+}
+
+.badge-tag-red {
+    color: #f5222d;
+    background: #fff1f0;
+    border: 1px solid #ffa39e
+}
+
+.badge-tag-volcano {
+    color: #fa541c;
+    background: #fff2e8;
+    border: 1px solid #ffbb96
+}
+
+.badge-tag-gold {
+    color: #faad14;
+    background: #fffbe6;
+    border: 1px solid #ffe58f
+}
+
+.badge-tag-lime {
+    color: #a0d911;
+    background: #fcffe6;
+    border: 1px solid #eaff8f
+}
+
+.badge-tag-cyan {
+    color: #13c2c2;
+    background: #e6fffb;
+    border: 1px solid #87e8de
+}
+
+.badge-tag-blue {
+    color: #1890ff;
+    background: #e6f7ff;
+    border: 1px solid #91d5ff
+}
+
+.badge-tag-geekblue {
+    color: #2f54eb;
+    background: #f0f5ff;
+    border: 1px solid #adc6ff
+}
+
+.badge-tag-purple {
+    color: #722ed1;
+    background: #f9f0ff;
+    border: 1px solid #d3adf7
+}
+
+.badge-tag-grey {
+    color: var(--lumo-body-text-color);
+    background: white;
+    border: 1px solid #d5d5d5
+}
+
+
+.badge-tag-bg-green {
+    background: #52c41a
+}
+
+.badge-tag-bg-orange {
+    background: #fa8c16
+}
+
+.badge-tag-bg-red {
+    background: #f5222d
+}
+
+.badge-tag-bg-magenta {
+    background: #eb2f96
+}
+
+.badge-tag-bg-gold {
+    background: #faad14
+}
+
+.badge-tag-bg-volcano {
+    background: #fa541c
+}
+
+.badge-tag-bg-lime {
+    background: #a0d911
+}
+
+.badge-tag-bg-cyan {
+    background: #13c2c2
+}
+
+.badge-tag-bg-blue {
+    background: #1890ff
+}
+
+.badge-tag-bg-geekblue {
+    background: #2f54eb
+}
+
+.badge-tag-bg-purple {
+    background: #722ed1
+}
+
+.badge-bg-tag-grey {
+    color: var(--lumo-body-text-color);
+    background: #eeeeee
+}

@@ -1,17 +1,17 @@
-:host {
+:host([theme~="pagination"]) {
     padding: 0 !important;
 }
 
-.vaadin-text-field-container {
+:host([theme~="pagination"]) .vaadin-text-field-container {
     max-height: 29px;
     max-height: -webkit-fill-available !important;
 }
 
-.pagination-page-size__normal [part="input-field"] {
+:host([theme~="pagination"]) .pagination-page-size__normal [part="input-field"] {
     height: 22px !important;
 }
 
-[part="input-field"] {
+:host([theme~="pagination"]) [part="input-field"] {
     margin: auto 0;
     height: 14px;
     font-size: 14px;
@@ -24,11 +24,11 @@
     padding: 0 11px;
 }
 
-[part="clear-button"] {
+:host([theme~="pagination"]) [part="clear-button"] {
     color: var(--text-color);
 }
 
-[part="label"] {
+:host([theme~="pagination"]) [part="label"] {
     color: var(--text-color);
 }
 

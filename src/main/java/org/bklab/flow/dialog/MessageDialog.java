@@ -42,7 +42,8 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
 
     public MessageDialog() {
         setMinHeight("185px");
-        setWidth("420px");
+        setWidth("520px");
+        setMaxWidth("90vw");
         this.confirm = new ButtonFactory().text("确定").clickListener(e -> close()).lumoSmall().lumoPrimary().get();
         this.bottom = new LmrHorizontalLayout();
     }
@@ -120,7 +121,7 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
         Span header = new Span(this.header);
         header.getStyle().set("font-weight", "600").set("font-size", "var(--lumo-font-size-m)");
         message.getStyle().set("font-size", "var(--lumo-font-size-s)").set("padding-left", "3.2em")
-                .set("display", "flex").set("align-self", "flex-start");
+                .set("display", "flex").set("align-self", "flex-start").set("overflow-wrap", "anywhere");
 
         TmbVerticalLayout main = new TmbVerticalLayout().noBorder();
         main.top(new HorizontalLayoutFactory(icon, header).expand(header).widthFull().get());
@@ -138,7 +139,7 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
     }
 
     private MessageDialog buildNoHeader() {
-        message.getStyle().set("font-size", "var(--lumo-font-size-s)").set("display", "flex").set("align-self", "flex-start");
+        message.getStyle().set("font-size", "var(--lumo-font-size-s)").set("display", "flex").set("align-self", "flex-start").set("overflow-wrap", "anywhere");
         HorizontalLayout content = new HorizontalLayoutFactory(icon, message).expand(message).widthFull().get();
         VerticalLayout main = new VerticalLayoutFactory(content, bottom).expand(content).widthFull().get();
         main.getStyle().set("padding", "1.5em 1.5em 1em 1.5em");

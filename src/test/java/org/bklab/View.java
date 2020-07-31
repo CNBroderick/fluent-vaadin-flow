@@ -16,7 +16,9 @@ public class View extends MainAppLayout {
 
     public View() {
         appBar.lightTheme();
-        naviDrawer.whenLogoutClick(e -> UI.getCurrent().navigate(LoginView.class));
+        appBar.logout(e -> UI.getCurrent().navigate(LoginView.class)).avatarName("Broderick Labs");
+        naviDrawer.disableSwap();
+        appBar.getContextIcon().setVisible(true);
         setWidthFull();
     }
 

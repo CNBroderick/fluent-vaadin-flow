@@ -18,12 +18,14 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.theme.lumo.Lumo;
 import org.bklab.flow.components.navigation.tab.NaviTabs;
+import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.layout.FlexBoxLayout;
 import org.bklab.flow.util.lumo.LumoStyles;
 import org.bklab.flow.util.lumo.UIUtils;
@@ -39,6 +41,8 @@ public class TabBar extends FlexBoxLayout {
 	private final NaviTabs tabs;
 	private final Button addTab;
 	private final Image avatar;
+	private final Span avatarName;
+	private final Button logout;
 
 	public TabBar() {
 		setClassName(CLASS_NAME);
@@ -49,6 +53,11 @@ public class TabBar extends FlexBoxLayout {
 		avatar = new Image();
 		avatar.setClassName(CLASS_NAME + "__avatar");
 		avatar.setSrc(IMG_PATH + "avatar.png");
+
+		avatarName = new Span();
+		avatarName.addClassName(CLASS_NAME + "__avatar-name");
+
+		logout = new ButtonFactory().visible(false).lumoSmall().lumoTertiary().get();
 
 		ContextMenu contextMenu = new ContextMenu(avatar);
 		contextMenu.setOpenOnClick(true);
@@ -66,7 +75,7 @@ public class TabBar extends FlexBoxLayout {
 		tabs = new NaviTabs();
 		tabs.setClassName(CLASS_NAME + "__tabs");
 
-		add(menuIcon, tabs, addTab, avatar);
+		add(menuIcon, tabs, addTab, avatarName, avatar, logout);
 	}
 
 
@@ -78,6 +87,24 @@ public class TabBar extends FlexBoxLayout {
 	public TabBar darkTheme() {
 		UIUtils.setTheme(Lumo.DARK, this);
 		return this;
+	}
+
+	public TabBar avatarName(String text) {
+		avatarName.setText(text);
+		return this;
+	}
+
+	public TabBar logout(ComponentEventListener<ClickEvent<Button>> eventListener) {
+		logout.addClickListener(eventListener);
+		return this;
+	}
+
+	public Span getAvatarName() {
+		return avatarName;
+	}
+
+	public Button getLogout() {
+		return logout;
 	}
 
 	public TabBar whenAddTabClicked(ComponentEventListener<ClickEvent<Button>> listener) {

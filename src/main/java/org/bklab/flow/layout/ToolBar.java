@@ -7,7 +7,7 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import org.bklab.flow.factory.DivFactory;
 import org.bklab.flow.factory.FlexLayoutFactory;
 
-@CssImport(value = "./styles/components/tool-bar.css")
+@CssImport(value = "./styles/components/layout/tool-bar.css")
 public class ToolBar extends FlexLayout {
     private final Div left = new Div();
     private final Div middle = new Div();

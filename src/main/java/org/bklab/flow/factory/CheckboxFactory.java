@@ -4,10 +4,11 @@ import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import org.bklab.flow.FlowFactory;
+import org.bklab.flow.base.GeneratedVaadinCheckboxFactory;
 import org.bklab.flow.base.HasSizeFactory;
 
 public class CheckboxFactory extends FlowFactory<Checkbox, CheckboxFactory> implements
-        HasSizeFactory<Checkbox, CheckboxFactory> {
+        GeneratedVaadinCheckboxFactory<Boolean, Checkbox, CheckboxFactory>, HasSizeFactory<Checkbox, CheckboxFactory> {
     public CheckboxFactory() {
         super(new Checkbox());
     }

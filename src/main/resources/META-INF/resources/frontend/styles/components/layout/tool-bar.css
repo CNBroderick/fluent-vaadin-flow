@@ -1,5 +1,17 @@
+.tool-bar-left {
+    align-items: center;
+}
+
+.tool-bar-middle {
+    align-items: center;
+}
+
+.tool-bar-right {
+    align-items: center;
+}
+
 .tool-bar-left > *:not(:last-child) {
-    margin-right: 0 !important;
+    margin-right: 0.5em;
 }
 
 .tool-bar-middle > *:not(:last-child) {

@@ -22,13 +22,15 @@ public class PaginationJumpField extends Span {
     private final Span suffix = new SpanFactory("页").className(CLASS_NAME + "__jump-suffix").get();
 
     private final NumberField numberField = new NumberFieldFactory()
-            .minWidth("4em").step(1.0).min(1).errorMessage("请输入整数页码")
+            .minWidth("4em").maxWidth("5em").step(1.0).min(1).errorMessage("请输入整数页码")
             .backgroundColor("white").fontSizeS().lumoAlignCenter().lumoSmall()
             .className(CLASS_NAME + "__jump-text").get();
 
     public PaginationJumpField() {
         add(prefix, numberField, suffix);
         numberField.setValueChangeMode(ValueChangeMode.ON_CHANGE);
+        numberField.addThemeName("pagination");
+        addClassName(CLASS_NAME);
     }
 
     public PaginationJumpField tinySize() {
@@ -49,6 +51,13 @@ public class PaginationJumpField extends Span {
         return numberField;
     }
 
+    public PaginationJumpField setMax(int total) {
+        numberField.setMax(total);
+        numberField.setErrorMessage("请确认页码为 1 - " + total + " 之间的正整数");
+        numberField.setMaxWidth(String.valueOf(total).length() + 2 + "em");
+        return this;
+    }
+
     public PaginationJumpField addValueChangeConsumer(BiConsumer<Boolean, Integer> consumer) {
         Consumer<ComponentEvent<?>> componentEventConsumer = e ->
                 Optional.ofNullable(numberField.getValue()).map(Double::intValue)
@@ -57,4 +66,6 @@ public class PaginationJumpField extends Span {
         numberField.addKeyUpListener(Key.ENTER, componentEventConsumer::accept);
         return this;
     }
+
+
 }

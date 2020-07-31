@@ -4,8 +4,10 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.bklab.flow.components.selector.ButtonSelector;
 import org.bklab.flow.dialog.ModalDialog;
 import org.bklab.flow.factory.ButtonFactory;
+import org.bklab.flow.factory.NotificationFactory;
 import org.bklab.flow.layout.EmptyLayout;
 import org.bklab.flow.layout.ToolBar;
 import org.bklab.flow.text.TitleLabel;
@@ -35,6 +37,15 @@ public class ComponentDemoView extends Div {
                     .width("521px")
                     .open();
         }).text("打开对话框").lumoPrimary().lumoSmall().get());
+
+        add(new ButtonSelector()
+                .add("第1个", e -> new NotificationFactory("第1个").lumoSuccess().positionTopEnd().duration(3000).open())
+                .add("第2个", e -> new NotificationFactory("第2个").lumoSuccess().positionTopEnd().duration(3000).open())
+                .add("第3个", e -> new NotificationFactory("第3个").lumoSuccess().positionTopEnd().duration(3000).open())
+                .add("第4个", e -> new NotificationFactory("第4个").lumoSuccess().positionTopEnd().duration(3000).open())
+                .add("第5个", e -> new NotificationFactory("第5个").lumoSuccess().positionTopEnd().duration(3000).open())
+                .add("第6个", e -> new NotificationFactory("第6个").lumoSuccess().positionTopEnd().duration(3000).open())
+                .activeFirst());
 
         add(new EmptyLayout());
 

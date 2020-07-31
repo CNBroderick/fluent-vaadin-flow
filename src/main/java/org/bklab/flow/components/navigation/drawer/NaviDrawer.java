@@ -29,8 +29,7 @@ import org.bklab.flow.util.lumo.UIUtils;
 
 @CssImport("./styles/components/navi-drawer.css")
 @JsModule("./swipe-away.js")
-public class NaviDrawer extends Div
-		implements AfterNavigationObserver {
+public class NaviDrawer extends Div implements AfterNavigationObserver {
 
 	private final String CLASS_NAME = "navi-drawer";
 	private final static String RAIL = "rail";
@@ -45,6 +44,7 @@ public class NaviDrawer extends Div
 	private final BrandExpression iconBrand;
 	private NaviMenu menu;
 	private Button logout;
+	private final boolean enableSwap = true;
 
 	public NaviDrawer() {
 		this.iconBrand = new BrandExpression("");
@@ -59,6 +59,8 @@ public class NaviDrawer extends Div
 		initMenu();
 
 		initFooter();
+
+		enableSwap(true);
 	}
 
 	public BrandExpression getIconBrand() {
@@ -113,7 +115,8 @@ public class NaviDrawer extends Div
 	}
 
 	private void initFooter() {
-		railButton = UIUtils.createSmallButton("收起菜单", VaadinIcon.CHEVRON_LEFT_SMALL);
+		railButton = UIUtils.createSmallButton(VaadinIcon.CHEVRON_LEFT_SMALL);
+		railButton.getElement().setAttribute("title", "收起菜单");
 		railButton.addClassName(CLASS_NAME + "__footer");
 		railButton.addClickListener(event -> toggleRailMode());
 		railButton.getElement().setAttribute("aria-label", "收起菜单");
@@ -146,22 +149,20 @@ public class NaviDrawer extends Div
 
 	private void toggleRailModeExpand() {
 		railButton.setIcon(new Icon(VaadinIcon.CHEVRON_LEFT_SMALL));
-		railButton.setText("收起菜单");
 		UIUtils.setAriaLabel("收起菜单", railButton);
+		railButton.getElement().setAttribute("title", "收起菜单");
 
 		logout.setIcon(new Icon(VaadinIcon.SIGN_OUT));
-		logout.setText("退出登录");
 		UIUtils.setAriaLabel("退出登录", logout);
 		iconBrand.toggle(true);
 	}
 
 	private void toggleRailModeCollapse() {
 		railButton.setIcon(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
-		railButton.setText("展开");
 		UIUtils.setAriaLabel("展开菜单", railButton);
+		railButton.getElement().setAttribute("title", "展开菜单");
 
 		logout.setIcon(new Icon(VaadinIcon.SIGN_OUT));
-		logout.setText("退出");
 		UIUtils.setAriaLabel("退出登录", logout);
 
 		getUI().ifPresent(ui -> ui.getPage().executeJs(
@@ -201,6 +202,21 @@ public class NaviDrawer extends Div
 
 	public NaviMenu getMenu() {
 		return menu;
+	}
+
+	public NaviDrawer enableSwap() {
+		this.enableSwap(true);
+		return this;
+	}
+
+	public NaviDrawer enableSwap(boolean enable) {
+		getElement().setAttribute("enable-swap", enable);
+		return this;
+	}
+
+	public NaviDrawer disableSwap() {
+		this.enableSwap(false);
+		return this;
 	}
 
 	@Override

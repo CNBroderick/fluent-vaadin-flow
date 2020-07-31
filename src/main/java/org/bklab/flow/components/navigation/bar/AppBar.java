@@ -19,28 +19,35 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.flow.theme.lumo.Lumo;
 import org.bklab.flow.components.navigation.tab.NaviTab;
 import org.bklab.flow.components.navigation.tab.NaviTabs;
+import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.image.ImageBase;
 import org.bklab.flow.layout.FlexBoxLayout;
 import org.bklab.flow.util.lumo.LumoStyles;
 import org.bklab.flow.util.lumo.UIUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @CssImport("./styles/components/app-bar.css")
 public class AppBar extends Header {
 
 	private final String CLASS_NAME = "app-bar";
+	private static final Logger logger = LoggerFactory.getLogger(AppBar.class);
 
 	private FlexBoxLayout container;
 
@@ -57,6 +64,9 @@ public class AppBar extends Header {
 	private NaviTabs tabs;
 	private ArrayList<Registration> tabSelectionListeners;
 	private Button addTab;
+	private final List<Registration> registrations = new ArrayList<>();
+	private Span avatarName;
+	private Button logout;
 
 	private TextField search;
 	private Registration searchRegistration;
@@ -120,15 +130,6 @@ public class AppBar extends Header {
 		return this;
 	}
 
-	private void initContextIcon() {
-		contextIcon = UIUtils
-				.createTertiaryInlineButton(VaadinIcon.ARROW_LEFT);
-		contextIcon.addClassNames(CLASS_NAME + "__context-icon");
-		contextIcon.setVisible(false);
-		UIUtils.setAriaLabel("Back", contextIcon);
-		UIUtils.setLineHeight("1", contextIcon);
-	}
-
 	private void initTitle(String title) {
 		this.title = new H1(title);
 		this.title.setClassName(CLASS_NAME + "__title");
@@ -143,13 +144,13 @@ public class AppBar extends Header {
 
 	private ContextMenu userIconMenu;
 
-	private void initAvatar() {
-		avatar = ImageBase.getImage("default-user-icon.svg");
-		avatar.setClassName(CLASS_NAME + "__avatar");
-		avatar.setAlt("User menu");
-
-		this.userIconMenu = new ContextMenu(avatar);
-		userIconMenu.setOpenOnClick(true);
+	private void initContextIcon() {
+		contextIcon = UIUtils
+				.createTertiaryInlineButton(VaadinIcon.ARROW_LEFT);
+		contextIcon.addClassNames(CLASS_NAME + "__context-icon");
+		contextIcon.setVisible(false);
+		UIUtils.setAriaLabel("返回", contextIcon);
+		UIUtils.setLineHeight("1", contextIcon);
 	}
 
 	public ContextMenu getUserIconMenu() {
@@ -169,7 +170,7 @@ public class AppBar extends Header {
 
 	private void initContainer() {
 		container = new FlexBoxLayout(menuIcon, contextIcon, this.title,
-				leftActionItems, middleActionItems, search, actionItems, avatar);
+				leftActionItems, middleActionItems, search, actionItems, avatarName, avatar, logout);
 		container.addClassName(CLASS_NAME + "__container");
 		container.setAlignItems(FlexComponent.Alignment.CENTER);
 		container.setFlexGrow(1, search);
@@ -359,7 +360,7 @@ public class AppBar extends Header {
 		actionItems.setVisible(false);
 		tabContainer.setVisible(false);
 
-		contextIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+		contextIcon.setIcon(new Icon(VaadinIcon.ARROW_LEFT));
 		contextIcon.setVisible(true);
 		searchRegistration = contextIcon
 				.addClickListener(e -> searchModeOff());
@@ -393,11 +394,61 @@ public class AppBar extends Header {
 		search.setVisible(false);
 	}
 
+	private void initAvatar() {
+		avatar = ImageBase.getImage("default-user-icon.svg");
+		avatar.setClassName(CLASS_NAME + "__avatar");
+		avatar.setAlt("用户菜单");
+
+
+		avatarName = new Span();
+		avatarName.addClassName(CLASS_NAME + "__avatar-name");
+
+		logout = new ButtonFactory()
+				.className(CLASS_NAME + "__logout")
+				.icon(VaadinIcon.SIGN_OUT).visible(false)
+				.lumoLarge().lumoTertiary().attributeTitle("退出登录").get();
+		logout.getStyle().set("color", "var(--lumo-contrast-60pct)");
+
+		this.userIconMenu = new ContextMenu(avatar);
+		userIconMenu.setOpenOnClick(true);
+	}
+
+	public AppBar avatarName(String name) {
+		avatarName.setText(name);
+		return this;
+	}
+
+	public AppBar logout(ComponentEventListener<ClickEvent<Button>> eventListener) {
+		logout.addClickListener(eventListener);
+		logout.setVisible(true);
+		return this;
+	}
+
+	public Span getAvatarName() {
+		return avatarName;
+	}
+
+	public Button getLogout() {
+		return logout;
+	}
+
+	public void setContextIconAsBack(Class<? extends Component> navigationTarget) {
+		contextIcon.setVisible(true);
+		registrations.add(contextIcon.addClickListener(e -> UI.getCurrent().navigate(navigationTarget)));
+	}
+
+	public <T, C extends Component & HasUrlParameter<T>>
+	void setContextIconAsBack(Class<? extends C> navigationTarget, T parameter) {
+		contextIcon.setVisible(true);
+		registrations.add(contextIcon.addClickListener(e -> UI.getCurrent().navigate(navigationTarget, parameter)));
+	}
+
 	public void reset() {
 		title.setText("");
 		setNaviMode(NaviMode.MENU);
 		removeAllActionItems();
 		removeAllTabs();
+		registrations.forEach(Registration::remove);
 	}
 
 	/* === RESET === */

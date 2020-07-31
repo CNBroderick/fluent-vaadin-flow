@@ -8,6 +8,7 @@ import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.Renderer;
 import com.vaadin.flow.function.SerializableFunction;
 import org.bklab.flow.FlowFactory;
+import org.bklab.flow.base.GeneratedVaadinComboBoxFactory;
 import org.bklab.flow.base.HasFilterableDataProviderFactory;
 import org.bklab.flow.base.HasSizeFactory;
 import org.bklab.flow.base.HasValidationFactory;
@@ -15,6 +16,7 @@ import org.bklab.flow.base.HasValidationFactory;
 import java.util.Collection;
 
 public class ComboBoxFactory<T> extends FlowFactory<ComboBox<T>, ComboBoxFactory<T>> implements
+        GeneratedVaadinComboBoxFactory<T, ComboBox<T>, ComboBoxFactory<T>>,
         HasSizeFactory<ComboBox<T>, ComboBoxFactory<T>>,
         HasValidationFactory<ComboBox<T>, ComboBoxFactory<T>>,
         HasFilterableDataProviderFactory<T, String, ComboBox<T>, ComboBoxFactory<T>> {
@@ -153,6 +155,19 @@ public class ComboBoxFactory<T> extends FlowFactory<ComboBox<T>, ComboBoxFactory
 
     public ComboBoxFactory<T> allowCustomValue(boolean allowCustomValue) {
         get().setAllowCustomValue(allowCustomValue);
+        return this;
+    }
+
+    public ComboBoxFactory<T> lumoSmall() {
+        get().getElement().setAttribute("theme", "small");
+        get().getStyle().set("margin-top", "auto 0").set("margin-bottom", "auto 0");
+        return this;
+    }
+
+    public ComboBoxFactory<T> lumoSmall30pxHeight() {
+        get().getElement().setAttribute("theme", "small");
+        get().getStyle().set("height", "30px")
+                .set("margin-top", "auto 0").set("margin-bottom", "auto 0");
         return this;
     }
 }

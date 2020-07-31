@@ -72,6 +72,8 @@ public class NaviItem extends ListItem {
 			this.link = div;
 		}
 
+		UIUtils.setTooltip(text, link);
+
 		expandCollapse = UIUtils.createButton(VaadinIcon.CARET_UP, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		expandCollapse.addClickListener(event -> setSubItemsVisible(!subItemsVisible));
 		expandCollapse.setVisible(false);

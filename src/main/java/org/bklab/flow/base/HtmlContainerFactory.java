@@ -7,4 +7,5 @@ public interface HtmlContainerFactory<C extends HtmlContainer, E extends HtmlCon
         HtmlComponentFactory<C, E>,
         HasComponentsFactory<C, E>,
         HasTextFactory<C, E> {
+
 }

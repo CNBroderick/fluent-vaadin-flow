@@ -5,6 +5,7 @@ import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.dom.Style;
 import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.factory.DialogFactory;
@@ -192,6 +193,10 @@ public class ModalDialog extends Dialog {
         return footerRight(new ButtonFactory().text(text).lumoSmall().clickListener(event -> close()).get());
     }
 
+    public ModalDialog addIconCloseButton(String text) {
+        return footerRight(new ButtonFactory().text(text).icon(VaadinIcon.CLOSE).lumoSmall().clickListener(event -> close()).get());
+    }
+
     public ModalDialog toolBarRight(Component... components) {
         toolBar.right(components);
         return this;
@@ -246,6 +251,11 @@ public class ModalDialog extends Dialog {
 
     public TitleLabel getTitle() {
         return title;
+    }
+
+    public ModalDialog noFooter() {
+        this.footer.setVisible(false);
+        return this;
     }
 
     public DialogFactory asFactory() {

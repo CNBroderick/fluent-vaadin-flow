@@ -11,19 +11,28 @@
 
 package org.bklab.flow.text;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Span;
 
 public class TitleLabel extends Span {
-    public TitleLabel(String text) {
-        super(text);
+
+    {
         getStyle()
                 .set("margin", "0")
                 .set("color", "rgba(0,0,0,.85)")
-                .set("font-weight", "600")
+                .set("font-weight", "500")
                 .set("font-size", "16px")
                 .set("line-height", "22px")
                 .set("word-wrap", "break-word")
                 .set("display", "flex")
         ;
+    }
+
+    public TitleLabel(String text) {
+        super(text);
+    }
+
+    public TitleLabel(Component component) {
+        super(component);
     }
 }

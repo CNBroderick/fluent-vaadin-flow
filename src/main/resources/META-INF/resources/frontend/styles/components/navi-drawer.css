@@ -34,7 +34,7 @@
 /* Content */
 .navi-drawer__content {
     background-color: var(--lumo-base-color);
-    box-shadow: var(--lumo-box-shadow-s);
+    box-shadow: var(--lumo-box-shadow-xs);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -55,10 +55,12 @@
 
 /* Footer button */
 .navi-drawer__footer {
-    border-radius: 0;
-    margin-bottom: 0;
-    margin-top: auto;
-    min-width: 0;
+    border-radius: 100%;
+    align-self: flex-end;
+    margin: var(--lumo-space-s);
+    height: 2em;
+    padding: 0px;
+    min-width: 2em;
 }
 
 /* Rail navigation */
@@ -71,7 +73,7 @@
     width: var(--navi-drawer-rail-width);
 }
 
-.navi-drawer[rail]:not([open]):hover .navi-drawer__content {
+.navi-drawer[rail][enable-swap]:not([open]):hover .navi-drawer__content {
     width: var(--navi-drawer-width);
 }
 
@@ -111,25 +113,42 @@
 }
 
 @media (min-width: 1024px) {
-    .navi-drawer[rail]:not([open]):not(:hover) .account-switcher__avatar,
-    .navi-drawer[rail]:not([open]):not(:hover) .navi-item__link iron-icon {
+    .navi-drawer[rail]:not([open]):not([enable-swap]) .account-switcher__avatar,
+    .navi-drawer[rail]:not([open]):not([enable-swap]) .navi-item__link iron-icon {
         margin-left: auto;
         margin-right: auto;
     }
 
-    .navi-drawer[rail]:not([open]):not(:hover) .account-switcher__title,
-    .navi-drawer[rail]:not([open]):not(:hover) .account-switcher__email,
-    .navi-drawer[rail]:not([open]):not(:hover) .brand-expression__title,
-    .navi-drawer[rail]:not([open]):not(:hover) .navi-item[level],
-    .navi-drawer[rail]:not([open]):not(:hover) .navi-item__link span,
-    .navi-drawer[rail]:not([open]):not(:hover) .navi-item vaadin-button {
+    .navi-drawer[rail]:not([open]):not([enable-swap]) .account-switcher__title,
+    .navi-drawer[rail]:not([open]):not([enable-swap]) .account-switcher__email,
+    .navi-drawer[rail]:not([open]):not([enable-swap]) .brand-expression__title,
+    .navi-drawer[rail]:not([open]):not([enable-swap]) .navi-item[level],
+    .navi-drawer[rail]:not([open]):not([enable-swap]) .navi-item__link span,
+    .navi-drawer[rail]:not([open]):not([enable-swap]) .navi-item vaadin-button {
         display: none;
     }
 
-    .navi-drawer[rail]:not([open]):not(:hover) .navi-drawer__footer iron-icon {
-        margin-left: 0.25em;
-        margin-right: -0.25em;
-        width: var(--navi-drawer-rail-width);
+    .navi-drawer[rail]:not([open]):not([enable-swap]) .navi-drawer__footer {
+        align-self: center;
+    }
+
+    .navi-drawer[rail][enable-swap]:not([open]):not(:hover) .account-switcher__avatar,
+    .navi-drawer[rail][enable-swap]:not([open]):not(:hover) .navi-item__link iron-icon {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .navi-drawer[rail][enable-swap]:not([open]):not(:hover) .account-switcher__title,
+    .navi-drawer[rail][enable-swap]:not([open]):not(:hover) .account-switcher__email,
+    .navi-drawer[rail][enable-swap]:not([open]):not(:hover) .brand-expression__title,
+    .navi-drawer[rail][enable-swap]:not([open]):not(:hover) .navi-item[level],
+    .navi-drawer[rail][enable-swap]:not([open]):not(:hover) .navi-item__link span,
+    .navi-drawer[rail][enable-swap]:not([open]):not(:hover) .navi-item vaadin-button {
+        display: none;
+    }
+
+    .navi-drawer[rail][enable-swap]:not([open]):not(:hover) .navi-drawer__footer {
+        align-self: center;
     }
 }
 

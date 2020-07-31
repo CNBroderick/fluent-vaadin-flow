@@ -32,6 +32,16 @@ public abstract class FlowFactory<C extends Component, E extends FlowFactory<C, 
         return (E) this;
     }
 
+    public E lumoSmall() {
+        get().getElement().setAttribute("theme", "small");
+        return (E) this;
+    }
+
+    public E attributeTitle(String title) {
+        get().getElement().setAttribute("title", title);
+        return (E) this;
+    }
+
     public E peek(Consumer<C> consumer) {
         consumer.accept(get());
         return (E) this;

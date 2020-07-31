@@ -113,7 +113,7 @@ public abstract class MainAppLayout extends FlexBoxLayout implements RouterLayou
 
         viewContainer = new Main();
         viewContainer.addClassName(CLASS_NAME + "__view-container");
-        viewContainer.getStyle().set("margin", "0.5em");
+        viewContainer.getStyle().set("margin", "0.3em");
         UIUtils.setDisplay(Display.FLEX, viewContainer);
         UIUtils.setFlexGrow(1, viewContainer);
         UIUtils.setOverflow(Overflow.HIDDEN, viewContainer);
