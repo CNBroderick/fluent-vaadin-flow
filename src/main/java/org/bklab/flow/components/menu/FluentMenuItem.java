@@ -54,10 +54,15 @@ public class FluentMenuItem extends Span {
     }
 
     public MenuItem add(ContextMenu contextMenu, ComponentEventListener<ClickEvent<MenuItem>> listener) {
-        return contextMenu.addItem(this, listener);
+        return peek(contextMenu.addItem(this, listener));
     }
 
     public MenuItem add(ContextMenu contextMenu) {
-        return contextMenu.addItem(this);
+        return peek(contextMenu.addItem(this));
+    }
+
+    private MenuItem peek(MenuItem menuItem) {
+        menuItem.getElement().setAttribute("fluent-menu-item", true);
+        return menuItem;
     }
 }

@@ -20,6 +20,7 @@ import org.vaadin.olli.ClipboardHelper;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Collection;
 
 public class ErrorDialog extends MessageDialog {
 
@@ -49,10 +50,24 @@ public class ErrorDialog extends MessageDialog {
 
     public ErrorDialog(String message, String detail) {
         message(message);
+        addCopyButton(message);
+    }
+
+    public ErrorDialog(String... message) {
+        message(message);
+        addCopyButton(String.join("\n\t", message));
+    }
+
+    public ErrorDialog(Collection<String> message) {
+        message(message);
+        addCopyButton(String.join("\n\t", message));
+    }
+
+    private void addCopyButton(String message) {
         copyButton.addClickListener(e -> new NotificationFactory("复制成功")
                 .positionTopEnd().duration(1500).lumoSuccess().open()
         );
-        getBottom().right(new ClipboardHelper(detail, copyButton));
+        getBottom().right(new ClipboardHelper(message, copyButton));
     }
 
     private static String toString(Throwable throwable) {

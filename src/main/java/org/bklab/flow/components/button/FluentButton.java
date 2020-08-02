@@ -11,7 +11,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import org.bklab.flow.factory.ButtonFactory;
 
 @Tag("fluent-button")
-@CssImport("./styles/components/button/fluent-button.css")
+@CssImport("./styles/org/bklab/component/button/fluent-button.css")
 public class FluentButton extends Button {
 
     private final static String CLASS_NAME = "fluent-button";

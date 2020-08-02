@@ -69,7 +69,7 @@ public class PaginationView extends VerticalLayout {
                 .whenEmpty("请拖动左侧房间到此处").componentRender(roomDivFunction)
                 .items(IntStream.range(101, 129).mapToObj(Room::new).collect(Collectors.toSet()));
         dragSelectLayout.containerHeight("400px");
-        dragSelectLayout.getSelectedToolBar().right(selectArea);
+        dragSelectLayout.getSelectedFooter().right(selectArea);
         dragSelectLayout.addValueChangeListener(e -> {
             String areas = String.format("已选择：%.2f㎡", e.getValue().stream().mapToDouble(r -> r.area).sum());
             Notification.show(areas);

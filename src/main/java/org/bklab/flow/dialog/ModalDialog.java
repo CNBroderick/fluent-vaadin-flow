@@ -103,6 +103,7 @@ public class ModalDialog extends Dialog {
                 .set("padding", "1em 24px")
                 .set("font-size", "14px")
                 .set("line-height", "1.5715")
+                .set("width", "100%")
         ;
     }
 

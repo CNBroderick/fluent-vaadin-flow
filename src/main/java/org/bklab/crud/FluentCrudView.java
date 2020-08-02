@@ -21,13 +21,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 import java.util.stream.Collectors;
 
-@CssImport("./styles/components/crud/fluent-crud-view.css")
+@CssImport("./styles/org/bklab/component/crud/fluent-crud-view.css")
 public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayout {
 
     private final static String CLASS_NAME = "fluent-crud-view";
@@ -44,6 +41,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     private final List<Consumer<Exception>> exceptionConsumers = new ArrayList<>();
     protected boolean hasGridMenu = true;
     protected boolean hasPagination = true;
+    private final List<FluentCrudMenuButton<T>> menuButtons = new ArrayList<>();
 
     public FluentCrudView() {
         getStyle().set("padding", "0.5em").set("background-color", "white");
@@ -97,21 +95,50 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
                 .lumoTertiary().lumoIcon().lumoSmall().get(), menuEntityBiConsumer);
     }
 
+    protected BiPredicate<T, T> sameEntityBiPredicate = Objects::equals;
+
+    public BiPredicate<T, T> getSameEntityBiPredicate() {
+        if (sameEntityBiPredicate == null) this.sameEntityBiPredicate = Objects::equals;
+        return sameEntityBiPredicate;
+    }
+
+    public FluentCrudView<T, G> setSameEntityBiPredicate(BiPredicate<T, T> sameEntityBiPredicate) {
+        this.sameEntityBiPredicate = Objects.requireNonNull(sameEntityBiPredicate, "sameEntityBiPredicate is null");
+        return this;
+    }
+
     public FluentCrudView<T, G> addMenuColumn(Supplier<Button> buttonSupplier, BiConsumer<ContextMenu, T> menuEntityBiConsumer) {
-        grid.addComponentColumn(entity -> {
+        Grid.Column<T> column = grid.addComponentColumn(entity -> {
             Button button = buttonSupplier.get();
             ContextMenu contextMenu = new ContextMenu(button);
-            button.addClickListener(e -> {
-                grid.select(entity);
-                contextMenu.removeAll();
-                menuEntityBiConsumer.accept(contextMenu, entity);
-            });
+            menuEntityBiConsumer.accept(contextMenu, entity);
+            button.addClickListener(e -> grid.select(entity));
+            menuButtons.add(new FluentCrudMenuButton<>(entity, button, contextMenu, menuEntityBiConsumer));
             contextMenu.setOpenOnClick(true);
             return button;
         }).setHeader("操作").setKey("operationButton").setSortable(false)
                 .setTextAlign(ColumnTextAlign.CENTER).setAutoWidth(true).setFrozen(true);
         return this;
     }
+
+    public FluentCrudView<T, G> reloadContextMenu(T entity, Predicate<T> samePredicate) {
+        for (FluentCrudMenuButton<T> menuButton : menuButtons) {
+            menuButton.reload(entity, samePredicate != null
+                    ? samePredicate : t -> getSameEntityBiPredicate().test(entity, t));
+        }
+        return this;
+    }
+
+    public FluentCrudView<T, G> removeContextMenu(T entity) {
+        return this.removeContextMenu(entity, sameEntityBiPredicate);
+    }
+
+    public FluentCrudView<T, G> removeContextMenu(T entity, BiPredicate<T, T> sameEntityBiPredicate) {
+        menuButtons.stream().filter(m -> m.isThisEntity(entity, sameEntityBiPredicate))
+                .collect(Collectors.toList()).forEach(menuButtons::remove);
+        return this;
+    }
+
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
@@ -137,14 +164,21 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected void deleteEntity(T entity) {
         this.entities.remove(entity);
         this.pagination.totalData(this.entities.size()).build();
+        this.removeContextMenu(entity);
+    }
+
+    protected void deleteEntity(T entity, BiPredicate<T, T> isEquals) {
+        this.entities.stream().filter(t -> isEquals.test(t, entity)).collect(Collectors.toList()).forEach(this.entities::remove);
+        this.pagination.totalData(this.entities.size()).build();
+        this.removeContextMenu(entity, isEquals == null ? getSameEntityBiPredicate() : isEquals);
     }
 
     protected void updateEntity(T entity) {
-        this.updateEntity(entity, t -> t.equals(entity));
+        this.updateEntity(entity, t -> getSameEntityBiPredicate().test(t, entity));
     }
 
     protected void updateEntity(T oldEntity, T newEntity) {
-        this.updateEntity(newEntity, oldEntity::equals);
+        this.updateEntity(newEntity, t -> getSameEntityBiPredicate().test(oldEntity, t));
     }
 
     protected void updateEntity(T entity, Predicate<T> isEquals) {
@@ -152,6 +186,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         this.entities.clear();
         this.entities.addAll(instances);
         this.pagination.totalData(this.entities.size()).build();
+        this.reloadContextMenu(entity, isEquals);
     }
 
     public FluentCrudView<T, G> buildGridMenu(BiConsumer<GridContextMenu<T>, T> menuEntityBiConsumer) {

@@ -1,3 +1,8 @@
-fluent-menu-item:host([tabindex])::before {
+vaadin-context-menu-item[fluent-menu-item]::before {
     font-size: var(--lumo-font-size-s);
+}
+
+vaadin-context-menu-item[fluent-menu-item] {
+    padding-top: 0;
+    padding-bottom: 0;
 }

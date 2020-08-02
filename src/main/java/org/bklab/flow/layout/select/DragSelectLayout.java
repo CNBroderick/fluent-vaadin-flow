@@ -4,6 +4,7 @@ import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dnd.*;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.data.selection.MultiSelect;
@@ -21,16 +22,19 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 @Tag("drag-select-layout")
+@CssImport("./styles/org/bklab/component/select/drag-select-layout.css")
 public class DragSelectLayout<T> extends Div implements MultiSelect<DragSelectLayout<T>, T> {
+
+    private final static String CLASS_NAME = "drag-select-layout";
 
     private final Div candidateContainer = new DivFactory().displayFlex().heightFull().get();
     private final Div selectedContainer = new DivFactory().displayFlex().heightFull().get();
 
-    private final ToolBar candidateToolBar = new ToolBar();
-    private final ToolBar selectedToolBar = new ToolBar();
+    private final ToolBar candidateFooter = new ToolBar();
+    private final ToolBar selectedFooter = new ToolBar();
 
-    private final TitleLayout candidateLayout = new TitleLayout("请拖动选择").content(candidateContainer, candidateToolBar).heightFull();
-    private final TitleLayout selectedLayout = new TitleLayout("已选择").content(selectedContainer, selectedToolBar).heightFull();
+    private final TitleLayout candidateLayout = new TitleLayout("请拖动选择").content(candidateContainer, candidateFooter).heightFull();
+    private final TitleLayout selectedLayout = new TitleLayout("已选择").content(selectedContainer, selectedFooter).heightFull();
 
     private final Set<T> candidateItems = new LinkedHashSet<>();
     private final Set<T> selectedItems = new LinkedHashSet<>();
@@ -46,20 +50,22 @@ public class DragSelectLayout<T> extends Div implements MultiSelect<DragSelectLa
     {
         add(candidateLayout, selectedLayout);
 
-        candidateLayout.getStyle().set("flex-grow", "1").set("min-width", "150px");
-        selectedLayout.getStyle().set("width", "150px").set("margin-left", "var(--lumo-space-m)");
+        candidateLayout.addClassName(CLASS_NAME + "__candidate_layout");
+        selectedLayout.addClassName(CLASS_NAME + "__selected_layout");
 
-        candidateLayout.getContent().getStyle().set("flex-wrap", "wrap");
-        selectedLayout.getContent().getStyle().set("flex-wrap", "wrap");
+        candidateLayout.getContent().addClassName(CLASS_NAME + "__layout_content");
+        selectedLayout.getContent().addClassName(CLASS_NAME + "__layout_content");
 
-        candidateContainer.getStyle().set("border", "1px solid #d9d9d9").set("flex-wrap", "wrap").set("min-height", "100px").set("padding", "var(--lumo-space-m)").set("overflow-y", "auto");
-        selectedContainer.getStyle().set("border", "1px solid #d9d9d9").set("flex-wrap", "wrap").set("min-height", "100px").set("padding", "var(--lumo-space-m)").set("overflow-y", "auto");
+        candidateLayout.header().addClassName(CLASS_NAME + "__layout_header");
+        selectedLayout.header().addClassName(CLASS_NAME + "__layout_header");
+
+        candidateLayout.header().addClassName(CLASS_NAME + "__layout_container");
+        selectedLayout.header().addClassName(CLASS_NAME + "__layout_container");
 
         candidateContainer.addClassName(LumoStyles.Spacing.Right.M);
         selectedContainer.addClassName(LumoStyles.Spacing.Right.M);
 
-        addClassName(LumoStyles.Spacing.Right.M);
-        getElement().getStyle().set("display", "flex").set("padding-right", "var(--lumo-space-l)");
+        addClassNames(LumoStyles.Spacing.Right.M, CLASS_NAME);
     }
 
     public DragSelectLayout() {
@@ -238,12 +244,20 @@ public class DragSelectLayout<T> extends Div implements MultiSelect<DragSelectLa
         return selectedContainer;
     }
 
-    public ToolBar getCandidateToolBar() {
-        return candidateToolBar;
+    public ToolBar getCandidateFooter() {
+        return candidateFooter;
     }
 
-    public ToolBar getSelectedToolBar() {
-        return selectedToolBar;
+    public ToolBar getSelectedFooter() {
+        return selectedFooter;
+    }
+
+    public ToolBar getCandidateHeader() {
+        return candidateLayout.header();
+    }
+
+    public ToolBar getSelectedHeader() {
+        return selectedLayout.header();
     }
 
     public TitleLayout getCandidateLayout() {
@@ -258,9 +272,33 @@ public class DragSelectLayout<T> extends Div implements MultiSelect<DragSelectLa
         return candidateItems;
     }
 
+    public DragSelectLayout<T> containerHeight(String minHeight, String height, String maxHeight) {
+        this.selectedContainer.setMinHeight(minHeight);
+        this.candidateContainer.setMinHeight(minHeight);
+
+        this.selectedContainer.setHeight(height);
+        this.candidateContainer.setHeight(height);
+
+        this.selectedContainer.setMaxHeight(maxHeight);
+        this.candidateContainer.setMaxHeight(maxHeight);
+        return this;
+    }
+
     public DragSelectLayout<T> containerHeight(String height) {
         this.selectedContainer.setHeight(height);
         this.candidateContainer.setHeight(height);
+        return this;
+    }
+
+    public DragSelectLayout<T> containerMaxHeight(String height) {
+        this.selectedContainer.setMaxHeight(height);
+        this.candidateContainer.setMaxHeight(height);
+        return this;
+    }
+
+    public DragSelectLayout<T> containerMinHeight(String height) {
+        this.selectedContainer.setMinHeight(height);
+        this.candidateContainer.setMinHeight(height);
         return this;
     }
 }
