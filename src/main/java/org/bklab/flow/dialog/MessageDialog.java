@@ -30,6 +30,7 @@ import org.bklab.flow.layout.LmrHorizontalLayout;
 import org.bklab.flow.layout.TmbVerticalLayout;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>, HasSizeFactory<MessageDialog, MessageDialog> {
@@ -67,14 +68,14 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
     }
 
     public MessageDialog message(String message) {
-        this.message.add(message);
+        this.message.add(Optional.ofNullable(message).orElse(""));
         return this;
     }
 
     public MessageDialog message(String... message) {
         Div div = new Div();
         for (String s : message) {
-            div.add(new Html("<div>" + s + "</div>"));
+            div.add(new Html("<div>" + Optional.ofNullable(s).orElse("") + "</div>"));
         }
         this.message.add(div);
         return this;
@@ -83,14 +84,14 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
     public MessageDialog message(Collection<String> message) {
         Div div = new Div();
         for (String s : message) {
-            div.add(new Html("<div>" + s + "</div>"));
+            div.add(new Html("<div>" + Optional.ofNullable(s).orElse("") + "</div>"));
         }
         this.message.add(div);
         return this;
     }
 
     public MessageDialog content(Component content) {
-        this.message.add(content);
+        if (content != null) this.message.add(content);
         return this;
     }
 
@@ -121,7 +122,8 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
         Span header = new Span(this.header);
         header.getStyle().set("font-weight", "600").set("font-size", "var(--lumo-font-size-m)");
         message.getStyle().set("font-size", "var(--lumo-font-size-s)").set("padding-left", "3.2em")
-                .set("display", "flex").set("align-self", "flex-start").set("overflow-wrap", "anywhere");
+                .set("word-break", "break-word").set("display", "flex").set("align-self", "flex-start")
+                .set("overflow-wrap", "anywhere");
 
         TmbVerticalLayout main = new TmbVerticalLayout().noBorder();
         main.top(new HorizontalLayoutFactory(icon, header).expand(header).widthFull().get());
@@ -139,7 +141,7 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
     }
 
     private MessageDialog buildNoHeader() {
-        message.getStyle().set("font-size", "var(--lumo-font-size-s)").set("display", "flex").set("align-self", "flex-start").set("overflow-wrap", "anywhere");
+        message.getStyle().set("font-size", "var(--lumo-font-size-s)").set("display", "flex").set("align-self", "flex-start").set("word-break", "break-word").set("overflow-wrap", "anywhere");
         HorizontalLayout content = new HorizontalLayoutFactory(icon, message).expand(message).widthFull().get();
         VerticalLayout main = new VerticalLayoutFactory(content, bottom).expand(content).widthFull().get();
         main.getStyle().set("padding", "1.5em 1.5em 1em 1.5em");

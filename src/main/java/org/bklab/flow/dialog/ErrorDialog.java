@@ -21,6 +21,7 @@ import org.vaadin.olli.ClipboardHelper;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collection;
+import java.util.Optional;
 
 public class ErrorDialog extends MessageDialog {
 
@@ -37,7 +38,9 @@ public class ErrorDialog extends MessageDialog {
     }
 
     public ErrorDialog(Throwable throwable) {
-        this(throwable.getLocalizedMessage(), toString(throwable));
+        this(Optional.ofNullable(throwable.getLocalizedMessage()).orElse(
+                Optional.ofNullable(throwable.getMessage()).orElse(toString(throwable))
+        ), toString(throwable));
     }
 
     public ErrorDialog(String message) {

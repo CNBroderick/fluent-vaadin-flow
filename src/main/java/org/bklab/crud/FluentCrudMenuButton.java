@@ -2,21 +2,25 @@ package org.bklab.crud;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
+import com.vaadin.flow.component.grid.Grid;
 
 import java.util.Objects;
-import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
-class FluentCrudMenuButton<T> {
+class FluentCrudMenuButton<T, G extends Grid<T>> {
 
     private final Button button;
     private final ContextMenu contextMenu;
-    private final BiConsumer<ContextMenu, T> menuEntityBiConsumer;
+    private final IFluentMenuBuilder<T, G> menuEntityBiConsumer;
+    private final FluentCrudView<T, G> fluentCrudView;
+
     private T entity;
 
-    public FluentCrudMenuButton(T entity, Button button, ContextMenu contextMenu,
-                                BiConsumer<ContextMenu, T> menuEntityBiConsumer) {
+    public FluentCrudMenuButton(FluentCrudView<T, G> fluentCrudView,
+                                T entity, Button button, ContextMenu contextMenu,
+                                IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
+        this.fluentCrudView = fluentCrudView;
         this.entity = entity;
         this.button = button;
         this.contextMenu = contextMenu;
@@ -31,7 +35,7 @@ class FluentCrudMenuButton<T> {
         if (!sameFunction.test(entity)) return;
         this.entity = entity;
         contextMenu.removeAll();
-        menuEntityBiConsumer.accept(contextMenu, entity);
+        if (menuEntityBiConsumer != null) menuEntityBiConsumer.safeBuild(fluentCrudView, contextMenu, entity);
     }
 
     public boolean isThisEntity(T entity, BiPredicate<T, T> sameFunction) {
