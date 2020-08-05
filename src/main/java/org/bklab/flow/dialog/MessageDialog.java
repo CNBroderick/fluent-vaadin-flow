@@ -42,11 +42,11 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
     private final Span message = new Span();
 
     public MessageDialog() {
-        setMinHeight("185px");
         setWidth("520px");
         setMaxWidth("90vw");
         this.confirm = new ButtonFactory().text("确定").clickListener(e -> close()).lumoSmall().lumoPrimary().get();
         this.bottom = new LmrHorizontalLayout();
+
     }
 
     public Button getConfirm() {
@@ -129,7 +129,7 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
         main.top(new HorizontalLayoutFactory(icon, header).expand(header).widthFull().get());
         main.middle(message);
         main.bottom(bottom);
-        main.getStyle().set("padding", "1em 1em 1em 0");
+        main.getStyle().set("padding", "1em 1em 1em 0").set("display", "inline-block");
         add(main);
 
         return this;
@@ -144,7 +144,7 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
         message.getStyle().set("font-size", "var(--lumo-font-size-s)").set("display", "flex").set("align-self", "flex-start").set("word-break", "break-word").set("overflow-wrap", "anywhere");
         HorizontalLayout content = new HorizontalLayoutFactory(icon, message).expand(message).widthFull().get();
         VerticalLayout main = new VerticalLayoutFactory(content, bottom).expand(content).widthFull().get();
-        main.getStyle().set("padding", "1.5em 1.5em 1em 1.5em");
+        main.getStyle().set("padding", "1.5em 1.5em 1em 1.5em").set("display", "inline-block");
         add(main);
 
         return this;

@@ -25,7 +25,6 @@ public class DownloadDialog extends FluentDialog {
         this.anchor = new Anchor(streamResource, null);
         anchor.add(new ButtonFactory().text("下载").clickListener(e -> close()).lumoSmall().lumoPrimary().get());
         this.bottom = new LmrHorizontalLayout();
-        setMinHeight("185px");
         setWidth("420px");
     }
 
@@ -74,7 +73,7 @@ public class DownloadDialog extends FluentDialog {
         main.top(new HorizontalLayoutFactory(icon, header).expand(header).widthFull().get());
         main.middle(message);
         main.bottom(bottom);
-        main.getStyle().set("padding", "1em 1em 1em 0");
+        main.getStyle().set("padding", "1em 1em 1em 0").set("display", "inline-block");
         add(main);
 
         return this;
@@ -85,7 +84,7 @@ public class DownloadDialog extends FluentDialog {
         span.getStyle().set("font-size", "var(--lumo-font-size-s)");
         HorizontalLayout content = new HorizontalLayoutFactory(icon, span).expand(span).widthFull().get();
         VerticalLayout main = new VerticalLayoutFactory(content, bottom).expand(content).widthFull().get();
-        main.getStyle().set("padding", "1.5em 1.5em 1em 1.5em");
+        main.getStyle().set("padding", "1.5em 1.5em 1em 1.5em").set("display", "inline-block");
         add(main);
         return this;
     }

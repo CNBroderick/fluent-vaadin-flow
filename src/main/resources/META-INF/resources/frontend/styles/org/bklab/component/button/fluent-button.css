@@ -109,6 +109,14 @@ fluent-button.fluent-button.fluent-button__primary:hover {
     border-color: #ff7875;
 }
 
+.fluent-button.fluent-button.fluent-button__link.fluent-button__error {
+    color: #ff4d4f;
+}
+
+.fluent-button.fluent-button.fluent-button__link.fluent-button__error:hover {
+    color: #ff7875;
+}
+
 .fluent-button__error:hover, .fluent-button__error:focus {
     color: #ff7875;
     background: #fff;
@@ -142,8 +150,8 @@ fluent-button.fluent-button.fluent-button__primary:hover {
 }
 
 .fluent-button iron-icon {
-    height: 16px;
-    width: 16px;
+    height: 14px;
+    width: 14px;
     padding-right: 0.5em;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
 }

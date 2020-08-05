@@ -17,6 +17,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.*;
+import org.bklab.flow.components.time.ChineseDatePickerI18n;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -37,7 +38,7 @@ public class DateTimePickerFactory extends FlowFactory<DateTimePicker, DateTimeP
     public DateTimePickerFactory(DateTimePicker component) {
         super(component);
         component.setLocale(Locale.CHINA);
-        get().setDatePickerI18n(building.ui.view.sms.ChineseDatePickerI18n.getInstance());
+        get().setDatePickerI18n(ChineseDatePickerI18n.getInstance());
     }
 
     public DateTimePickerFactory(String label) {

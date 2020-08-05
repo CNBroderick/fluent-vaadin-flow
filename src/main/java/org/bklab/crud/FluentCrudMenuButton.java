@@ -27,6 +27,13 @@ class FluentCrudMenuButton<T, G extends Grid<T>> {
         this.menuEntityBiConsumer = menuEntityBiConsumer;
     }
 
+    public void reload() {
+        contextMenu.removeAll();
+        if (menuEntityBiConsumer != null) {
+            menuEntityBiConsumer.safeBuild(fluentCrudView, contextMenu, entity);
+        }
+    }
+
     public void reload(T entity) {
         this.reload(entity, t -> Objects.equals(t, entity));
     }
@@ -35,7 +42,9 @@ class FluentCrudMenuButton<T, G extends Grid<T>> {
         if (!sameFunction.test(entity)) return;
         this.entity = entity;
         contextMenu.removeAll();
-        if (menuEntityBiConsumer != null) menuEntityBiConsumer.safeBuild(fluentCrudView, contextMenu, entity);
+        if (menuEntityBiConsumer != null) {
+            menuEntityBiConsumer.safeBuild(fluentCrudView, contextMenu, entity);
+        }
     }
 
     public boolean isThisEntity(T entity, BiPredicate<T, T> sameFunction) {

@@ -5,6 +5,8 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.*;
 
+import java.util.Optional;
+
 public class TextFieldFactory extends FlowFactory<TextField, TextFieldFactory> implements
         GeneratedVaadinTextFieldFactory<String, TextField, TextFieldFactory>,
         HasSizeFactory<TextField, TextFieldFactory>,
@@ -39,7 +41,7 @@ public class TextFieldFactory extends FlowFactory<TextField, TextFieldFactory> i
     }
 
     public TextFieldFactory value(String value) {
-        get().setValue(value);
+        get().setValue(Optional.ofNullable(value).orElse(""));
         return this;
     }
 

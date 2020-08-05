@@ -5,6 +5,7 @@
     "@polymer/iron-icon": "3.0.1",
     "@polymer/iron-iconset-svg": "^3.0.1",
     "@polymer/iron-list": "3.1.0",
+    "@polymer/iron-dropdown": "3.0.1",
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-icon-button": "^3.0.2",
     "@polymer/paper-slider": "^3.0.1",
@@ -156,6 +157,6 @@
       "lit-html": "1.2.1",
       "@types/validator": "10.11.3"
     },
-    "hash": "da8b02aa0ff66047d2f24d5fe4ebb2ca8983f5a1835eda55294a17333e593949"
+    "hash": "424c1cd53ff648efce03eda38e56fb892184eff99e1e280d7ee15302f2567201"
   }
 }

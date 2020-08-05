@@ -1,10 +1,13 @@
 package org.bklab.flow.factory;
 
-import com.vaadin.flow.component.*;
-import com.vaadin.flow.component.textfield.*;
+import com.vaadin.flow.component.AbstractField;
+import com.vaadin.flow.component.HasValue;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.*;
+
+import java.util.Optional;
 
 public class TextAreaFactory extends FlowFactory<TextArea, TextAreaFactory> implements
         GeneratedVaadinTextAreaFactory<TextArea, TextAreaFactory>,
@@ -54,7 +57,7 @@ public class TextAreaFactory extends FlowFactory<TextArea, TextAreaFactory> impl
     }
 
     public TextAreaFactory value (String value) {
-        get().setValue(value);
+        get().setValue(Optional.ofNullable(value).orElse(""));
         return this;
     }
     public TextAreaFactory valueChangeTimeout (int valueChangeTimeout) {

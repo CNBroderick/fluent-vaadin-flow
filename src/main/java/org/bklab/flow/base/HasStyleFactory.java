@@ -20,6 +20,15 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
         return (E) this;
     }
 
+    default E overflowYScroll() {
+        return overflowY("auto");
+    }
+
+    default E overflowY(String overflow) {
+        get().getStyle().set("overflow-y", overflow);
+        return (E) this;
+    }
+
     default E flexWrap() {
         get().getStyle().set("flex-wrap", "wrap");
         return (E) this;

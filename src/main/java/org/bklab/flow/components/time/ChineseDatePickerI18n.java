@@ -9,7 +9,7 @@
  * Copyright (c) 2008 - 2020. - Broderick Labs.
  */
 
-package building.ui.view.sms;
+package org.bklab.flow.components.time;
 
 import com.vaadin.flow.component.datepicker.DatePicker;
 

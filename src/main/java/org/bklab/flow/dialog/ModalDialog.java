@@ -199,6 +199,20 @@ public class ModalDialog extends Dialog {
         return this;
     }
 
+    public ModalDialog width(String minWidth, String width, String maxWidth) {
+        setMinWidth(minWidth);
+        setWidth(width);
+        setMaxWidth(maxWidth);
+        return this;
+    }
+
+    public ModalDialog height(String minHeight, String height, String maxHeight) {
+        setMinHeight(minHeight);
+        setHeight(height);
+        setMaxHeight(maxHeight);
+        return this;
+    }
+
     public ModalDialog addCancelButton() {
         return footerRight(FluentButton.cancelButton().asFactory().clickListener(event -> close()).get());
     }

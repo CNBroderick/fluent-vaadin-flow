@@ -11,7 +11,6 @@
 
 package org.bklab.flow.factory;
 
-import building.ui.view.sms.ChineseDatePickerI18n;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.HasValue;
@@ -21,6 +20,7 @@ import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.GeneratedVaadinDatePickerFactory;
 import org.bklab.flow.base.HasSizeFactory;
 import org.bklab.flow.base.HasValidationFactory;
+import org.bklab.flow.components.time.ChineseDatePickerI18n;
 
 import java.time.LocalDate;
 import java.util.Locale;

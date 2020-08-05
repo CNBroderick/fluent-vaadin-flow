@@ -1,4 +1,5 @@
 dependencies:
+  '@polymer/iron-dropdown': 3.0.1
   '@polymer/iron-icon': 3.0.1
   '@polymer/iron-iconset-svg': 3.0.1
   '@polymer/iron-list': 3.1.0
@@ -1024,6 +1025,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-aDr0cbCNVq49q+pOqa6CZutFh+wWpwPMLpEth9swx+GkAj+gCURhuQkaUYhIo5f2egDbEioR1aeHMnPlU9dQZA==
+  /@polymer/iron-dropdown/3.0.1:
+    dependencies:
+      '@polymer/iron-behaviors': 3.0.1
+      '@polymer/iron-overlay-behavior': 3.0.3
+      '@polymer/neon-animation': 3.0.1
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-22yLhepfcKjuQMfFmRHi/9MPKTqkzgRrmWWW0P5uqK++xle53k2QBO5VYUAYiCN3ZcxIi9lEhZ9YWGeQj2JBig==
   /@polymer/iron-fit-behavior/3.0.2:
     dependencies:
       '@polymer/polymer': 3.2.0
@@ -1113,6 +1123,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-xg1WanG25BIkQE8rhuReqY9zx1K5M7F+YAIYpswEp5eyDIaZ1Y3vUmVeQ3KG+hiSugzI1M752azXN7kvyhOBcQ==
+  /@polymer/iron-selector/3.0.1:
+    dependencies:
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-sBVk2uas6prW0glUe2xEJJYlvxmYzM40Au9OKbfDK2Qekou/fLKcBRyIYI39kuI8zWRaip8f3CI8qXcUHnKb1A==
   /@polymer/iron-validatable-behavior/3.0.1:
     dependencies:
       '@polymer/iron-meta': 3.0.1
@@ -1120,6 +1136,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-wwpYh6wOa4fNI+jH5EYKC7TVPYQ2OfgQqocWat7GsNWcsblKYhLYbwsvEY5nO0n2xKqNfZzDLrUom5INJN7msQ==
+  /@polymer/neon-animation/3.0.1:
+    dependencies:
+      '@polymer/iron-resizable-behavior': 3.0.1
+      '@polymer/iron-selector': 3.0.1
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-cDDc0llpVCe0ATbDS3clDthI54Bc8YwZIeTGGmBJleKOvbRTUC5+ssJmRL+VwVh+VM5FlnQlx760ppftY3uprg==
   /@polymer/paper-behaviors/3.0.1:
     dependencies:
       '@polymer/iron-behaviors': 3.0.1
@@ -6881,6 +6905,7 @@ packages:
     resolution:
       integrity: sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==
 specifiers:
+  '@polymer/iron-dropdown': 3.0.1
   '@polymer/iron-icon': 3.0.1
   '@polymer/iron-iconset-svg': 3.0.1
   '@polymer/iron-list': 3.1.0

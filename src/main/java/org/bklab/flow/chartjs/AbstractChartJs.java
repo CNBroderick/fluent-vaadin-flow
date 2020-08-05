@@ -51,6 +51,10 @@ public abstract class AbstractChartJs<T extends AbstractChartJs<T>> extends Vert
         }
     }
 
+    public String[] getColorArray() {
+        return colors.stream().map(Color::toString).collect(Collectors.toList()).toArray(new String[]{});
+    }
+
     public T addData(String name, Number value) {
         data.put(name, value);
         return (T) this;
@@ -159,17 +163,15 @@ public abstract class AbstractChartJs<T extends AbstractChartJs<T>> extends Vert
     }
 
     private void checkColors() {
-        colors = new ArrayList<>(
-                Arrays.asList(
-                        new Color(153, 102, 255, colorAlpha),
-                        new Color(54, 162, 235, colorAlpha),
-                        new Color(75, 192, 192, colorAlpha),
-                        new Color(255, 205, 86, colorAlpha),
-                        new Color(255, 159, 64, colorAlpha),
-                        new Color(255, 99, 132, colorAlpha),
-                        new Color(201, 203, 207, colorAlpha)
-                )
-        );
+        if (colors == null) colors = new ArrayList<>(Arrays.asList(
+                new Color(153, 102, 255, colorAlpha),
+                new Color(54, 162, 235, colorAlpha),
+                new Color(75, 192, 192, colorAlpha),
+                new Color(255, 205, 86, colorAlpha),
+                new Color(255, 159, 64, colorAlpha),
+                new Color(255, 99, 132, colorAlpha),
+                new Color(201, 203, 207, colorAlpha)
+        ));
         while (colors.size() < data.size()) {
             colors.add(randomColor());
         }

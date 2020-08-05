@@ -432,6 +432,11 @@ public class AppBar extends Header {
 		return logout;
 	}
 
+	public void setContextIconAsBack() {
+		contextIcon.setVisible(true);
+		registrations.add(contextIcon.addClickListener(e -> UI.getCurrent().getPage().getHistory().back()));
+	}
+
 	public void setContextIconAsBack(Class<? extends Component> navigationTarget) {
 		contextIcon.setVisible(true);
 		registrations.add(contextIcon.addClickListener(e -> UI.getCurrent().navigate(navigationTarget)));

@@ -1,0 +1,13 @@
+
+vaadin-combo-box-overlay[theme~="small"] [part="content"] {
+    background-color: var(--lumo-base-color);
+    color: var(--lumo-body-text-color);
+    font-size: var(--lumo-font-size-s);
+}
+
+:host([theme~="small"]:not([grid])) #items > ::slotted(*) {
+    width: 100%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-size: var(--lumo-font-size-s);
+}

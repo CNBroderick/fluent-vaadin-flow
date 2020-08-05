@@ -4,6 +4,8 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.bklab.flow.components.button.FluentButton;
+import org.bklab.flow.components.select.MultiSelectComboBox;
 import org.bklab.flow.components.selector.ButtonSelector;
 import org.bklab.flow.dialog.ModalDialog;
 import org.bklab.flow.factory.ButtonFactory;
@@ -11,6 +13,10 @@ import org.bklab.flow.factory.NotificationFactory;
 import org.bklab.flow.layout.EmptyLayout;
 import org.bklab.flow.layout.ToolBar;
 import org.bklab.flow.text.TitleLabel;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.stream.IntStream;
 
 @Route(value = "components", layout = View.class)
 @PageTitle("工具栏&对话框 --Broderick Labs")
@@ -47,6 +53,15 @@ public class ComponentDemoView extends Div {
                 .add("第6个", e -> new NotificationFactory("第6个").lumoSuccess().positionTopEnd().duration(3000).open())
                 .activeFirst());
 
+        MultiSelectComboBox<LocalDateTime> objectMultiSelectComboBox = new MultiSelectComboBox<>();
+        objectMultiSelectComboBox.addSelectionListener(e -> {
+            new NotificationFactory(e.getValue().toString()).duration(3000).positionTopEnd().open();
+        });
+        objectMultiSelectComboBox.itemComponentGenerator(e ->
+                new FluentButton(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(e)));
+        objectMultiSelectComboBox.items(IntStream.range(1, 13).mapToObj(r -> LocalDateTime.now().plusMonths(r)));
+
+        add(objectMultiSelectComboBox);
         add(new EmptyLayout());
 
         setSizeFull();
