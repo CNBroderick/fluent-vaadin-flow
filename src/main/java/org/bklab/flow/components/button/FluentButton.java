@@ -40,7 +40,6 @@ public class FluentButton extends Button {
         return new FluentButton(VaadinIcon.EXCLAMATION_CIRCLE_O, "错误");
     }
 
-
     {
         addClassNames(CLASS_NAME);
     }

@@ -1,9 +1,5 @@
 package org.bklab.flow.components.select;
 
-import com.github.appreciated.dropdown.Alignment;
-import com.github.appreciated.dropdown.HorizontalAlignment;
-import com.github.appreciated.dropdown.IronDropdownWrapper;
-import com.github.appreciated.dropdown.VerticalAlignment;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -50,8 +46,6 @@ public class MultiSelectComboBox<T> extends Div implements MultiSelect<MultiSele
         textField.setSuffixComponent(new DivFactory(clearButton, dropButton).displayFlex().get());
         textField.setClearButtonVisible(false);
 
-        IronDropdownWrapper ironDropdownWrapper = new IronDropdownWrapper(dropButton, content, new Alignment(HorizontalAlignment.LEFT, VerticalAlignment.TOP));
-        ironDropdownWrapper.getContentWrapper().getStyle().set("border-radius", "3px").set("box-shadow", "0px 2px 6px #ccc");
     }
 
     public MultiSelectComboBox<T> itemLabelGenerator(SerializableFunction<T, String> itemLabelGenerator) {

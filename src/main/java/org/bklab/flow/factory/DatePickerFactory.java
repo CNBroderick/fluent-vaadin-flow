@@ -68,9 +68,17 @@ public class DatePickerFactory extends FlowFactory<DatePicker, DatePickerFactory
     }
 
     public DatePickerFactory(DatePicker component) {
+        this(component, Locale.CHINA, ChineseDatePickerI18n.getInstance());
+    }
+
+    public DatePickerFactory(DatePicker component, Locale locale) {
+        this(component, locale, locale == null || locale == Locale.CHINA ? ChineseDatePickerI18n.getInstance() : null);
+    }
+
+    public DatePickerFactory(DatePicker component, Locale locale, DatePicker.DatePickerI18n datePickerI18n) {
         super(component);
-        get().setLocale(Locale.CHINA);
-        get().setI18n(ChineseDatePickerI18n.getInstance());
+        if (locale != null) get().setLocale(locale);
+        if (datePickerI18n != null) get().setI18n(datePickerI18n);
     }
 
     public DatePickerFactory name(String name) {
