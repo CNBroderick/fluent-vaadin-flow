@@ -3,11 +3,13 @@ package org.bklab.flow;
 import com.vaadin.flow.component.Component;
 import org.bklab.flow.base.AttachNotifierFactory;
 import org.bklab.flow.base.DetachNotifierFactory;
+import org.bklab.flow.base.HasElementFactory;
 
 import java.util.function.Consumer;
 
 @SuppressWarnings("unchecked")
-public abstract class FlowFactory<C extends Component, E extends FlowFactory<C, E>> implements IFlowFactory<C>,
+public abstract class FlowFactory<C extends Component, E extends FlowFactory<C, E>> implements
+        IFlowFactory<C>, HasElementFactory<C, E>,
         AttachNotifierFactory<C, FlowFactory<C, E>>,
         DetachNotifierFactory<C, FlowFactory<C, E>> {
 

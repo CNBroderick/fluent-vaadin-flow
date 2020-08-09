@@ -11,15 +11,15 @@
 
 package org.bklab.flow.creator;
 
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import org.bklab.flow.factory.FlexLayoutFactory;
+import dev.mett.vaadin.tooltip.config.TooltipConfiguration;
+import org.bklab.flow.factory.TooltipConfigurationFactory;
 
 public class ClassMethodMainCreator {
 
     public static void main(String[] args) {
 
-        Class<?> factoryClass = FlexLayoutFactory.class;
-        Class<?> targetClass = FlexLayout.class;
+        Class<?> factoryClass = TooltipConfigurationFactory.class;
+        Class<?> targetClass = TooltipConfiguration.class;
 //        Class<? extends Enum<?>> variantClass = ButtonVariant.class;
         new PrintClassMethod(factoryClass, targetClass).print();
 //        new PrintLumoTheme(factoryClass, targetClass).print(variantClass);

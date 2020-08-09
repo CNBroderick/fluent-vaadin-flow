@@ -2,6 +2,8 @@ package org.bklab.flow.base;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasStyle;
+import dev.mett.vaadin.tooltip.Tooltips;
+import dev.mett.vaadin.tooltip.config.TooltipConfiguration;
 import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
@@ -221,5 +223,19 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
     default E hasClassName(String hasClassName) {
         get().hasClassName(hasClassName);
         return (E) this;
+    }
+
+    default E tooltip(String text) {
+        if (text != null && !text.isBlank()) Tooltips.getCurrent().setTooltip(get(), text);
+        return (E) this;
+    }
+
+    default E tooltip(String text, TooltipConfiguration tooltipConfiguration) {
+        if (text != null && !text.isBlank()) Tooltips.getCurrent().setTooltip(get(), tooltipConfiguration);
+        return (E) this;
+    }
+
+    default E tooltip(TooltipConfiguration tooltipConfiguration) {
+        return tooltip(tooltipConfiguration.getContent(), tooltipConfiguration);
     }
 }

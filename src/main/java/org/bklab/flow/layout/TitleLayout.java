@@ -1,6 +1,7 @@
 package org.bklab.flow.layout;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import org.bklab.flow.factory.DivFactory;
@@ -8,6 +9,7 @@ import org.bklab.flow.text.TitleLabel;
 
 import java.util.Objects;
 
+@Tag("fluent-title-layout")
 @CssImport(value = "./styles/components/layout/fluent-title-layout.css")
 public class TitleLayout extends Div {
     private final static String CLASS_NAME = "fluent-title-layout";

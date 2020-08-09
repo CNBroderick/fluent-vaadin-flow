@@ -98,6 +98,12 @@ public class ComboBoxFactory<T> extends FlowFactory<ComboBox<T>, ComboBoxFactory
         return this;
     }
 
+    public ComboBoxFactory<T> itemsAndSelectFirst(Collection<T> items) {
+        get().setItems(items);
+        if (items != null) items.stream().findFirst().ifPresent(get()::setValue);
+        return this;
+    }
+
     public ComboBoxFactory<T> dataProvider(ComboBox.FetchItemsCallback<T> fetchItems, SerializableFunction<String, Integer> sizeCallback) {
         get().setDataProvider(fetchItems, sizeCallback);
         return this;

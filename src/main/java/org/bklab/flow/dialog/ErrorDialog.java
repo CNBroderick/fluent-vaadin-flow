@@ -44,7 +44,7 @@ public class ErrorDialog extends MessageDialog {
     }
 
     public ErrorDialog(String message) {
-        this(message, message);
+        this(message, (String) null);
     }
 
     public ErrorDialog(String message, Throwable throwable) {
@@ -53,7 +53,7 @@ public class ErrorDialog extends MessageDialog {
 
     public ErrorDialog(String message, String detail) {
         message(message);
-        addCopyButton(message);
+        if (detail != null) addCopyButton(message);
     }
 
     public ErrorDialog(String... message) {

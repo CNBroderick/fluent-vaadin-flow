@@ -3,12 +3,13 @@
 
     <groupId>org.bklab</groupId>
     <artifactId>fluent-vaadin-flow</artifactId>
-    <version>17.0.0.alpha6</version>
+    <version>17.0.0.beta1</version>
     <name>fluent-vaadin-flow</name>
     <description>Broderick Labs for fluent vaadin flow. Inherits common Vaadin components.</description>
+    <packaging>jar</packaging>
 
     <properties>
-        <vaadin.version>17.0.0.alpha6</vaadin.version>
+        <vaadin.version>17.0.0.beta1</vaadin.version>
 
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
@@ -105,6 +106,12 @@
                     <groupId>com.vaadin</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.mett.vaadin</groupId>
+            <artifactId>tooltip</artifactId>
+            <version>1.6.0</version>
         </dependency>
 
         <dependency>

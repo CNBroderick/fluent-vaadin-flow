@@ -36,12 +36,15 @@ public class FluentButton extends Button {
         return new FluentButton(VaadinIcon.CLOSE_SMALL, "取消");
     }
 
-    public static FluentButton errorButton() {
-        return new FluentButton(VaadinIcon.EXCLAMATION_CIRCLE_O, "错误");
+    public FluentButton() {
     }
 
     {
         addClassNames(CLASS_NAME);
+    }
+
+    public FluentButton(VaadinIcon icon, String text, ComponentEventListener<ClickEvent<Button>> clickListener) {
+        super(text, icon.create(), clickListener);
     }
 
     public FluentButton(String text) {
@@ -68,6 +71,10 @@ public class FluentButton extends Button {
         super(text, icon, clickListener);
     }
 
+    public static FluentButton errorButton() {
+        return new FluentButton(VaadinIcon.EXCLAMATION_CIRCLE_O, "错误").error();
+    }
+
     public FluentButton primary() {
         addClassNames(CLASS_NAME + "__primary");
         return this;
@@ -85,6 +92,11 @@ public class FluentButton extends Button {
 
     public FluentButton link() {
         addClassNames(CLASS_NAME + "__link");
+        return this;
+    }
+
+    public FluentButton clickListener(ComponentEventListener<ClickEvent<Button>> listener) {
+        addClickListener(listener);
         return this;
     }
 

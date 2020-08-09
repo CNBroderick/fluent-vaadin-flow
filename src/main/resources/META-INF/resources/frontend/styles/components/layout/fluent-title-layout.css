@@ -1,5 +1,5 @@
 .fluent-title-layout {
-    width: 100%;
+    width: calc(100% - 1em);
 }
 
 .fluent-title-layout__header {

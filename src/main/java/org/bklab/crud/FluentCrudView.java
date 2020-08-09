@@ -37,6 +37,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected final Div content = new Div();
     protected final Div footer = new Div();
     protected final List<T> entities = new ArrayList<>();
+    protected final Map<String, Predicate<T>> inMemoryEntityFilter = new LinkedHashMap<>();
     protected final Pagination pagination = new Pagination().onePageSize(20).limit(10).customLayout(new MiddleCustomPaginationLayout());
     protected final G grid = createGrid();
     private final List<Consumer<Exception>> exceptionConsumers = new ArrayList<>();
@@ -44,6 +45,8 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected boolean hasGridMenu = true;
     protected boolean hasPagination = true;
     private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
+    protected final List<Consumer<List<T>>> afterReloadListeners = new ArrayList<>();
+    private final List<T> inMemoryFilteredEntities = new ArrayList<>();
 
     public FluentCrudView() {
         getStyle().set("padding", "0.5em").set("background-color", "white");
@@ -214,8 +217,9 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
 
     protected PageSwitchEvent createPageSwitchEvent() {
         return (currentPageNumber, pageSize, lastPageNumber, isFromClient) -> grid.setItems(hasPagination
-                ? this.entities.stream().skip((Math.max(Math.min(currentPageNumber, entities.size() / pageSize + 1), 1) - 1) * pageSize).limit(pageSize).collect(Collectors.toList())
-                : entities
+                ? this.inMemoryFilteredEntities.stream().skip((Math.max(Math.min(currentPageNumber,
+                this.inMemoryFilteredEntities.size() / pageSize + 1), 1) - 1) * pageSize).limit(pageSize).collect(Collectors.toList())
+                : inMemoryFilteredEntities
         );
     }
 
@@ -249,12 +253,13 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return this;
     }
 
-    public void reloadGridData() {
-        this.entities.clear();
-        Map<String, Object> map = new LinkedHashMap<>();
-        parameterMap.forEach((k, v) -> Optional.ofNullable(v).map(Supplier::get).ifPresent(v1 -> map.put(k, v1)));
-        Optional.ofNullable(queryEntities(map)).ifPresent(this.entities::addAll);
-        pagination.totalData(this.entities.size()).build();
+    public void reloadGridDataInMemory() {
+        List<T> entities = this.entities.stream().filter(t ->
+                inMemoryEntityFilter.values().stream().filter(Objects::nonNull).allMatch(p -> p.test(t))
+        ).collect(Collectors.toList());
+        this.inMemoryFilteredEntities.clear();
+        this.inMemoryFilteredEntities.addAll(entities);
+        pagination.totalData(entities.size()).build();
         if (entities.isEmpty()) toggleEmpty();
         else {
             grid.setHeightByRows(false);
@@ -262,5 +267,14 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
             content.removeAll();
             content.add(grid);
         }
+        afterReloadListeners.forEach(a -> a.accept(entities));
+    }
+
+    public void reloadGridData() {
+        this.entities.clear();
+        Map<String, Object> map = new LinkedHashMap<>();
+        parameterMap.forEach((k, v) -> Optional.ofNullable(v).map(Supplier::get).ifPresent(v1 -> map.put(k, v1)));
+        Optional.ofNullable(queryEntities(map)).ifPresent(this.entities::addAll);
+        this.reloadGridDataInMemory();
     }
 }

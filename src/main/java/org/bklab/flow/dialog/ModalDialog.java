@@ -8,6 +8,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.dom.Style;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.factory.ButtonFactory;
@@ -17,6 +18,7 @@ import org.bklab.flow.layout.ToolBar;
 import org.bklab.flow.text.TitleLabel;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 @CssImport(value = "./styles/components/modal-dialog.css", themeFor = "vaadin-dialog-overlay")
 public class ModalDialog extends Dialog {
@@ -172,6 +174,35 @@ public class ModalDialog extends Dialog {
 
     public ModalDialog addButton(BiConsumer<ButtonFactory, ModalDialog> buttonModalConsumer) {
         buttonModalConsumer.accept(new ButtonFactory().lumoSmall(), this);
+        return this;
+    }
+
+    public ModalDialog addButton(Consumer<FluentButton> buttonModalConsumer) {
+        FluentButton fluentButton = new FluentButton();
+        footerRight(fluentButton);
+        buttonModalConsumer.accept(fluentButton);
+        return this;
+    }
+
+    public ModalDialog addButton(Button button) {
+        footerRight(button);
+        return this;
+    }
+
+    public ModalDialog addPrimaryButton(Consumer<FluentButton> buttonModalConsumer) {
+        FluentButton fluentButton = new FluentButton().primary();
+        footerRight(fluentButton);
+        buttonModalConsumer.accept(fluentButton);
+        return this;
+    }
+
+    public ModalDialog addPrimaryButton(String text, ComponentEventListener<ClickEvent<Button>> listener) {
+        footerRight(new FluentButton(text, listener));
+        return this;
+    }
+
+    public ModalDialog addPrimaryButton(VaadinIcon icon, String text, ComponentEventListener<ClickEvent<Button>> listener) {
+        footerRight(new FluentButton(icon, text, listener));
         return this;
     }
 
