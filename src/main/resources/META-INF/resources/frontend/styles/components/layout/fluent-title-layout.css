@@ -3,14 +3,14 @@
 }
 
 .fluent-title-layout__header {
-    width: 100%;
+    width: calc(100% - 1em) !important;
     padding: 0.5em;
 }
 
 .fluent-title-layout__content {
     border-top: 1px solid #d9d9d9;
     padding: 0.5em;
-    width: 100%;
+    width: calc(100% - 1em) !important;
 }
 
 .fluent-title-layout__content:not(:last-child) {

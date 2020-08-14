@@ -16,7 +16,7 @@ public class AdvanceSearchField<E extends Dialog> extends TextField {
 
     public AdvanceSearchField(E dialog) {
         this.dialog = dialog;
-        asFactory().lumoSmall().minWidth("200px").width("40vw").maxWidth("50vw").readOnly().value("高级搜索");
+        asFactory().lumoSmall().minWidth("200px").width("25vw").maxWidth("50vw").readOnly().value("高级搜索");
         clearButton = new FluentButton(VaadinIcon.CLOSE.create()).link().asFactory().clickListener(e -> {
             clear();
             e.getSource().setVisible(false);

@@ -11,6 +11,11 @@
     vertical-align: middle;
 }
 
+.fluent-crud-view__content.fluent-crud-view__no_header {
+    padding-top: 0 !important;
+    border-top: none !important;
+}
+
 .fluent-crud-view__content {
     overflow-y: auto;
     flex-grow: 1;

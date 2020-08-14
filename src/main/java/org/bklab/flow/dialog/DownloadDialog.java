@@ -1,5 +1,6 @@
 package org.bklab.flow.dialog;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -7,11 +8,14 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.AbstractStreamResource;
+import com.vaadin.flow.server.StreamResource;
 import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.factory.HorizontalLayoutFactory;
 import org.bklab.flow.factory.VerticalLayoutFactory;
 import org.bklab.flow.layout.LmrHorizontalLayout;
 import org.bklab.flow.layout.TmbVerticalLayout;
+
+import java.io.*;
 
 public class DownloadDialog extends FluentDialog {
     private final Anchor anchor;
@@ -19,6 +23,7 @@ public class DownloadDialog extends FluentDialog {
     private Icon icon;
     private String header;
     private String message;
+    private Component preview;
 
     public DownloadDialog(String message, AbstractStreamResource streamResource) {
         this.message = message;
@@ -26,6 +31,26 @@ public class DownloadDialog extends FluentDialog {
         anchor.add(new ButtonFactory().text("下载").clickListener(e -> close()).lumoSmall().lumoPrimary().get());
         this.bottom = new LmrHorizontalLayout();
         setWidth("420px");
+    }
+
+    public DownloadDialog(String message, File file) {
+        this(message, new StreamResource(file.getName(), () -> {
+            try {
+                return new BufferedInputStream(new FileInputStream(file));
+            } catch (FileNotFoundException e) {
+                new ErrorDialog(e).build().open();
+                return null;
+            }
+        }));
+    }
+
+    public DownloadDialog(String message, String fileName, InputStream inputStream) {
+        this(message, new StreamResource(fileName, () -> inputStream));
+    }
+
+    public DownloadDialog preview(Component preview) {
+        this.preview = preview;
+        return this;
     }
 
     public Anchor getAnchor() {
@@ -61,6 +86,10 @@ public class DownloadDialog extends FluentDialog {
 
         icon.getStyle().set("min-width", "1.8em");
 
+        if (preview != null) {
+            preview.getElement().getStyle().set("align-self", "baseline");
+            bottom.right(preview);
+        }
         bottom.right(anchor, new ButtonFactory().lumoSmall().text("取消").clickListener(x -> close()).get());
         if (header == null) return buildNoHeader();
 

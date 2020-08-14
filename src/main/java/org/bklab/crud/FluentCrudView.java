@@ -41,7 +41,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected final Pagination pagination = new Pagination().onePageSize(20).limit(10).customLayout(new MiddleCustomPaginationLayout());
     protected final G grid = createGrid();
     private final List<Consumer<Exception>> exceptionConsumers = new ArrayList<>();
-    protected final Button searchButton = new FluentButton(VaadinIcon.SEARCH, "查询").asFactory().clickListener(e -> reloadGridData()).get();
+    protected final Button searchButton = new FluentButton(VaadinIcon.SEARCH, "查询").primary().asFactory().clickListener(e -> reloadGridData()).get();
     protected boolean hasGridMenu = true;
     protected boolean hasPagination = true;
     private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
@@ -72,6 +72,13 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     public abstract G createGrid();
 
     public abstract Collection<T> queryEntities(Map<String, Object> parameters);
+
+    public FluentCrudView<T, G> headerVisible(boolean visible) {
+        header.setVisible(visible);
+        if (visible) content.removeClassName("fluent-crud-view__no_header");
+        else content.addClassName("fluent-crud-view__no_header");
+        return this;
+    }
 
     public FluentCrudView<T, G> noPagination() {
         this.hasPagination = false;
