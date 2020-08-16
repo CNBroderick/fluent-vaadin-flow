@@ -124,11 +124,14 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
             Button button = buttonSupplier.get();
             ContextMenu contextMenu = new ContextMenu(button);
             contextMenu.addOpenedChangeListener(e -> {
-                if (e.isOpened() && contextMenu.getItems().isEmpty()) {
-                    menuEntityBiConsumer.safeBuild(this, contextMenu, entity);
+                if (e.isOpened()) {
+                    if (contextMenu.getItems().isEmpty()) {
+                        menuEntityBiConsumer.safeBuild(this, contextMenu, entity);
+                        contextMenu.setVisible(true);
+                    }
+                    grid.select(entity);
                 }
             });
-            button.addClickListener(e -> grid.select(entity));
             FluentCrudMenuButton<T, G> crudMenuButton = new FluentCrudMenuButton<>(this, entity, button, contextMenu, menuEntityBiConsumer);
             menuButtons.add(crudMenuButton);
             contextMenu.setOpenOnClick(true);

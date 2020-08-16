@@ -1,19 +1,28 @@
 :host([theme~="pagination"]) {
     padding: 0 !important;
+    height: 100%;
+}
+
+:host([theme~="pagination"]):focus {
+    background-color: white !important;
 }
 
 :host([theme~="pagination"]) .vaadin-text-field-container {
-    max-height: 29px;
-    max-height: -webkit-fill-available !important;
+    height: 100%;
+}
+
+:host([theme~="pagination"]) .pagination-page-size__normal.vaadin-text-field-container {
+    height: 100%;
 }
 
 :host([theme~="pagination"]) .pagination-page-size__normal [part="input-field"] {
-    height: 22px !important;
+    height: 100%;
+!important;
 }
 
 :host([theme~="pagination"]) [part="input-field"] {
     margin: auto 0;
-    height: 14px;
+    height: 100%;
     font-size: 14px;
     text-align: center !important;
     background-color: white !important;

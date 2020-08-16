@@ -19,6 +19,7 @@ public interface IFluentMenuBuilder<T, G extends Grid<T>> {
 
     default void safeBuild(FluentCrudView<T, G> fluentCrudView, ContextMenu contextMenu, T entity) {
         try {
+
             build(fluentCrudView, contextMenu, entity);
             removeDuplicateSeparator(contextMenu);
             Component target = contextMenu.getTarget();

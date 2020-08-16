@@ -27,6 +27,7 @@ public class View extends MainAppLayout {
         naviMenu.addNaviItem(VaadinIcon.VAADIN_H, "组件库", ComponentDemoView.class);
         naviMenu.addNaviItem(VaadinIcon.DATABASE, "暂无数据", EmptyView.class);
         naviMenu.addNaviItem(VaadinIcon.PACKAGE, "翻页工具", PaginationView.class);
+        naviMenu.addNaviItem(VaadinIcon.PACKAGE, "颜色管理", CrudView.class);
     }
 
     @Override
