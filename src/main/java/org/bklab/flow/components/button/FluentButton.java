@@ -20,6 +20,10 @@ public class FluentButton extends Button {
         super(text, icon.create());
     }
 
+    public static FluentButton addButton() {
+        return new FluentButton(VaadinIcon.PLUS, "新建").primary();
+    }
+
     public static FluentButton saveButton() {
         return new FluentButton(VaadinIcon.CHECK_CIRCLE_O, "保存").primary();
     }

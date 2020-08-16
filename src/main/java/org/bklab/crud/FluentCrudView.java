@@ -179,17 +179,21 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
 
     public void insertEntity(T entity) {
         this.entities.add(entity);
+        this.inMemoryFilteredEntities.add(entity);
         this.pagination.totalData(this.entities.size()).build();
     }
 
     public void deleteEntity(T entity) {
         this.entities.remove(entity);
+        this.inMemoryFilteredEntities.remove(entity);
         this.pagination.totalData(this.entities.size()).build();
         this.removeContextMenu(entity);
     }
 
     public void deleteEntity(T entity, BiPredicate<T, T> isEquals) {
-        this.entities.stream().filter(t -> isEquals.test(t, entity)).collect(Collectors.toList()).forEach(this.entities::remove);
+        List<T> instance = this.entities.stream().filter(t -> isEquals.test(t, entity)).collect(Collectors.toList());
+        this.entities.removeAll(instance);
+        this.inMemoryFilteredEntities.removeAll(entities);
         this.pagination.totalData(this.entities.size()).build();
         this.removeContextMenu(entity, isEquals == null ? getSameEntityBiPredicate() : isEquals);
     }
@@ -203,11 +207,16 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     public void updateEntity(T entity, Predicate<T> isEquals) {
-        List<T> instances = entities.stream().map(t -> isEquals.test(t) ? entity : t).collect(Collectors.toList());
-        this.entities.clear();
-        this.entities.addAll(instances);
-        this.pagination.totalData(this.entities.size()).build();
+        replaceSameEntity(entities, entity, isEquals);
+        replaceSameEntity(inMemoryFilteredEntities, entity, isEquals);
         this.reloadContextMenu(entity, isEquals);
+        this.pagination.totalData(this.entities.size()).build();
+    }
+
+    private void replaceSameEntity(Collection<T> collection, T entity, Predicate<T> isEquals) {
+        List<T> instances = collection.stream().map(t -> isEquals.test(t) ? entity : t).collect(Collectors.toList());
+        collection.clear();
+        collection.addAll(instances);
     }
 
     public FluentCrudView<T, G> buildGridMenu(IFluentGridMenuBuilder<T, G> menuEntityBiConsumer) {
