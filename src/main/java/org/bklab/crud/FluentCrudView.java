@@ -47,6 +47,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
     protected final List<Consumer<List<T>>> afterReloadListeners = new ArrayList<>();
     private final List<T> inMemoryFilteredEntities = new ArrayList<>();
+    protected String emptyMessage;
 
     public FluentCrudView() {
         getStyle().set("padding", "0.5em").set("background-color", "white");
@@ -92,8 +93,9 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
 
     public FluentCrudView<T, G> toggleEmpty() {
         content.removeAll();
-        EmptyLayout emptyLayout = new EmptyLayout();
+        EmptyLayout emptyLayout = emptyMessage == null ? new EmptyLayout() : new EmptyLayout(emptyMessage);
         emptyLayout.getElement().getStyle().set("flex-grow", "1");
+        emptyLayout.setHeight("calc(100% - 5em)");
         if (grid != null) {
             grid.setHeightByRows(true);
             content.add(grid);

@@ -28,11 +28,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
     public AbstractSearchDialog() {
         build();
 
-        advanceSearchField.getClearButton().addClickListener(e -> {
-            clearParameterConsumer.forEach(ClearParameterListener::clear);
-            callSaveListeners(new LinkedHashMap<>());
-        });
-
+        refreshSearchFieldValue();
         title("高级搜索").content(formLayout).width("600px", "600px", "80vw");
         addCancelButton();
         footerRight(new FluentButton(VaadinIcon.SEARCH, "搜索").primary().asFactory().clickListener(e -> search()).get());
@@ -43,12 +39,21 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
     protected abstract void build();
 
     protected void search() {
-        Map<String, Object> map = getConditions();
-        String status = statusBuilder.stream().map(Supplier::get).filter(Objects::nonNull).collect(Collectors.joining(", \n"));
-        advanceSearchField.setValue(status);
-        Tooltips.getCurrent().setTooltip(advanceSearchField, status);
-        callSaveListeners(map);
+        refreshSearchFieldValue();
+        callSaveListeners(getConditions());
         close();
+    }
+
+    public void refreshSearchFieldValue() {
+        String status = createStatus();
+        if (status != null && !status.isBlank()) {
+            advanceSearchField.setValue(status);
+            Tooltips.getCurrent().setTooltip(advanceSearchField, status);
+        }
+    }
+
+    public String createStatus() {
+        return statusBuilder.stream().map(Supplier::get).filter(Objects::nonNull).collect(Collectors.joining(", \n"));
     }
 
     public Map<String, Object> getConditions() {
@@ -77,14 +82,30 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
     }
 
     protected <T> void register(String name, HasValue<?, T> hasValue, Function<T, String> toStatusLabel) {
+        this.register(name, name, hasValue, toStatusLabel);
+    }
+
+    protected <T> void register(String caption, String name, HasValue<?, T> hasValue, Function<T, String> toStatusLabel) {
         parameterMap.put(name, () -> {
             T value = hasValue.getValue();
             if (value == null) return null;
             if (value instanceof String) return ((String) value).trim().isEmpty() ? null : ((String) value).trim();
             return value;
         });
-        statusBuilder.add(() -> Optional.ofNullable(hasValue.getValue()).map(toStatusLabel).map(a -> name + ": " + a).orElse(null));
+        addStatusBuilder(caption, hasValue, toStatusLabel);
         clearParameterConsumer.add(hasValue::clear);
+    }
+
+    protected <T, V> void register(String caption, String name, HasValue<?, T> hasValue, Function<T, V> toValueFunction, Function<T, String> toStatusLabel) {
+        parameterMap.put(name, () -> Optional.ofNullable(hasValue.getValue()).map(toValueFunction).orElse(null));
+        addStatusBuilder(caption, hasValue, toStatusLabel);
+        clearParameterConsumer.add(hasValue::clear);
+    }
+
+    private <T, V> void addStatusBuilder(String caption, HasValue<?, T> hasValue, Function<T, String> toStatusLabel) {
+        statusBuilder.add(() -> Optional.ofNullable(hasValue.getValue()).map(value -> value instanceof String
+                ? ((String) value).trim().isEmpty() ? null : ((String) value).trim() :
+                toStatusLabel.apply(value)).map(a -> caption + ": " + a).orElse(null));
     }
 
     protected <T> void register(String name, String minName, String maxName, HasValue<?, T> min, HasValue<?, T> max, Function<T, String> toStatusLabel) {

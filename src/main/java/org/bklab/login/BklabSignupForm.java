@@ -28,7 +28,7 @@ import com.vaadin.flow.templatemodel.TemplateModel;
  * does not overwrite or otherwise change this file.
  */
 @Tag("bklab-signup-form")
-@JsModule("./src/login/bklab-signup-form.js")
+@JsModule("./src/org/bklab/login/bklab-signup-form.js")
 public class BklabSignupForm extends PolymerTemplate<BklabSignupForm.BklabSignupFormModel> {
 
     @Id("mail")

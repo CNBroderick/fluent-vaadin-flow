@@ -34,7 +34,7 @@ import java.util.function.Consumer;
  * does not overwrite or otherwise change this file.
  */
 @Tag("bklab-login-form")
-@JsModule("./src/login/bklab-login-form.js")
+@JsModule("./src/org/bklab/login/bklab-login-form.js")
 public class BklabLoginForm extends PolymerTemplate<BklabLoginForm.BklabLoginFormModel> {
 
     @Id("logo")

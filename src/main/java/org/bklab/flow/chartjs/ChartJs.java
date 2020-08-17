@@ -13,7 +13,7 @@ import com.vaadin.flow.shared.Registration;
 @NpmPackage(value = "chart.js", version = "2.9.3")
 @NpmPackage(value = "moment", version = "2.24.0")
 @NpmPackage(value = "@polymer/paper-slider", version = "^3.0.1")
-@JsModule("./src/chart/chartjs.js")
+@JsModule("./src/org/bklab/chart/chartjs.js")
 @JsModule("chart.js/dist/Chart.min.js")
 @JsModule("moment/moment.js")
 /**

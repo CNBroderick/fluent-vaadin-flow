@@ -2,14 +2,16 @@
   "name": "no-name",
   "license": "UNLICENSED",
   "dependencies": {
+    "@polymer/iron-dropdown": "3.0.1",
     "@polymer/iron-icon": "3.0.1",
     "@polymer/iron-iconset-svg": "^3.0.1",
     "@polymer/iron-list": "3.1.0",
-    "@polymer/iron-dropdown": "3.0.1",
+    "@polymer/iron-overlay-behavior": "^3.0.2",
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-icon-button": "^3.0.2",
     "@polymer/paper-slider": "^3.0.1",
     "@polymer/polymer": "3.2.0",
+    "@types/echarts": "^4.6.4",
     "@vaadin/flow-frontend": "./target/flow-frontend",
     "@vaadin/form": "./target/flow-frontend/form",
     "@vaadin/router": "1.7.2",
@@ -53,9 +55,10 @@
     "@vaadin/vaadin-time-picker": "2.3.0-beta1",
     "@vaadin/vaadin-upload": "4.4.0-beta1",
     "@webcomponents/webcomponentsjs": "^2.2.10",
+    "chart.js": "2.9.3",
+    "echarts": "^4.8.0",
     "lit-element": "2.3.1",
     "lit-html": "^1.1.2",
-    "chart.js": "2.9.3",
     "moment": "2.24.0",
     "retry": "0.12.0",
     "tippy.js": "6.2.3"
@@ -138,7 +141,10 @@
       "react-dom": "^16.13.1",
       "react": "^16.13.1",
       "retry": "0.12.0",
-      "tippy.js": "6.2.3"
+      "tippy.js": "6.2.3",
+      "@polymer/iron-overlay-behavior": "^3.0.2",
+      "@types/echarts": "^4.6.4",
+      "echarts": "4.8.0"
     },
     "devDependencies": {
       "webpack-babel-multi-target-plugin": "2.3.3",
@@ -161,6 +167,6 @@
       "lit-html": "1.2.1",
       "@types/validator": "10.11.3"
     },
-    "hash": "5e09b834cd8558bb82647957a87e861994b47be11e356e9f77a0b581429b3d58"
+    "hash": "5bcca57c65283c60c1dfcda957159b93cc042e8445ae2e37a0e23b57165c41cd"
   }
 }

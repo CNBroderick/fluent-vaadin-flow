@@ -3,10 +3,12 @@ dependencies:
   '@polymer/iron-icon': npm.bbkki.com/@polymer/iron-icon/3.0.1
   '@polymer/iron-iconset-svg': npm.bbkki.com/@polymer/iron-iconset-svg/3.0.1
   '@polymer/iron-list': npm.bbkki.com/@polymer/iron-list/3.1.0
+  '@polymer/iron-overlay-behavior': npm.bbkki.com/@polymer/iron-overlay-behavior/3.0.3
   '@polymer/paper-button': npm.bbkki.com/@polymer/paper-button/3.0.1
   '@polymer/paper-icon-button': npm.bbkki.com/@polymer/paper-icon-button/3.0.2
   '@polymer/paper-slider': npm.bbkki.com/@polymer/paper-slider/3.0.1
   '@polymer/polymer': npm.bbkki.com/@polymer/polymer/3.2.0
+  '@types/echarts': npm.bbkki.com/@types/echarts/4.6.4
   '@vaadin/flow-frontend': 'link:target/flow-frontend'
   '@vaadin/form': 'link:target/flow-frontend/form'
   '@vaadin/router': npm.bbkki.com/@vaadin/router/1.7.2
@@ -51,6 +53,7 @@ dependencies:
   '@vaadin/vaadin-upload': npm.bbkki.com/@vaadin/vaadin-upload/4.4.0-beta1
   '@webcomponents/webcomponentsjs': npm.bbkki.com/@webcomponents/webcomponentsjs/2.4.3
   chart.js: npm.bbkki.com/chart.js/2.9.3
+  echarts: npm.bbkki.com/echarts/4.8.0
   lit-element: npm.bbkki.com/lit-element/2.3.1
   lit-html: npm.bbkki.com/lit-html/1.2.1
   moment: npm.bbkki.com/moment/2.24.0
@@ -1785,6 +1788,16 @@ packages:
       registry: 'https://npm.bbkki.com/'
       tarball: 'https://npm.bbkki.com/@popperjs%2fcore/-/core-2.4.4.tgz'
     version: 2.4.4
+  npm.bbkki.com/@types/echarts/4.6.4:
+    dependencies:
+      '@types/zrender': npm.bbkki.com/@types/zrender/4.0.0
+    dev: false
+    name: '@types/echarts'
+    resolution:
+      integrity: sha512-CUE+OEKyiaf39G1w0vK6DwEcz84jMJc3kYuUlPpSjJy9lwLTXjpc/12ARo2y6/CUxTzLvZHBSHtTIAVILdtjwQ==
+      registry: 'https://npm.bbkki.com/'
+      tarball: 'https://npm.bbkki.com/@types%2fecharts/-/echarts-4.6.4.tgz'
+    version: 4.6.4
   npm.bbkki.com/@types/events/3.0.0:
     dev: true
     name: '@types/events'
@@ -1837,6 +1850,14 @@ packages:
       registry: 'https://npm.bbkki.com/'
       tarball: 'https://npm.bbkki.com/@types/validator/-/validator-10.11.3.tgz'
     version: 10.11.3
+  npm.bbkki.com/@types/zrender/4.0.0:
+    dev: false
+    name: '@types/zrender'
+    resolution:
+      integrity: sha512-s89GOIeKFiod2KSqHkfd2rzx+T2DVu7ihZCBEBnhFrzvQPUmzvDSBot9Fi1DfMQm9Odg+rTqoMGC38RvrwJK2w==
+      registry: 'https://npm.bbkki.com/'
+      tarball: 'https://npm.bbkki.com/@types%2fzrender/-/zrender-4.0.0.tgz'
+    version: 4.0.0
   npm.bbkki.com/@vaadin/router/1.7.2:
     dependencies:
       '@vaadin/vaadin-usage-statistics': npm.bbkki.com/@vaadin/vaadin-usage-statistics/2.1.0
@@ -4633,6 +4654,16 @@ packages:
       registry: 'https://npm.bbkki.com/'
       tarball: 'https://npm.bbkki.com/duplexify/-/duplexify-3.7.1.tgz'
     version: 3.7.1
+  npm.bbkki.com/echarts/4.8.0:
+    dependencies:
+      zrender: npm.bbkki.com/zrender/4.3.1
+    dev: false
+    name: echarts
+    resolution:
+      integrity: sha512-YwShpug8fWngj/RlgxDaYrLBoD+LsZUArrusjNPHpAF+is+gGe38xx4W848AwWMGoi745t3OXM52JedNrv+F6g==
+      registry: 'https://npm.bbkki.com/'
+      tarball: 'https://npm.bbkki.com/echarts/-/echarts-4.8.0.tgz'
+    version: 4.8.0
   npm.bbkki.com/ee-first/1.1.1:
     dev: true
     name: ee-first
@@ -10398,15 +10429,25 @@ packages:
       registry: 'https://npm.bbkki.com/'
       tarball: 'https://npm.bbkki.com/yargs/-/yargs-13.3.2.tgz'
     version: 13.3.2
+  npm.bbkki.com/zrender/4.3.1:
+    dev: false
+    name: zrender
+    resolution:
+      integrity: sha512-CeH2TpJeCdG0TAGYoPSAcFX2ogdug1K7LIn9UO/q9HWqQ54gWhrMAlDP9AwWYMUDhrPe4VeazQ4DW3msD96nUQ==
+      registry: 'https://npm.bbkki.com/'
+      tarball: 'https://npm.bbkki.com/zrender/-/zrender-4.3.1.tgz'
+    version: 4.3.1
 specifiers:
   '@polymer/iron-dropdown': 3.0.1
   '@polymer/iron-icon': 3.0.1
   '@polymer/iron-iconset-svg': 3.0.1
   '@polymer/iron-list': 3.1.0
+  '@polymer/iron-overlay-behavior': 3.0.3
   '@polymer/paper-button': ^3.0.1
   '@polymer/paper-icon-button': ^3.0.2
   '@polymer/paper-slider': ^3.0.1
   '@polymer/polymer': 3.2.0
+  '@types/echarts': ^4.6.4
   '@types/validator': 10.11.3
   '@vaadin/flow-frontend': ./target/flow-frontend
   '@vaadin/form': ./target/flow-frontend/form
@@ -10456,6 +10497,7 @@ specifiers:
   chokidar: ^3.4.0
   compression-webpack-plugin: 3.1.0
   copy-webpack-plugin: 5.1.1
+  echarts: ^4.8.0
   html-webpack-plugin: 3.2.0
   lit-element: ^2.2.1
   lit-html: ^1.1.2

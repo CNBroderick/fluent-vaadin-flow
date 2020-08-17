@@ -22,6 +22,45 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
         return (E) this;
     }
 
+    default E alignItems(String align) {
+        get().getStyle().set("align-items", align);
+        return (E) this;
+    }
+
+    default E alignItemsCenter() {
+        return alignItems("center");
+    }
+
+    default E alignItemsBaseline() {
+        return alignItems("baseline");
+    }
+
+    default E alignSelf(String align) {
+        get().getStyle().set("align-self", align);
+        return (E) this;
+    }
+
+    default E alignSelfCenter() {
+        return alignSelf("center");
+    }
+
+    default E alignSelfBaseline() {
+        return alignSelf("baseline");
+    }
+
+    default E alignContent(String align) {
+        get().getStyle().set("align-content", align);
+        return (E) this;
+    }
+
+    default E alignContentCenter() {
+        return alignContent("center");
+    }
+
+    default E alignContentBaseline() {
+        return alignContent("baseline");
+    }
+
     default E overflowYScroll() {
         return overflowY("auto");
     }

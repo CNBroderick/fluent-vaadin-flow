@@ -12,9 +12,11 @@
 package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.AbstractField;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
+import com.vaadin.flow.component.timepicker.TimePicker;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.*;
 import org.bklab.flow.components.time.ChineseDatePickerI18n;
@@ -22,6 +24,7 @@ import org.bklab.flow.components.time.ChineseDatePickerI18n;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 public class DateTimePickerFactory extends FlowFactory<DateTimePicker, DateTimePickerFactory> implements
         AbstractFieldFactory<LocalDateTime, DateTimePicker, DateTimePickerFactory>,
@@ -71,6 +74,67 @@ public class DateTimePickerFactory extends FlowFactory<DateTimePicker, DateTimeP
 
     public DateTimePickerFactory(LocalDateTime initialDateTime, Locale locale) {
         this(new DateTimePicker(initialDateTime, locale));
+    }
+
+    @Override
+    public DateTimePickerFactory lumoSmall() {
+        super.lumoSmall().get().getElement().getChildren()
+                .forEach(a -> a.setAttribute("theme", "small"));
+        return this;
+    }
+
+    public DateTimePickerFactory startTimePlaceholder() {
+        datePlaceholder("开始日期");
+        timePlaceholder("开始时间");
+        return this;
+    }
+
+    public DateTimePickerFactory endTimePlaceholder() {
+        datePlaceholder("结束日期");
+        timePlaceholder("结束时间");
+        return this;
+    }
+
+    public DateTimePickerFactory clearButtonVisible(boolean clearButtonVisible) {
+        get().getElement().getChildren().forEach(element -> element.setProperty("clearButtonVisible", clearButtonVisible));
+        return this;
+    }
+
+    public DateTimePickerFactory widthMinimal() {
+        get().getElement().getChildren().forEach(element -> element.getStyle().set("width", "10em"));
+        return this;
+    }
+
+    public DateTimePickerFactory peekDatePicker(Consumer<DatePicker> datePickerConsumer) {
+        datePickerConsumer.accept(getDatePicker());
+        return this;
+    }
+
+    public DateTimePickerFactory peekTimePicker(Consumer<TimePicker> timePickerConsumer) {
+        timePickerConsumer.accept(getTimePicker());
+        return this;
+    }
+
+    public DatePicker getDatePicker() {
+        try {
+            Class<? extends Component> asSubclass = Class.forName(
+                    "com.vaadin.flow.component.datetimepicker.DateTimePickerDatePicker"
+            ).asSubclass(Component.class);
+            return (DatePicker) get().getElement().getChild(0).as(asSubclass);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("转换失败: " + e.getMessage());
+        }
+    }
+
+    public TimePicker getTimePicker() {
+        try {
+            Class<? extends Component> asSubclass = Class.forName(
+                    "com.vaadin.flow.component.datetimepicker.DateTimePickerTimePicker"
+            ).asSubclass(Component.class);
+            return (TimePicker) get().getElement().getChild(1).as(asSubclass);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("转换失败: " + e.getMessage());
+        }
     }
 
     public DateTimePickerFactory readOnly(boolean readOnly) {

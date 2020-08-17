@@ -1,9 +1,9 @@
 package org.bklab;
 
+import com.vaadin.testbench.TestBenchElement;
+import org.bklab.flow.factory.DateTimePickerFactory;
 import org.junit.Assert;
 import org.junit.Test;
-
-import com.vaadin.testbench.TestBenchElement;
 
 public class ViewIT extends AbstractViewTest {
 
@@ -15,5 +15,9 @@ public class ViewIT extends AbstractViewTest {
         // tag
         Assert.assertTrue(
                 paperSlider.$(TestBenchElement.class).all().size() > 0);
+
+        new DateTimePickerFactory().getDatePicker();
+        new DateTimePickerFactory().getTimePicker();
+
     }
 }

@@ -72,7 +72,7 @@ public class UploadFactory extends FlowFactory<Upload, UploadFactory> implements
         return this;
     }
 
-    public UploadFactory acceptedFileTypes(String[] acceptedFileTypes) {
+    public UploadFactory acceptedFileTypes(String... acceptedFileTypes) {
         get().setAcceptedFileTypes(acceptedFileTypes);
         return this;
     }

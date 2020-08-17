@@ -11,9 +11,9 @@ import org.bklab.flow.components.selector.ButtonSelector;
 import org.bklab.flow.dialog.ErrorDialog;
 import org.bklab.flow.dialog.MessageDialog;
 import org.bklab.flow.dialog.ModalDialog;
+import org.bklab.flow.echarts.ECharts;
 import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.factory.NotificationFactory;
-import org.bklab.flow.layout.EmptyLayout;
 import org.bklab.flow.layout.ToolBar;
 import org.bklab.flow.text.TitleLabel;
 
@@ -27,6 +27,8 @@ import java.util.stream.IntStream;
 public class ComponentDemoView extends Div {
 
     public ComponentDemoView() {
+
+        getStyle().set("background-color", "var(--lumo-base-color)");
 
         PaperSlider paperSlider = new PaperSlider();
         add(paperSlider);
@@ -84,7 +86,8 @@ public class ComponentDemoView extends Div {
         objectMultiSelectComboBox.items(IntStream.range(1, 13).mapToObj(r -> LocalDateTime.now().plusMonths(r)));
 
         add(objectMultiSelectComboBox);
-        add(new EmptyLayout());
+
+        add(new ECharts());
 
         setSizeFull();
 //        add( new VerticalLayoutFactory(new SimplyChart())
