@@ -150,6 +150,10 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
         return this;
     }
 
+    public Span getMessage() {
+        return message;
+    }
+
     @Override
     public MessageDialog get() {
         return this;

@@ -8,21 +8,21 @@ import com.vaadin.flow.data.provider.LazyDataView;
 import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
-public interface HasLazyDataViewFactory<T, V extends LazyDataView<T>,
-        C extends Component & HasLazyDataView<T, V>,
-        E extends HasLazyDataViewFactory<T, V, C, E>> extends IFlowFactory<C> {
+public interface HasLazyDataViewFactory<T, F, V extends LazyDataView<T>,
+        C extends Component & HasLazyDataView<T, F, V>,
+        E extends HasLazyDataViewFactory<T, F, V, C, E>> extends IFlowFactory<C> {
 
-    default E setItems(CallbackDataProvider.FetchCallback<T, Void> fetchCallback) {
+    default E setItems(CallbackDataProvider.FetchCallback<T, F> fetchCallback) {
         get().setItems(fetchCallback);
         return (E) this;
     }
 
-    default E setItems(CallbackDataProvider.FetchCallback<T, Void> fetchCallback, CallbackDataProvider.CountCallback<T, Void> countCallback) {
+    default E setItems(CallbackDataProvider.FetchCallback<T, F> fetchCallback, CallbackDataProvider.CountCallback<T, F> countCallback) {
         get().setItems(fetchCallback, countCallback);
         return (E) this;
     }
 
-    default E setItems(BackEndDataProvider<T, Void> backEndDataProvider) {
+    default E setItems(BackEndDataProvider<T, F> backEndDataProvider) {
         get().setItems(backEndDataProvider);
         return (E) this;
     }

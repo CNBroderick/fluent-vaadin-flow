@@ -37,7 +37,7 @@ public class NaviItem extends ListItem {
 	private final Class<? extends Component> navigationTarget;
 	private final String text;
 	private final List<NaviItem> subItems;
-	protected Button expandCollapse;
+	public Button expandCollapse;
 	private int level = 0;
 	private boolean subItemsVisible;
 
@@ -125,6 +125,10 @@ public class NaviItem extends ListItem {
 		subItems.forEach(item -> item.setVisible(visible));
 		subItemsVisible = visible;
 		updateAriaLabel();
+	}
+
+	public List<NaviItem> getSubItems() {
+		return subItems;
 	}
 
 	public String getText() {

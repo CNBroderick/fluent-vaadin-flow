@@ -8,6 +8,7 @@ import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.textfield.KeywordField;
 import org.bklab.flow.dialog.ModalDialog;
 import org.bklab.flow.factory.FormLayoutFactory;
+import org.bklab.flow.layout.ToolBar;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -34,6 +35,12 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
         footerRight(new FluentButton(VaadinIcon.SEARCH, "搜索").primary().asFactory().clickListener(e -> search()).get());
 
         new FormLayoutFactory(formLayout).warpWhenOverflow().formItemAlignEnd().widthFull().get();
+
+        advanceSearchField.getClearButton().addClickListener(e -> {
+            clearParameterConsumer.forEach(ClearParameterListener::clear);
+            callSaveListeners(getConditions());
+            Tooltips.getCurrent().removeTooltip(e.getSource());
+        });
     }
 
     protected abstract void build();
@@ -73,11 +80,16 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
 
 
     protected void register(String name, HasValue<?, String> hasValue) {
+        register(name, name, hasValue);
+    }
+
+    protected void register(String caption, String name, HasValue<?, String> hasValue) {
         parameterMap.put(name, () -> {
             String value = hasValue.getValue();
             return value == null || value.isBlank() ? null : value.trim();
         });
-        statusBuilder.add(() -> Optional.ofNullable(hasValue.getValue()).map(s -> s.isBlank() ? null : s.strip()).orElse(null));
+        statusBuilder.add(() -> Optional.ofNullable(hasValue.getValue()).map(s -> s.isBlank() ? null : s.strip())
+                .map(s -> caption + ": " + s).orElse(null));
         clearParameterConsumer.add(hasValue::clear);
     }
 
@@ -90,6 +102,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
             T value = hasValue.getValue();
             if (value == null) return null;
             if (value instanceof String) return ((String) value).trim().isEmpty() ? null : ((String) value).trim();
+            if (value instanceof Collection<?> && ((Collection<?>) value).isEmpty()) return null;
             return value;
         });
         addStatusBuilder(caption, hasValue, toStatusLabel);
@@ -103,9 +116,11 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
     }
 
     private <T, V> void addStatusBuilder(String caption, HasValue<?, T> hasValue, Function<T, String> toStatusLabel) {
-        statusBuilder.add(() -> Optional.ofNullable(hasValue.getValue()).map(value -> value instanceof String
-                ? ((String) value).trim().isEmpty() ? null : ((String) value).trim() :
-                toStatusLabel.apply(value)).map(a -> caption + ": " + a).orElse(null));
+        statusBuilder.add(() -> Optional.ofNullable(hasValue.getValue()).map(value -> {
+            if (value instanceof String) return ((String) value).trim().isEmpty() ? null : ((String) value).trim();
+            if (value instanceof Collection<?> && ((Collection<?>) value).isEmpty()) return null;
+            return toStatusLabel.apply(value);
+        }).map(a -> caption + ": " + a).orElse(null));
     }
 
     protected <T> void register(String name, String minName, String maxName, HasValue<?, T> min, HasValue<?, T> max, Function<T, String> toStatusLabel) {
@@ -148,10 +163,19 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
         return (E) this;
     }
 
+    public E extend(Map<String, Supplier<Object>> map, ToolBar header, Consumer<Map<String, Object>> reload) {
+        extend(map);
+        header.left(advanceSearchField);
+        addSaveListeners(reload);
+        return returnThis();
+    }
+
+    public E returnThis() {
+        return (E) this;
+    }
+
     public void callSaveListeners(Map<String, Object> object) {
-        this.getSaveListeners().forEach((s) -> {
-            s.accept(object);
-        });
+        this.getSaveListeners().forEach(s -> s.accept(object));
     }
 
     public E addSaveListeners(Consumer<Map<String, Object>> saveListener) {

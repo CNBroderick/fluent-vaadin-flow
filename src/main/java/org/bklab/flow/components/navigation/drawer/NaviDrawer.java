@@ -11,10 +11,7 @@
 
 package org.bklab.flow.components.navigation.drawer;
 
-import com.vaadin.flow.component.AttachEvent;
-import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.ClientCallable;
-import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -42,6 +39,7 @@ public class NaviDrawer extends Div implements AfterNavigationObserver {
 
 	private Button railButton;
 	private final BrandExpression iconBrand;
+	private Div beforeMenu;
 	private NaviMenu menu;
 	private Button logout;
 	private final boolean enableSwap = true;
@@ -56,6 +54,7 @@ public class NaviDrawer extends Div implements AfterNavigationObserver {
 		initHeader();
 		initSearch();
 
+		initBeforeMenu();
 		initMenu();
 
 		initFooter();
@@ -107,6 +106,12 @@ public class NaviDrawer extends Div implements AfterNavigationObserver {
 		search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
 		search.setVisible(false);
 		mainContent.add(search);
+	}
+
+	private void initBeforeMenu() {
+		beforeMenu = new Div();
+		beforeMenu.addClassName(CLASS_NAME + "__before_menu");
+		mainContent.add(beforeMenu);
 	}
 
 	private void initMenu() {
@@ -224,4 +229,28 @@ public class NaviDrawer extends Div implements AfterNavigationObserver {
 		close();
 	}
 
+	public NaviDrawer addBeforeMenu(Component... components) {
+		beforeMenu.add(components);
+		return this;
+	}
+
+	public Div getScrim() {
+		return scrim;
+	}
+
+	public Div getMainContent() {
+		return mainContent;
+	}
+
+	public TextField getSearch() {
+		return search;
+	}
+
+	public Button getRailButton() {
+		return railButton;
+	}
+
+	public Div getBeforeMenu() {
+		return beforeMenu;
+	}
 }

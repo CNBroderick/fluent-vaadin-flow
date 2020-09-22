@@ -34,9 +34,7 @@ public class FluentTabView extends Div {
     }
 
     public FluentTabView addTab(String id, String caption, Supplier<Component> componentSupplier) {
-        fluentTabMap.put(id, new FluentTab(id, caption, componentSupplier));
-        tabs.add(fluentTabMap.get(id));
-        return this;
+        return addTab(new FluentTab(id, caption, componentSupplier));
     }
 
     public FluentTabView addTab(String id, Supplier<Component> componentSupplier) {
@@ -44,6 +42,9 @@ public class FluentTabView extends Div {
     }
 
     public FluentTabView addTab(FluentTab fluentTab) {
+        if (fluentTabMap.containsKey(fluentTab.id)) {
+            Optional.ofNullable(fluentTabMap.get(fluentTab.id)).ifPresent(tabs::remove);
+        }
         fluentTabMap.put(fluentTab.id, fluentTab);
         tabs.add(fluentTab);
         return this;

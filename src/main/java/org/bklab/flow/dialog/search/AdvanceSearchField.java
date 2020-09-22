@@ -8,23 +8,32 @@ import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.factory.DivFactory;
 import org.bklab.flow.factory.TextFieldFactory;
 
+import java.util.Objects;
+
 public class AdvanceSearchField<E extends Dialog> extends TextField {
 
     private final E dialog;
     private final Button clearButton;
     private final Button openButton;
+    private String placeholder = "高级搜索";
 
     public AdvanceSearchField(E dialog) {
         this.dialog = dialog;
-        asFactory().lumoSmall().minWidth("200px").width("25vw").maxWidth("50vw").readOnly().value("高级搜索");
+        asFactory().lumoSmall().minWidth("200px").width("25vw").maxWidth("50vw").readOnly().value(placeholder);
         clearButton = new FluentButton(VaadinIcon.CLOSE.create()).link().asFactory().clickListener(e -> {
             clear();
             e.getSource().setVisible(false);
         }).visible(false).padding("0").get();
         openButton = new FluentButton(VaadinIcon.SEARCH.create()).link().asFactory().enabled(true).padding("0").clickListener(e -> dialog.open()).get();
-        addValueChangeListener(e -> clearButton.setVisible(e.getValue() != null));
+        addValueChangeListener(e -> clearButton.setVisible(e.getValue() != null && !placeholder.equals(e.getValue())));
         dialog.addOpenedChangeListener(e -> openButton.setEnabled(!e.isOpened()));
         setSuffixComponent(new DivFactory(clearButton, openButton).displayFlex().get());
+    }
+
+    public AdvanceSearchField<E> placeholder(String placeholder) {
+        if (Objects.equals(getPlaceholder(), this.placeholder)) setValue(placeholder);
+        this.placeholder = Objects.toString(placeholder, this.placeholder);
+        return this;
     }
 
     public E getDialog() {
@@ -41,7 +50,7 @@ public class AdvanceSearchField<E extends Dialog> extends TextField {
 
     @Override
     public void setValue(String value) {
-        super.setValue(value == null || value.trim().isEmpty() ? "高级搜索" : value);
+        super.setValue(value == null || value.trim().isEmpty() ? placeholder : value);
     }
 
     public TextFieldFactory asFactory() {

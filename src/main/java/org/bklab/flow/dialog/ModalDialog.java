@@ -70,6 +70,7 @@ public class ModalDialog extends Dialog {
                 .set("border-radius", "2px")
                 .set("box-shadow", "0 3px 6px -4px rgba(0,0,0,.12),0 6px 16px 0 rgba(0,0,0,.08),0 9px 28px 8px rgba(0,0,0,.05)")
                 .set("pointer-events", "auto")
+                .set("overflow", "hidden")
         ;
     }
 
@@ -106,6 +107,7 @@ public class ModalDialog extends Dialog {
                 .set("font-size", "14px")
                 .set("line-height", "1.5715")
                 .set("width", "100%")
+                .set("overflow", "auto")
         ;
     }
 

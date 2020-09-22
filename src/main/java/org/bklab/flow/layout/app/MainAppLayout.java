@@ -92,6 +92,7 @@ public abstract class MainAppLayout extends FlexBoxLayout implements RouterLayou
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
+        appBar.reset();
         buildUserIcon(appBar.getAvatar(), appBar.getUserIconMenu());
     }
 

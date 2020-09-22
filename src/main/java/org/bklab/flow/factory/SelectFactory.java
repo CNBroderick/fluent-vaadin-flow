@@ -17,7 +17,7 @@ public class SelectFactory<T> extends FlowFactory<Select<T>, SelectFactory<T>> i
         GeneratedVaadinSelectFactory<T, Select<T>, SelectFactory<T>>,
         HasSizeFactory<Select<T>, SelectFactory<T>>,
         HasListDataViewFactory<T, SelectListDataView<T>, Select<T>, SelectFactory<T>>,
-        HasDataViewFactory<T, SelectDataView<T>, Select<T>, SelectFactory<T>>,
+        HasDataViewFactory<T, Void, SelectDataView<T>, Select<T>, SelectFactory<T>>,
         HasValidationFactory<Select<T>, SelectFactory<T>>,
         SingleSelectFactory<T, Select<T>, SelectFactory<T>> {
 

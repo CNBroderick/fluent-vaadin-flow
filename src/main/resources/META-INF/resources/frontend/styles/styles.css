@@ -1,19 +1,19 @@
 :root {
-  --app-bar-height: var(--lumo-size-xl);
+    --app-bar-height: var(--lumo-size-xl);
 
-  --navi-drawer-width: calc(var(--lumo-size-m) * 7);
-  --navi-drawer-rail-width: calc(var(--lumo-size-m) * 1.75);
-  --navi-item-indentation: calc(var(--lumo-icon-size-s) + var(--lumo-space-l));
+    --navi-drawer-width: calc(var(--lumo-size-m) * 7);
+    --navi-drawer-rail-width: calc(var(--lumo-size-m) * 1.75);
+    --navi-item-indentation: calc(var(--lumo-icon-size-s) + var(--lumo-space-s));
 
-  --details-drawer-width: calc(var(--lumo-size-m) * 11);
+    --details-drawer-width: calc(var(--lumo-size-m) * 11);
 
-  --transition-duration-s: 160ms;
-  --transition-duration-m: 240ms;
-  --transition-duration-l: 320ms;
+    --transition-duration-s: 160ms;
+    --transition-duration-m: 240ms;
+    --transition-duration-l: 320ms;
 
-  /* Responsive sizing and spacing */
-  --lumo-space-r-m: var(--lumo-space-m);
-  --lumo-space-r-l: var(--lumo-space-l);
+    /* Responsive sizing and spacing */
+    --lumo-space-r-m: var(--lumo-space-m);
+    --lumo-space-r-l: var(--lumo-space-l);
   --lumo-space-r-x: var(--lumo-space-l);
   --lumo-space-wide-r-m: var(--lumo-space-wide-m);
   --lumo-space-wide-r-l: var(--lumo-space-wide-l);

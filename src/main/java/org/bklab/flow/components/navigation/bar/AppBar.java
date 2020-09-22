@@ -442,6 +442,15 @@ public class AppBar extends Header {
 		registrations.add(contextIcon.addClickListener(e -> UI.getCurrent().navigate(navigationTarget)));
 	}
 
+	public void setContextIconAsBackward(Component component, Class<? extends Component> navigationTarget) {
+		contextIcon.setVisible(true);
+		Registration registration = contextIcon.addClickListener(e -> UI.getCurrent().navigate(navigationTarget));
+		component.addDetachListener(e -> {
+			reset();
+			registration.remove();
+		});
+	}
+
 	public <T, C extends Component & HasUrlParameter<T>>
 	void setContextIconAsBack(Class<? extends C> navigationTarget, T parameter) {
 		contextIcon.setVisible(true);

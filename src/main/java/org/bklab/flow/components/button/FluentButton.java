@@ -40,6 +40,10 @@ public class FluentButton extends Button {
         return new FluentButton(VaadinIcon.CLOSE_SMALL, "取消");
     }
 
+    public FluentButton(VaadinIcon icon) {
+        super(icon.create());
+    }
+
     public FluentButton() {
     }
 
@@ -57,6 +61,10 @@ public class FluentButton extends Button {
 
     public FluentButton(Component icon) {
         super(icon);
+    }
+
+    public static FluentButton refreshIconButton() {
+        return new FluentButton(VaadinIcon.REFRESH).link().noPadding();
     }
 
     public FluentButton(String text, Component icon) {
@@ -101,6 +109,12 @@ public class FluentButton extends Button {
 
     public FluentButton clickListener(ComponentEventListener<ClickEvent<Button>> listener) {
         addClickListener(listener);
+        return this;
+    }
+
+    public FluentButton noPadding() {
+        getStyle().set("padding-top", "0").set("padding-bottom", "0")
+                .set("padding-left", "0").set("padding-right", "0");
         return this;
     }
 

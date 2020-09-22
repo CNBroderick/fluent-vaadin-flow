@@ -8,6 +8,7 @@ import com.vaadin.flow.router.Route;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.select.MultiSelectComboBox;
 import org.bklab.flow.components.selector.ButtonSelector;
+import org.bklab.flow.components.slider.PaperSlider;
 import org.bklab.flow.dialog.ErrorDialog;
 import org.bklab.flow.dialog.MessageDialog;
 import org.bklab.flow.dialog.ModalDialog;
@@ -29,9 +30,10 @@ public class ComponentDemoView extends Div {
     public ComponentDemoView() {
 
         getStyle().set("background-color", "var(--lumo-base-color)");
-
-        PaperSlider paperSlider = new PaperSlider();
-        add(paperSlider);
+        Span span = new Span();
+        PaperSlider paperSlider = new PaperSlider(0, 60, 49).valueChangeListener(e -> span.setText("当前值：" + e.getValue()));
+        add(span, paperSlider);
+        span.setText("初始值：" + paperSlider);
         HorizontalLayout layout = new HorizontalLayout();
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("普通对话框").clickListener(e -> new MessageDialog().message("这是一个则消息").header("提示").build().open()).get());
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("成功对话框").clickListener(e -> new MessageDialog().message("这是一个则成功消息").header("成功").forSuccess().build().open()).get());

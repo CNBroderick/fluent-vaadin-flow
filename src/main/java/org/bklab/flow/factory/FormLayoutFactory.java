@@ -78,6 +78,15 @@ public class FormLayoutFactory extends FlowFactory<FormLayout, FormLayoutFactory
         return this;
     }
 
+    public FormLayoutFactory formItemAlignVerticalCenter() {
+        get().getChildren().forEach(component -> {
+            if (component instanceof FormLayout.FormItem) {
+                ((FormLayout.FormItem) component).getStyle().set("align-items", "center");
+            }
+        });
+        return this;
+    }
+
     public FormLayoutFactory warpWhenOverflow() {
         get().getChildren().forEach(component -> component.getElement().getStyle().set("flex-wrap", "warp"));
         return this;

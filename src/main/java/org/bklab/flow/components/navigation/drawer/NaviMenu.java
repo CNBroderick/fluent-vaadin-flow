@@ -33,13 +33,15 @@ public class NaviMenu extends Nav {
 		add(list);
 	}
 
-	protected void addNaviItem(NaviItem item) {
+	public void addNaviItem(NaviItem item) {
 		list.add(item);
 	}
 
-	protected void addNaviItem(NaviItem parent, NaviItem item) {
+	public void addNaviItem(NaviItem parent, NaviItem item) {
 		parent.addSubItem(item);
-		addNaviItem(item);
+		int i = list.getChildren().collect(Collectors.toList()).indexOf(parent);
+		if (i >= 0) list.addComponentAtIndex(i + parent.getSubItems().size(), item);
+		else addNaviItem(item);
 	}
 
 	public void filter(String filter) {

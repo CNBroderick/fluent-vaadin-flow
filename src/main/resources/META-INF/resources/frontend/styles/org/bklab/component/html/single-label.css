@@ -1,0 +1,35 @@
+.single-label {
+    display: grid;
+    user-select: none;
+    font: 400 16px/1.55 "Open Sans", sans-serif;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    font-weight: 500;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+    color: inherit;
+    visibility: visible;
+    box-sizing: inherit;
+    border-radius: 15%;
+    background-color: white;
+    padding: 12px;
+    min-width: 72px;
+    font-family: "Microsoft Yahei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.single-label-value {
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #474747;
+}
+
+.single-label-name {
+    font-size: 8px;
+    margin: 0;
+    text-align: center;
+    color: #a2abb4;
+}

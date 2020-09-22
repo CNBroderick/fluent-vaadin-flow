@@ -203,7 +203,7 @@ public class FluentComponentGrid<T> extends Grid<T> {
     }
 
     @Override
-    public GridDataView<T> setItems(DataProvider<T, ?> dataProvider) {
+    public GridDataView<T> setItems(DataProvider<T, Void> dataProvider) {
         throw new RuntimeException("请使用 building.ui.components.grid.FluentComponentGrid.setItems(com.vaadin.flow.data.provider.ListDataProvider<T>)");
     }
 

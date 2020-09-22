@@ -11,18 +11,26 @@ import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.PageTitle;
+import org.bklab.export.data.ColumnDataBuilder;
+import org.bklab.export.grid.GridColumnDataBuilderFactory;
+import org.bklab.export.xlsx.ExcelDataExporter;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.pagination.PageSwitchEvent;
 import org.bklab.flow.components.pagination.Pagination;
 import org.bklab.flow.components.pagination.layout.MiddleCustomPaginationLayout;
 import org.bklab.flow.components.textfield.KeywordField;
+import org.bklab.flow.dialog.DownloadDialog;
 import org.bklab.flow.dialog.ErrorDialog;
 import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.layout.EmptyLayout;
 import org.bklab.flow.layout.ToolBar;
+import org.bklab.flow.util.function.EmptyFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
@@ -47,18 +55,27 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
     protected final List<Consumer<List<T>>> afterReloadListeners = new ArrayList<>();
     private final List<T> inMemoryFilteredEntities = new ArrayList<>();
-    protected String emptyMessage;
+    protected final EmptyLayout emptyLayout = new EmptyLayout("暂无数据");
 
     public FluentCrudView() {
+        emptyLayout.setVisible(false);
         getStyle().set("padding", "0.5em").set("background-color", "white");
         addClassName(CLASS_NAME);
         header.addClassName(CLASS_NAME + "__header");
         content.addClassName(CLASS_NAME + "__content");
         footer.addClassName(CLASS_NAME + "__footer");
+        emptyLayout.addClassName(CLASS_NAME + "__empty");
         add(header, content, footer);
         grid.addClassName(CLASS_NAME + "__grid");
         addExceptionConsumer(e -> new ErrorDialog(e).header("错误").build().open());
         addExceptionConsumer(e -> logger.error("错误", e));
+        emptyLayout.getElement().getStyle().set("flex-grow", "1");
+        emptyLayout.setHeight("calc(100% - 5em)");
+    }
+
+    protected FluentCrudView<T, G> addRefreshIconButton() {
+        header.right(new FluentButton(VaadinIcon.REFRESH).link().clickListener(e -> reloadGridData()));
+        return this;
     }
 
     protected FluentCrudView<T, G> addExceptionConsumer(Consumer<Exception> exceptionConsumer) {
@@ -81,6 +98,46 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return this;
     }
 
+    public FluentCrudView<T, G> enableExport() {
+        PageTitle annotation = getClass().getAnnotation(PageTitle.class);
+        return annotation != null ? enableExport(annotation.value()) : enableExport("导出");
+    }
+
+    public FluentCrudView<T, G> enableExport(String fileName) {
+        return enableExport(fileName, fileName);
+    }
+
+    public FluentCrudView<T, G> enableExport(String fileName, String excelTitle) {
+        return enableExport(fileName, excelTitle, EmptyFunctions.emptyConsumer(), EmptyFunctions.emptyConsumer());
+    }
+
+    public FluentCrudView<T, G> enableExport(String fileName, String excelTitle, Map<String, String> keyHeaderMap) {
+        return enableExport(fileName, excelTitle, factory -> factory.headers(keyHeaderMap), EmptyFunctions.emptyConsumer());
+    }
+
+    public FluentCrudView<T, G> enableExport(String fileName, String excelTitle,
+                                             Consumer<GridColumnDataBuilderFactory<T>> builderFactoryConsumer,
+                                             Consumer<ColumnDataBuilder<T>> columnDataBuilderConsumer) {
+        header.right(createExportButton(fileName, excelTitle, builderFactoryConsumer, columnDataBuilderConsumer));
+        return this;
+    }
+
+    public Button createExportButton(String fileName, String excelTitle,
+                                     Consumer<GridColumnDataBuilderFactory<T>> builderFactoryConsumer,
+                                     Consumer<ColumnDataBuilder<T>> columnDataBuilderConsumer) {
+        GridColumnDataBuilderFactory<T> factory = new GridColumnDataBuilderFactory<>(grid);
+        builderFactoryConsumer.accept(factory);
+        ColumnDataBuilder<T> builder = factory.createBuilder();
+        columnDataBuilderConsumer.accept(builder);
+
+        return new FluentButton(VaadinIcon.EXTERNAL_LINK, "导出").clickListener(e ->
+                new DownloadDialog(fileName + "导出完毕，请下载。", new ExcelDataExporter<>(builder)
+                        .createStreamFactory(fileName + "-" + DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss")
+                                .format(LocalDateTime.now()) + ".xlsx", excelTitle, entities)
+                ).build().open()
+        );
+    }
+
     public FluentCrudView<T, G> noPagination() {
         this.hasPagination = false;
         return this;
@@ -92,15 +149,12 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     public FluentCrudView<T, G> toggleEmpty() {
-        content.removeAll();
-        EmptyLayout emptyLayout = emptyMessage == null ? new EmptyLayout() : new EmptyLayout(emptyMessage);
-        emptyLayout.getElement().getStyle().set("flex-grow", "1");
-        emptyLayout.setHeight("calc(100% - 5em)");
         if (grid != null) {
+            grid.getStyle().remove("height");
+            grid.getStyle().remove("min-height");
             grid.setHeightByRows(true);
-            content.add(grid);
         }
-        content.add(emptyLayout);
+        emptyLayout.setVisible(true);
         return this;
     }
 
@@ -167,7 +221,8 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
         header.right(searchButton);
-        content.add(grid == null ? new EmptyLayout() : grid);
+        content.remove(grid, emptyLayout);
+        content.add(grid, emptyLayout);
         if (hasPagination) {
             footer.add(pagination);
         } else {
@@ -285,8 +340,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         else {
             grid.setHeightByRows(false);
             grid.setSizeFull();
-            content.removeAll();
-            content.add(grid);
+            emptyLayout.setVisible(false);
         }
         afterReloadListeners.forEach(a -> a.accept(entities));
     }

@@ -8,11 +8,11 @@ import com.vaadin.flow.data.provider.InMemoryDataProvider;
 import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
-public interface HasDataViewFactory<T, V extends DataView<T>,
-        C extends Component & HasDataView<T, V>,
-        E extends HasDataViewFactory<T, V, C, E>> extends IFlowFactory<C> {
+public interface HasDataViewFactory<T, F, V extends DataView<T>,
+        C extends Component & HasDataView<T, F, V>,
+        E extends HasDataViewFactory<T, F, V, C, E>> extends IFlowFactory<C> {
 
-    default E setItems(DataProvider<T, ?> dataProvider) {
+    default E setItems(DataProvider<T, F> dataProvider) {
         get().setItems(dataProvider);
         return (E) this;
     }
