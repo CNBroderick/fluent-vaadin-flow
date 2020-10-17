@@ -8,6 +8,7 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import dev.mett.vaadin.tooltip.Tooltips;
 import org.bklab.flow.factory.ButtonFactory;
 
 @Tag("fluent-button")
@@ -40,6 +41,14 @@ public class FluentButton extends Button {
         return new FluentButton(VaadinIcon.CLOSE_SMALL, "取消");
     }
 
+    public FluentButton(Component icon) {
+        super(icon);
+    }
+
+    public static FluentButton searchButton() {
+        return new FluentButton(VaadinIcon.SEARCH, "查询");
+    }
+
     public FluentButton(VaadinIcon icon) {
         super(icon.create());
     }
@@ -59,12 +68,12 @@ public class FluentButton extends Button {
         super(text);
     }
 
-    public FluentButton(Component icon) {
-        super(icon);
+    public static FluentButton exportButton() {
+        return new FluentButton(VaadinIcon.EXTERNAL_LINK).link().noPadding().tooltip("导出到Excel文件");
     }
 
     public static FluentButton refreshIconButton() {
-        return new FluentButton(VaadinIcon.REFRESH).link().noPadding();
+        return new FluentButton(VaadinIcon.REFRESH).link().noPadding().tooltip("刷新");
     }
 
     public FluentButton(String text, Component icon) {
@@ -97,6 +106,12 @@ public class FluentButton extends Button {
         return this;
     }
 
+    public FluentButton iconOnly() {
+        Component icon = getIcon();
+        if (icon != null) icon.getElement().getStyle().set("padding-left", "0").set("padding-bottom", "0");
+        return this;
+    }
+
     public FluentButton dashed() {
         addClassNames(CLASS_NAME + "__dashed");
         return this;
@@ -115,6 +130,11 @@ public class FluentButton extends Button {
     public FluentButton noPadding() {
         getStyle().set("padding-top", "0").set("padding-bottom", "0")
                 .set("padding-left", "0").set("padding-right", "0");
+        return this;
+    }
+
+    public FluentButton tooltip(String text) {
+        Tooltips.getCurrent().setTooltip(this, text);
         return this;
     }
 

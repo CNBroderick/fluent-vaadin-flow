@@ -13,6 +13,7 @@ import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.RouterLayout;
+import com.vaadin.flow.shared.Registration;
 import com.vaadin.flow.theme.lumo.Lumo;
 import org.bklab.flow.components.navigation.bar.AppBar;
 import org.bklab.flow.components.navigation.bar.TabBar;
@@ -26,7 +27,8 @@ import org.bklab.flow.util.lumo.UIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Consumer;
 
 @CssImport(value = "./styles/components/charts.css", themeFor = "vaadin-chart", include = "vaadin-chart-default-theme")
 @CssImport(value = "./styles/components/floating-action-button.css", themeFor = "vaadin-button")
@@ -46,6 +48,9 @@ public abstract class MainAppLayout extends FlexBoxLayout implements RouterLayou
 
     private static final Logger logger = LoggerFactory.getLogger(MainAppLayout.class);
     private static final String CLASS_NAME = "root";
+
+    private static final Map<UI, List<Consumer<MainAppLayout>>> asynchronousSynchronizationMap = new LinkedHashMap<>();
+    private static final Map<UI, MainAppLayout> MAIN_APP_LAYOUT_MAP = new LinkedHashMap<>();
 
     protected FlexBoxLayout row;
     protected NaviDrawer naviDrawer;
@@ -75,18 +80,59 @@ public abstract class MainAppLayout extends FlexBoxLayout implements RouterLayou
 
         // Configure the headers and footers (optional)
         initHeadersAndFooters();
+
+        attachAsynchronousListeners();
+    }
+
+    public static void extend(Consumer<MainAppLayout> consumer) {
+        extend(UI.getCurrent(), consumer);
+    }
+
+    public static void extend(UI ui, Consumer<MainAppLayout> consumer) {
+        if (ui == null) return;
+        getCurrent(ui).ifPresentOrElse(consumer, () -> {
+            List<Consumer<MainAppLayout>> consumers = null;
+            if (asynchronousSynchronizationMap.containsKey(ui)) {
+                consumers = asynchronousSynchronizationMap.get(ui);
+            }
+            if (consumers == null) {
+                consumers = new ArrayList<>();
+                asynchronousSynchronizationMap.put(ui, consumers);
+            }
+            consumers.add(consumer);
+            ui.addDetachListener(detachEvent -> asynchronousSynchronizationMap.remove(ui));
+        });
     }
 
     public static MainAppLayout get() {
-        return UI.getCurrent().getChildren()
-                .filter(component -> component.getClass().isAssignableFrom(MainAppLayout.class))
-                .findFirst().map(MainAppLayout.class::cast).orElse(null);
+        return getCurrent().orElse(null);
     }
 
     public static Optional<MainAppLayout> getCurrent() {
-        return UI.getCurrent().getChildren()
+        return getCurrent(UI.getCurrent());
+    }
+
+    public static Optional<MainAppLayout> getCurrent(UI ui) {
+        MainAppLayout mainAppLayout = MAIN_APP_LAYOUT_MAP.get(ui);
+        return mainAppLayout != null ? Optional.of(mainAppLayout) : ui.getChildren()
                 .filter(component -> component.getClass().isAssignableFrom(MainAppLayout.class))
                 .findFirst().map(MainAppLayout.class::cast);
+    }
+
+    protected void attachAsynchronousListeners() {
+        Registration registration = addAttachListener(attachEvent -> {
+            MAIN_APP_LAYOUT_MAP.put(attachEvent.getUI(), this);
+            if (asynchronousSynchronizationMap.containsKey(attachEvent.getUI())) {
+                asynchronousSynchronizationMap.getOrDefault(attachEvent.getUI(), Collections.emptyList())
+                        .stream().filter(Objects::nonNull).forEach(a -> a.accept(this));
+                asynchronousSynchronizationMap.remove(attachEvent.getUI());
+            }
+        });
+
+        addDetachListener(detachEvent -> {
+            MAIN_APP_LAYOUT_MAP.remove(detachEvent.getUI());
+            registration.remove();
+        });
     }
 
     @Override

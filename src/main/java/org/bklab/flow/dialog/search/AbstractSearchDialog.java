@@ -25,6 +25,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
     protected final FormLayout formLayout = new FormLayout();
     protected final List<Supplier<String>> statusBuilder = new ArrayList<>();
     protected final AdvanceSearchField<E> advanceSearchField = new AdvanceSearchField<>((E) this);
+    protected final FluentButton searchButton = new FluentButton(VaadinIcon.SEARCH, "搜索").primary().clickListener(e -> search());
 
     public AbstractSearchDialog() {
         build();
@@ -32,7 +33,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
         refreshSearchFieldValue();
         title("高级搜索").content(formLayout).width("600px", "600px", "80vw");
         addCancelButton();
-        footerRight(new FluentButton(VaadinIcon.SEARCH, "搜索").primary().asFactory().clickListener(e -> search()).get());
+        footerRight(searchButton);
 
         new FormLayoutFactory(formLayout).warpWhenOverflow().formItemAlignEnd().widthFull().get();
 

@@ -12,6 +12,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.shared.Registration;
 import org.bklab.export.data.ColumnDataBuilder;
 import org.bklab.export.grid.GridColumnDataBuilderFactory;
 import org.bklab.export.xlsx.ExcelDataExporter;
@@ -73,12 +74,13 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         emptyLayout.setHeight("calc(100% - 5em)");
     }
 
-    protected FluentCrudView<T, G> addRefreshIconButton() {
-        header.right(new FluentButton(VaadinIcon.REFRESH).link().clickListener(e -> reloadGridData()));
+    public FluentCrudView<T, G> addRefreshIconButton() {
+        header.right(FluentButton.refreshIconButton().noPadding().iconOnly().clickListener(e -> reloadGridData()));
+        searchButton.setVisible(false);
         return this;
     }
 
-    protected FluentCrudView<T, G> addExceptionConsumer(Consumer<Exception> exceptionConsumer) {
+    public FluentCrudView<T, G> addExceptionConsumer(Consumer<Exception> exceptionConsumer) {
         this.exceptionConsumers.add(exceptionConsumer);
         return this;
     }
@@ -130,12 +132,22 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         ColumnDataBuilder<T> builder = factory.createBuilder();
         columnDataBuilderConsumer.accept(builder);
 
-        return new FluentButton(VaadinIcon.EXTERNAL_LINK, "导出").clickListener(e ->
-                new DownloadDialog(fileName + "导出完毕，请下载。", new ExcelDataExporter<>(builder)
-                        .createStreamFactory(fileName + "-" + DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss")
-                                .format(LocalDateTime.now()) + ".xlsx", excelTitle, entities)
-                ).build().open()
-        );
+        return FluentButton.exportButton().clickListener(e -> {
+            if (entities.isEmpty()) {
+                new ErrorDialog("当前无任何数据，无需导出。").build().open();
+                return;
+            }
+            new DownloadDialog(fileName + "导出完毕，请下载。", new ExcelDataExporter<>(builder)
+                    .createStreamFactory(fileName + "-" + DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss")
+                            .format(LocalDateTime.now()) + ".xlsx", excelTitle, entities)
+            ).build().open();
+        }).iconOnly();
+    }
+
+    public FluentCrudView<T, G> watch(HasValue<?, ?> hasValue) {
+        Registration registration = hasValue.addValueChangeListener(e -> reloadGridData());
+        addDetachListener(e -> registration.remove());
+        return this;
     }
 
     public FluentCrudView<T, G> noPagination() {
@@ -154,6 +166,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
             grid.getStyle().remove("min-height");
             grid.setHeightByRows(true);
         }
+        footer.setVisible(false);
         emptyLayout.setVisible(true);
         return this;
     }
@@ -293,7 +306,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
 
     protected PageSwitchEvent createPageSwitchEvent() {
         return (currentPageNumber, pageSize, lastPageNumber, isFromClient) -> grid.setItems(hasPagination
-                ? this.inMemoryFilteredEntities.stream().skip((Math.max(Math.min(currentPageNumber,
+                ? this.inMemoryFilteredEntities.stream().skip((long) (Math.max(Math.min(currentPageNumber,
                 this.inMemoryFilteredEntities.size() / pageSize + 1), 1) - 1) * pageSize).limit(pageSize).collect(Collectors.toList())
                 : inMemoryFilteredEntities
         );
@@ -341,6 +354,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
             grid.setHeightByRows(false);
             grid.setSizeFull();
             emptyLayout.setVisible(false);
+            footer.setVisible(true);
         }
         afterReloadListeners.forEach(a -> a.accept(entities));
     }

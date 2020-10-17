@@ -5,6 +5,7 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.TextField;
 import org.bklab.flow.components.button.FluentButton;
+import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.factory.DivFactory;
 import org.bklab.flow.factory.TextFieldFactory;
 
@@ -20,11 +21,13 @@ public class AdvanceSearchField<E extends Dialog> extends TextField {
     public AdvanceSearchField(E dialog) {
         this.dialog = dialog;
         asFactory().lumoSmall().minWidth("200px").width("25vw").maxWidth("50vw").readOnly().value(placeholder);
-        clearButton = new FluentButton(VaadinIcon.CLOSE.create()).link().asFactory().clickListener(e -> {
+
+        clearButton = new ButtonFactory().clickListener(e -> {
             clear();
             e.getSource().setVisible(false);
-        }).visible(false).padding("0").get();
-        openButton = new FluentButton(VaadinIcon.SEARCH.create()).link().asFactory().enabled(true).padding("0").clickListener(e -> dialog.open()).get();
+        }).icon(VaadinIcon.CLOSE).lumoIcon().lumoSmall().lumoTertiaryInline().get();
+
+        openButton = new FluentButton(VaadinIcon.FILTER.create()).asFactory().border("0").enabled(true).padding("0").clickListener(e -> dialog.open()).get();
         addValueChangeListener(e -> clearButton.setVisible(e.getValue() != null && !placeholder.equals(e.getValue())));
         dialog.addOpenedChangeListener(e -> openButton.setEnabled(!e.isOpened()));
         setSuffixComponent(new DivFactory(clearButton, openButton).displayFlex().get());

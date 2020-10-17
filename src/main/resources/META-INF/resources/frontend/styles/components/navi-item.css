@@ -45,7 +45,7 @@
     background-color: var(--lumo-contrast-10pct);
 }
 
-.navi-item__link:hover {
+.:hover {
     text-decoration: none;
 }
 
@@ -55,7 +55,7 @@
 }
 
 /* Link */
-.navi-item__link {
+. {
     align-items: center;
     display: flex;
     flex-grow: 1;
@@ -68,6 +68,8 @@
 /* Highlight */
 .navi-item__link[highlight] {
     background-color: var(--lumo-primary-color-10pct);
+    width: 100%;
+    padding: 10px 0;
 }
 
 .navi-item__link:not([highlight]) {
@@ -85,6 +87,7 @@
     margin: 0 var(--lumo-space-l) 0 0;
     transition: margin var(--transition-duration-s);
     width: var(--lumo-icon-size-s);
+    padding-left: var(--lumo-space-l);
 }
 
 /* Text */
