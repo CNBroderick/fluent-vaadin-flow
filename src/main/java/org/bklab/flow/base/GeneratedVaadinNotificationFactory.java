@@ -1,6 +1,5 @@
 package org.bklab.flow.base;
 
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.notification.GeneratedVaadinNotification;
 import org.bklab.flow.IFlowFactory;
 

@@ -17,7 +17,6 @@ import com.vaadin.flow.server.StreamResource;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.ClickNotifierFactory;
 import org.bklab.flow.base.HtmlContainerFactory;
-import org.bklab.flow.image.ImageBase;
 
 public class ImageFactory extends FlowFactory<Image, ImageFactory>
         implements ClickNotifierFactory<Image, ImageFactory>, HtmlContainerFactory<Image, ImageFactory> {

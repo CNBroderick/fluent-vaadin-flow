@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Component;
 import org.bklab.flow.base.AttachNotifierFactory;
 import org.bklab.flow.base.DetachNotifierFactory;
 import org.bklab.flow.base.HasElementFactory;
+import org.bklab.flow.base.HasReturnThis;
 
 import java.util.function.Consumer;
 
@@ -11,7 +12,8 @@ import java.util.function.Consumer;
 public abstract class FlowFactory<C extends Component, E extends FlowFactory<C, E>> implements
         IFlowFactory<C>, HasElementFactory<C, E>,
         AttachNotifierFactory<C, FlowFactory<C, E>>,
-        DetachNotifierFactory<C, FlowFactory<C, E>> {
+        DetachNotifierFactory<C, FlowFactory<C, E>>,
+        HasReturnThis<E> {
 
     private final C component;
 

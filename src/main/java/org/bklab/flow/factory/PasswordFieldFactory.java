@@ -18,6 +18,7 @@ public class PasswordFieldFactory extends FlowFactory<PasswordField, PasswordFie
         CompositionNotifierFactory<PasswordField, PasswordFieldFactory>,
         HasAutocompleteFactory<PasswordField, PasswordFieldFactory>,
         HasAutocapitalizeFactory<PasswordField, PasswordFieldFactory>,
+        HasHelperFactory<PasswordField, PasswordFieldFactory>,
         HasAutocorrectFactory<PasswordField, PasswordFieldFactory> {
 
     public PasswordFieldFactory() {

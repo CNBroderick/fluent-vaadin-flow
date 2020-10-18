@@ -3,7 +3,6 @@ package org.bklab.flow.base;
 import com.vaadin.flow.component.contextmenu.ContextMenuBase;
 import com.vaadin.flow.component.contextmenu.MenuItemBase;
 import com.vaadin.flow.component.contextmenu.SubMenuBase;
-import org.bklab.flow.IFlowFactory;
 
 import java.util.function.Supplier;
 

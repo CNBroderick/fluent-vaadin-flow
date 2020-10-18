@@ -7,9 +7,9 @@ import com.vaadin.flow.component.ComponentEvent;
  * Holds information which dataset values was clicked.
  */
 public class ClickEvent extends ComponentEvent<ChartJs> {
-    private String label;
-    private String value;
-    private String datasetLabel;
+    private final String label;
+    private final String value;
+    private final String datasetLabel;
 
     public ClickEvent(ChartJs source, boolean fromClient, String label, String datasetLabel, String value) {
         super(source, fromClient);

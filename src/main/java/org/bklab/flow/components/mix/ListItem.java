@@ -20,10 +20,10 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import org.bklab.flow.layout.FlexBoxLayout;
 import org.bklab.flow.layout.size.Right;
 import org.bklab.flow.layout.size.Wide;
+import org.bklab.flow.util.css.WhiteSpace;
 import org.bklab.flow.util.lumo.FontSize;
 import org.bklab.flow.util.lumo.TextColor;
 import org.bklab.flow.util.lumo.UIUtils;
-import org.bklab.flow.util.css.WhiteSpace;
 
 @CssImport("./styles/components/list-item.css")
 public class ListItem extends FlexBoxLayout {

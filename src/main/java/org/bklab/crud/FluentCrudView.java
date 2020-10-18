@@ -11,6 +11,7 @@ import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.shared.Registration;
 import org.bklab.export.data.ColumnDataBuilder;
@@ -165,6 +166,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
             grid.getStyle().remove("height");
             grid.getStyle().remove("min-height");
             grid.setHeightByRows(true);
+            grid.setItems(new ListDataProvider<>(Collections.emptyList()));
         }
         footer.setVisible(false);
         emptyLayout.setVisible(true);
