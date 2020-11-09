@@ -5,9 +5,7 @@ import com.vaadin.flow.component.progressbar.ProgressBarVariant;
 import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
-public interface GeneratedVaadinProgressBarFactory<
-        C extends GeneratedVaadinProgressBar<C>,
-        E extends GeneratedVaadinProgressBarFactory<C, E>> extends IFlowFactory<C> {
+public interface GeneratedVaadinProgressBarFactory<C extends GeneratedVaadinProgressBar<C>, E extends GeneratedVaadinProgressBarFactory<C, E>> extends IFlowFactory<C> {
     default E themeVariants(ProgressBarVariant... themeVariants) {
         get().addThemeVariants(themeVariants);
         return (E) this;

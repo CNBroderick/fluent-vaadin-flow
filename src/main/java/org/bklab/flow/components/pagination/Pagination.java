@@ -174,6 +174,11 @@ public class Pagination extends ToolBar {
         jumpField.normalSize();
     }
 
+    public Pagination refresh() {
+        generatePagesContainer.go(false,currentPage);
+        return this;
+    }
+
     public Pagination build() {
         if (!hasInit) init();
         this.total = (int) Math.ceil(1d * totalData / pageSize.getValue());

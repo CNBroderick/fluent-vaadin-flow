@@ -4,14 +4,14 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.combobox.GeneratedVaadinComboBox;
-import com.vaadin.flow.component.combobox.dataview.ComboBoxDataView;
-import com.vaadin.flow.component.combobox.dataview.ComboBoxLazyDataView;
-import com.vaadin.flow.component.combobox.dataview.ComboBoxListDataView;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.Renderer;
 import com.vaadin.flow.function.SerializableFunction;
 import org.bklab.flow.FlowFactory;
-import org.bklab.flow.base.*;
+import org.bklab.flow.base.GeneratedVaadinComboBoxFactory;
+import org.bklab.flow.base.HasFilterableDataProviderFactory;
+import org.bklab.flow.base.HasSizeFactory;
+import org.bklab.flow.base.HasValidationFactory;
 
 import java.util.Collection;
 
@@ -19,10 +19,7 @@ public class ComboBoxFactory<T> extends FlowFactory<ComboBox<T>, ComboBoxFactory
         GeneratedVaadinComboBoxFactory<T, ComboBox<T>, ComboBoxFactory<T>>,
         HasSizeFactory<ComboBox<T>, ComboBoxFactory<T>>,
         HasValidationFactory<ComboBox<T>, ComboBoxFactory<T>>,
-        HasDataViewFactory<T, String, ComboBoxDataView<T>, ComboBox<T>, ComboBoxFactory<T>>,
-        HasListDataViewFactory<T, ComboBoxListDataView<T>, ComboBox<T>, ComboBoxFactory<T>>,
-        HasLazyDataViewFactory<T, String, ComboBoxLazyDataView<T>, ComboBox<T>, ComboBoxFactory<T>>,
-        HasHelperFactory<ComboBox<T>, ComboBoxFactory<T>> {
+        HasFilterableDataProviderFactory<T, String, ComboBox<T>, ComboBoxFactory<T>> {
 
     public ComboBoxFactory() {
         super(new ComboBox<>());

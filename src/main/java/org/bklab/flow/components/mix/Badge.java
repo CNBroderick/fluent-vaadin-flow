@@ -12,10 +12,10 @@
 package org.bklab.flow.components.mix;
 
 import com.vaadin.flow.component.html.Span;
+import org.bklab.flow.util.lumo.UIUtils;
 import org.bklab.flow.util.css.lumo.BadgeColor;
 import org.bklab.flow.util.css.lumo.BadgeShape;
 import org.bklab.flow.util.css.lumo.BadgeSize;
-import org.bklab.flow.util.lumo.UIUtils;
 
 import java.util.StringJoiner;
 

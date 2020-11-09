@@ -35,166 +35,166 @@ import static org.bklab.flow.util.lumo.UIUtils.IMG_PATH;
 @CssImport("./styles/components/tab-bar.css")
 public class TabBar extends FlexBoxLayout {
 
-    private final String CLASS_NAME = "tab-bar";
+	private final String CLASS_NAME = "tab-bar";
 
-    private final Button menuIcon;
-    private final NaviTabs tabs;
-    private final Button addTab;
-    private final Image avatar;
-    private final Span avatarName;
-    private final Button logout;
+	private final Button menuIcon;
+	private final NaviTabs tabs;
+	private final Button addTab;
+	private final Image avatar;
+	private final Span avatarName;
+	private final Button logout;
 
-    public TabBar() {
-        setClassName(CLASS_NAME);
+	public TabBar() {
+		setClassName(CLASS_NAME);
 
-        menuIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
-        menuIcon.addClassName(CLASS_NAME + "__navi-icon");
+		menuIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
+		menuIcon.addClassName(CLASS_NAME + "__navi-icon");
 
-        avatar = new Image();
-        avatar.setClassName(CLASS_NAME + "__avatar");
-        avatar.setSrc(IMG_PATH + "avatar.png");
+		avatar = new Image();
+		avatar.setClassName(CLASS_NAME + "__avatar");
+		avatar.setSrc(IMG_PATH + "avatar.png");
 
-        avatarName = new Span();
-        avatarName.addClassName(CLASS_NAME + "__avatar-name");
+		avatarName = new Span();
+		avatarName.addClassName(CLASS_NAME + "__avatar-name");
 
-        logout = new ButtonFactory().visible(false).lumoSmall().lumoTertiary().get();
+		logout = new ButtonFactory().visible(false).lumoSmall().lumoTertiary().get();
 
-        ContextMenu contextMenu = new ContextMenu(avatar);
-        contextMenu.setOpenOnClick(true);
-        contextMenu.addItem("Settings",
-                e -> Notification.show("Not implemented yet.", 3000,
-                        Notification.Position.BOTTOM_CENTER));
-        contextMenu.addItem("Log Out",
-                e -> Notification.show("Not implemented yet.", 3000,
-                        Notification.Position.BOTTOM_CENTER));
+		ContextMenu contextMenu = new ContextMenu(avatar);
+		contextMenu.setOpenOnClick(true);
+		contextMenu.addItem("Settings",
+				e -> Notification.show("Not implemented yet.", 3000,
+						Notification.Position.BOTTOM_CENTER));
+		contextMenu.addItem("Log Out",
+				e -> Notification.show("Not implemented yet.", 3000,
+						Notification.Position.BOTTOM_CENTER));
 
-        addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
-        addTab.setVisible(false);
-        addTab.setClassName(CLASS_NAME + "__add-tab");
+		addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
+		addTab.setVisible(false);
+		addTab.setClassName(CLASS_NAME + "__add-tab");
 
-        tabs = new NaviTabs();
-        tabs.setClassName(CLASS_NAME + "__tabs");
+		tabs = new NaviTabs();
+		tabs.setClassName(CLASS_NAME + "__tabs");
 
-        add(menuIcon, tabs, addTab, avatarName, avatar, logout);
-    }
+		add(menuIcon, tabs, addTab, avatarName, avatar, logout);
+	}
 
 
-    public TabBar lightTheme() {
-        UIUtils.setTheme(Lumo.LIGHT, this);
-        return this;
-    }
+	public TabBar lightTheme() {
+		UIUtils.setTheme(Lumo.LIGHT, this);
+		return this;
+	}
 
-    public TabBar darkTheme() {
-        UIUtils.setTheme(Lumo.DARK, this);
-        return this;
-    }
+	public TabBar darkTheme() {
+		UIUtils.setTheme(Lumo.DARK, this);
+		return this;
+	}
 
-    public TabBar avatarName(String text) {
-        avatarName.setText(text);
-        return this;
-    }
+	public TabBar avatarName(String text) {
+		avatarName.setText(text);
+		return this;
+	}
 
-    public TabBar logout(ComponentEventListener<ClickEvent<Button>> eventListener) {
-        logout.addClickListener(eventListener);
-        return this;
-    }
+	public TabBar logout(ComponentEventListener<ClickEvent<Button>> eventListener) {
+		logout.addClickListener(eventListener);
+		return this;
+	}
 
-    public Span getAvatarName() {
-        return avatarName;
-    }
+	public Span getAvatarName() {
+		return avatarName;
+	}
 
-    public Button getLogout() {
-        return logout;
-    }
+	public Button getLogout() {
+		return logout;
+	}
 
-    public TabBar whenAddTabClicked(ComponentEventListener<ClickEvent<Button>> listener) {
-        addTab.addClickListener(listener);
-        addTab.setVisible(true);
-        return this;
-    }
+	public TabBar whenAddTabClicked(ComponentEventListener<ClickEvent<Button>> listener) {
+		addTab.addClickListener(listener);
+		addTab.setVisible(true);
+		return this;
+	}
 
-    public TabBar whenMenuClicked(ComponentEventListener<ClickEvent<Button>> listener) {
-        menuIcon.addClickListener(listener);
-        return this;
-    }
+	public TabBar whenMenuClicked(ComponentEventListener<ClickEvent<Button>> listener) {
+		menuIcon.addClickListener(listener);
+		return this;
+	}
 
-    /* === MENU ICON === */
+	/* === MENU ICON === */
 
-    public Button getMenuIcon() {
-        return menuIcon;
-    }
+	public Button getMenuIcon() {
+		return menuIcon;
+	}
 
-    /* === TABS === */
+	/* === TABS === */
 
-    public void centerTabs() {
-        tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
-    }
+	public void centerTabs() {
+		tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
+	}
 
-    private void configureTab(Tab tab) {
-        tab.addClassName(CLASS_NAME + "__tab");
-    }
+	private void configureTab(Tab tab) {
+		tab.addClassName(CLASS_NAME + "__tab");
+	}
 
-    public Tab addTab(String text) {
-        Tab tab = tabs.addTab(text);
-        configureTab(tab);
-        return tab;
-    }
+	public Tab addTab(String text) {
+		Tab tab = tabs.addTab(text);
+		configureTab(tab);
+		return tab;
+	}
 
-    public Tab addTab(String text,
-                      Class<? extends Component> navigationTarget) {
-        Tab tab = tabs.addTab(text, navigationTarget);
-        configureTab(tab);
-        return tab;
-    }
+	public Tab addTab(String text,
+					  Class<? extends Component> navigationTarget) {
+		Tab tab = tabs.addTab(text, navigationTarget);
+		configureTab(tab);
+		return tab;
+	}
 
-    public Tab addClosableTab(String text,
-                              Class<? extends Component> navigationTarget) {
-        Tab tab = tabs.addClosableTab(text, navigationTarget);
-        configureTab(tab);
-        return tab;
-    }
+	public Tab addClosableTab(String text,
+							  Class<? extends Component> navigationTarget) {
+		Tab tab = tabs.addClosableTab(text, navigationTarget);
+		configureTab(tab);
+		return tab;
+	}
 
-    public Tab getSelectedTab() {
-        return tabs.getSelectedTab();
-    }
+	public Tab getSelectedTab() {
+		return tabs.getSelectedTab();
+	}
 
-    public void setSelectedTab(Tab selectedTab) {
-        tabs.setSelectedTab(selectedTab);
-    }
+	public void setSelectedTab(Tab selectedTab) {
+		tabs.setSelectedTab(selectedTab);
+	}
 
-    public void updateSelectedTab(String text,
-                                  Class<? extends Component> navigationTarget) {
-        tabs.updateSelectedTab(text, navigationTarget);
-    }
+	public void updateSelectedTab(String text,
+								  Class<? extends Component> navigationTarget) {
+		tabs.updateSelectedTab(text, navigationTarget);
+	}
 
-    public void addTabSelectionListener(
-            ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
-        tabs.addSelectedChangeListener(listener);
-    }
+	public void addTabSelectionListener(
+			ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
+		tabs.addSelectedChangeListener(listener);
+	}
 
-    public int getTabCount() {
-        return tabs.getTabCount();
-    }
+	public int getTabCount() {
+		return tabs.getTabCount();
+	}
 
-    public void removeAllTabs() {
-        tabs.removeAll();
-    }
+	public void removeAllTabs() {
+		tabs.removeAll();
+	}
 
-    /* === ADD TAB BUTTON === */
+	/* === ADD TAB BUTTON === */
 
-    public void setAddTabVisible(boolean visible) {
-        addTab.setVisible(visible);
-    }
+	public void setAddTabVisible(boolean visible) {
+		addTab.setVisible(visible);
+	}
 
-    public NaviTabs getTabs() {
-        return tabs;
-    }
+	public NaviTabs getTabs() {
+		return tabs;
+	}
 
-    public Button getAddTab() {
-        return addTab;
-    }
+	public Button getAddTab() {
+		return addTab;
+	}
 
-    public Image getAvatar() {
-        return avatar;
-    }
+	public Image getAvatar() {
+		return avatar;
+	}
 }

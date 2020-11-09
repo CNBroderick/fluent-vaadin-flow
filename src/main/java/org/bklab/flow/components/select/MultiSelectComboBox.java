@@ -130,13 +130,13 @@ public class MultiSelectComboBox<T> extends Div implements MultiSelect<MultiSele
     @Override
     public Registration addSelectionListener(MultiSelectionListener<MultiSelectComboBox<T>, T> listener) {
         multiSelectionListeners.add(listener);
-        return () -> multiSelectionListeners.remove(listener);
+        return (Registration) () -> multiSelectionListeners.remove(listener);
     }
 
     @Override
     public Registration addValueChangeListener(ValueChangeListener<? super AbstractField.ComponentValueChangeEvent<MultiSelectComboBox<T>, Set<T>>> listener) {
         valueChangeListeners.add(listener);
-        return () -> valueChangeListeners.remove(listener);
+        return (Registration) () -> valueChangeListeners.remove(listener);
     }
 
     @Tag("multi-select-combo-box-item")

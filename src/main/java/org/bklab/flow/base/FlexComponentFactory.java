@@ -3,6 +3,7 @@ package org.bklab.flow.base;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")

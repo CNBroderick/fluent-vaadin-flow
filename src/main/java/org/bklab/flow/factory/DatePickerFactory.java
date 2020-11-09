@@ -18,7 +18,6 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.datepicker.GeneratedVaadinDatePicker;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.GeneratedVaadinDatePickerFactory;
-import org.bklab.flow.base.HasHelperFactory;
 import org.bklab.flow.base.HasSizeFactory;
 import org.bklab.flow.base.HasValidationFactory;
 import org.bklab.flow.components.time.ChineseDatePickerI18n;
@@ -29,7 +28,6 @@ import java.util.Locale;
 public class DatePickerFactory extends FlowFactory<DatePicker, DatePickerFactory> implements
         GeneratedVaadinDatePickerFactory<LocalDate, DatePicker, DatePickerFactory>,
         HasSizeFactory<DatePicker, DatePickerFactory>,
-        HasHelperFactory<DatePicker, DatePickerFactory>,
         HasValidationFactory<DatePicker, DatePickerFactory> {
 
     public DatePickerFactory() {

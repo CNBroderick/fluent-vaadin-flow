@@ -68,7 +68,7 @@
     "awesome-typescript-loader": "5.2.1",
     "chokidar": "^3.4.0",
     "compression-webpack-plugin": "4.0.1",
-    "copy-webpack-plugin": "5.1.1",
+    "copy-webpack-plugin": "5.1.2",
     "html-webpack-plugin": "3.2.0",
     "lit-element": "2.3.1",
     "lit-html": "1.2.1",
@@ -76,16 +76,13 @@
     "raw-loader": "4.0.0",
     "script-ext-html-webpack-plugin": "2.1.4",
     "terser": "4.6.7",
-    "typescript": "4.0.3",
+    "typescript": "3.8.3",
     "validator": "12.0.0",
     "webpack": "4.42.0",
     "webpack-babel-multi-target-plugin": "2.3.3",
     "webpack-cli": "3.3.11",
     "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "4.2.2",
-    "css-loader": "4.2.1",
-    "lit-css-loader": "0.0.4",
-    "extract-loader": "5.1.0"
+    "webpack-merge": "4.2.2"
   },
   "vaadin": {
     "dependencies": {
@@ -151,7 +148,7 @@
     },
     "devDependencies": {
       "webpack-babel-multi-target-plugin": "2.3.3",
-      "copy-webpack-plugin": "5.1.1",
+      "copy-webpack-plugin": "5.1.2",
       "compression-webpack-plugin": "4.0.1",
       "raw-loader": "4.0.0",
       "webpack-cli": "3.3.11",
@@ -159,19 +156,16 @@
       "html-webpack-plugin": "3.2.0",
       "script-ext-html-webpack-plugin": "2.1.4",
       "awesome-typescript-loader": "5.2.1",
-      "typescript": "4.0.3",
+      "typescript": "3.8.3",
       "webpack-merge": "4.2.2",
-      "webpack-dev-server": "3.10.3",
+      "webpack-dev-server": "3.11.0",
       "terser": "4.6.7",
       "progress-webpack-plugin": "0.0.24",
       "lit-element": "2.3.1",
       "chokidar": "^3.4.0",
       "validator": "12.0.0",
       "lit-html": "1.2.1",
-      "@types/validator": "10.11.3",
-      "css-loader": "4.2.1",
-      "lit-css-loader": "0.0.4",
-      "extract-loader": "5.1.0"
+      "@types/validator": "10.11.3"
     },
     "hash": "5bcca57c65283c60c1dfcda957159b93cc042e8445ae2e37a0e23b57165c41cd"
   }

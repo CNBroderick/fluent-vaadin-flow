@@ -18,7 +18,7 @@ public class PrintLumoTheme {
 
 
         for (String name : getStyles(enumClass)) {
-            String string = (factory.isInterface() ? "default " : "public ") + factory.getSimpleName() + " ";
+            String string = (factory.isInterface() ? "default ": "public ") + factory.getSimpleName() + " ";
             StringBuilder s = new StringBuilder();
 
             char[] charArray = (name.replaceFirst(target.getSimpleName().toUpperCase(), "").toLowerCase()).toCharArray();
@@ -43,7 +43,7 @@ public class PrintLumoTheme {
         List<String> list = new ArrayList<>();
         for (Field declaredField : enumClass.getDeclaredFields()) {
             String name = declaredField.getName();
-            if (!name.equals("variant") && !name.contains("values")) list.add(name);
+            if(!name.equals("variant") && !name.contains("values")) list.add(name);
         }
         return list.toArray(new String[]{});
     }

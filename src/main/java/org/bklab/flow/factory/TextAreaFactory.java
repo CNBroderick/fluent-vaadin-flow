@@ -20,8 +20,9 @@ public class TextAreaFactory extends FlowFactory<TextArea, TextAreaFactory> impl
         CompositionNotifierFactory<TextArea, TextAreaFactory>,
         HasAutocompleteFactory<TextArea, TextAreaFactory>,
         HasAutocapitalizeFactory<TextArea, TextAreaFactory>,
-        HasHelperFactory<TextArea, TextAreaFactory>,
-        HasAutocorrectFactory<TextArea, TextAreaFactory> {
+        HasAutocorrectFactory<TextArea, TextAreaFactory>
+
+{
 
     public TextAreaFactory() {
         this(new TextArea());
@@ -55,77 +56,63 @@ public class TextAreaFactory extends FlowFactory<TextArea, TextAreaFactory> impl
         super(component);
     }
 
-    public TextAreaFactory value(String value) {
+    public TextAreaFactory value (String value) {
         get().setValue(Optional.ofNullable(value).orElse(""));
         return this;
     }
-
-    public TextAreaFactory valueChangeTimeout(int valueChangeTimeout) {
+    public TextAreaFactory valueChangeTimeout (int valueChangeTimeout) {
         get().setValueChangeTimeout(valueChangeTimeout);
         return this;
     }
-
-    public TextAreaFactory clearButtonVisible(boolean clearButtonVisible) {
+    public TextAreaFactory clearButtonVisible (boolean clearButtonVisible) {
         get().setClearButtonVisible(clearButtonVisible);
         return this;
     }
-
-    public TextAreaFactory preventInvalidInput(boolean preventInvalidInput) {
+    public TextAreaFactory preventInvalidInput (boolean preventInvalidInput) {
         get().setPreventInvalidInput(preventInvalidInput);
         return this;
     }
-
-    public TextAreaFactory requiredIndicatorVisible(boolean requiredIndicatorVisible) {
+    public TextAreaFactory requiredIndicatorVisible (boolean requiredIndicatorVisible) {
         get().setRequiredIndicatorVisible(requiredIndicatorVisible);
         return this;
     }
-
-    public TextAreaFactory label(String label) {
+    public TextAreaFactory label (String label) {
         get().setLabel(label);
         return this;
     }
-
-    public TextAreaFactory invalid(boolean invalid) {
+    public TextAreaFactory invalid (boolean invalid) {
         get().setInvalid(invalid);
         return this;
     }
-
-    public TextAreaFactory errorMessage(String errorMessage) {
+    public TextAreaFactory errorMessage (String errorMessage) {
         get().setErrorMessage(errorMessage);
         return this;
     }
-
-    public TextAreaFactory placeholder(String placeholder) {
+    public TextAreaFactory placeholder (String placeholder) {
         get().setPlaceholder(placeholder);
         return this;
     }
-
-    public TextAreaFactory autoselect(boolean autoselect) {
+    public TextAreaFactory autoselect (boolean autoselect) {
         get().setAutoselect(autoselect);
         return this;
     }
-
-    public TextAreaFactory maxLength(int maxLength) {
+    public TextAreaFactory maxLength (int maxLength) {
         get().setMaxLength(maxLength);
         return this;
     }
-
-    public TextAreaFactory autofocus(boolean autofocus) {
+    public TextAreaFactory autofocus (boolean autofocus) {
         get().setAutofocus(autofocus);
         return this;
     }
-
-    public TextAreaFactory minLength(int minLength) {
+    public TextAreaFactory minLength (int minLength) {
         get().setMinLength(minLength);
         return this;
     }
-
-    public TextAreaFactory required(boolean required) {
+    public TextAreaFactory required (boolean required) {
         get().setRequired(required);
         return this;
     }
-
-    public TextAreaFactory valueChangeMode(ValueChangeMode valueChangeMode) {
+    public TextAreaFactory valueChangeMode (ValueChangeMode valueChangeMode) {
         get().setValueChangeMode(valueChangeMode);
         return this;
     }

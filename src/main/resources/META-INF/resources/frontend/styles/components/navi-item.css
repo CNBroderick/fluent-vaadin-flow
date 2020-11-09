@@ -43,9 +43,6 @@
 /* Hover */
 .navi-item:hover {
     background-color: var(--lumo-contrast-10pct);
-}
-
-.:hover {
     text-decoration: none;
 }
 

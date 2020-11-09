@@ -54,7 +54,7 @@ public class ErrorDialog extends MessageDialog {
 
     public ErrorDialog(String message, String detail) {
         message(message);
-        if (detail != null) addCopyButton(message);
+        if (detail != null) addCopyButton(detail);
     }
 
     public ErrorDialog(String... message) {
