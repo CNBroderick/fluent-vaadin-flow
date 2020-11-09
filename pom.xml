@@ -3,13 +3,13 @@
 
     <groupId>org.bklab</groupId>
     <artifactId>fluent-vaadin-flow</artifactId>
-    <version>18.0.0.alpha1</version>
+    <version>18.0.0.beta1</version>
     <name>fluent-vaadin-flow</name>
     <description>Broderick Labs for fluent vaadin flow. Inherits common Vaadin components.</description>
     <packaging>jar</packaging>
 
     <properties>
-        <vaadin.version>18.0.0.alpha1</vaadin.version>
+        <vaadin.version>18.0.0.beta1</vaadin.version>
 
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
@@ -205,6 +205,26 @@
         </resources>
         <defaultGoal>jetty:run</defaultGoal>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.0</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -434,6 +454,9 @@
                             </supportedPackagings>
                             <stopKey>${project.artifactId}</stopKey>
                             <stopPort>8081</stopPort>
+                            <httpConnector>
+                                <port>9465</port>
+                            </httpConnector>
                         </configuration>
                         <executions>
                             <execution>

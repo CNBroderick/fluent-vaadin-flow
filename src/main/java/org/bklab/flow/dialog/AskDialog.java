@@ -31,15 +31,24 @@ public class AskDialog extends FluentDialog {
     private Icon icon;
     private String header;
     private String message;
+    private boolean hasConfirmed = false;
 
     public AskDialog(String message, Consumer<Void> whenConfirmed) {
         this.message = message;
         this.confirm = new ButtonFactory().text("确定").clickListener(e -> {
+            this.hasConfirmed = true;
             close();
             whenConfirmed.accept(null);
         }).lumoSmall().lumoPrimary().get();
         this.bottom = new LmrHorizontalLayout();
         setWidth("420px");
+    }
+
+    public AskDialog(String message, Consumer<Void> whenConfirmed, Consumer<Void> whenConfused) {
+        this(message, whenConfirmed);
+        addOpenedChangeListener(e -> {
+            if (!e.isOpened() && !hasConfirmed) whenConfused.accept(null);
+        });
     }
 
     public Button getConfirm() {

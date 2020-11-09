@@ -8,12 +8,13 @@ import org.bklab.crud.FluentCrudView;
 import org.bklab.crud.IFluentMenuBuilder;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.menu.FluentMenuItem;
+import org.bklab.flow.components.time.TimeRangeDialog;
 import org.bklab.flow.factory.GridFactory;
 import org.bklab.flow.factory.NotificationFactory;
 import org.bklab.flow.factory.SpanFactory;
 import org.bklab.flow.util.css.FluentColor;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
@@ -28,6 +29,8 @@ public class CrudView extends FluentCrudView<FluentColor, Grid<FluentColor>> {
         addMenuColumn(new FluentColorMenuBuilder());
         FluentColor[] values = FluentColor.values();
         header.right(FluentButton.addButton().clickListener(e -> insertEntity(values[i++])));
+
+        header.left(new TimeRangeDialog().getStatusField());
     }
 
     @Override
@@ -41,7 +44,7 @@ public class CrudView extends FluentCrudView<FluentColor, Grid<FluentColor>> {
 
     @Override
     public Collection<FluentColor> queryEntities(Map<String, Object> parameters) {
-        return new ArrayList<>();
+        return Arrays.asList(FluentColor.values());
     }
 
     private static class FluentColorMenuBuilder implements IFluentMenuBuilder<FluentColor, Grid<FluentColor>> {

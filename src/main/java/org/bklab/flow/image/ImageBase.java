@@ -16,15 +16,38 @@ import com.vaadin.flow.server.AbstractStreamResource;
 import com.vaadin.flow.server.StreamResource;
 
 public class ImageBase {
+    private final Class<?> baseClass;
+
+    public ImageBase() {
+        this(ImageBase.class);
+    }
+
+    public ImageBase(Class<?> baseClass) {
+        this.baseClass = baseClass;
+    }
+
     public static Image getImage(String name) {
-        return new Image(getResource(name), name);
+        return new ImageBase(ImageBase.class).image(name);
     }
 
     public static Image getImage(String name, String alt) {
-        return new Image(getResource(name), alt);
+        return new ImageBase(ImageBase.class).image(name, alt);
     }
 
     public static AbstractStreamResource getResource(String name) {
-        return new StreamResource(name, () -> ImageBase.class.getResourceAsStream(name));
+        return new ImageBase(ImageBase.class).resource(name);
     }
+
+    public Image image(String name) {
+        return new Image(resource(name), name);
+    }
+
+    public Image image(String name, String alt) {
+        return new Image(resource(name), alt);
+    }
+
+    public AbstractStreamResource resource(String name) {
+        return new StreamResource(name, () -> baseClass.getResourceAsStream(name));
+    }
+
 }

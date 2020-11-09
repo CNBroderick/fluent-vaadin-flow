@@ -11,7 +11,12 @@ import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.treegrid.TreeGrid;
+import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.data.provider.hierarchy.HierarchicalDataProvider;
+import com.vaadin.flow.data.provider.hierarchy.TreeData;
+import com.vaadin.flow.data.provider.hierarchy.TreeDataProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.shared.Registration;
 import org.bklab.export.data.ColumnDataBuilder;
@@ -58,6 +63,8 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected final List<Consumer<List<T>>> afterReloadListeners = new ArrayList<>();
     private final List<T> inMemoryFilteredEntities = new ArrayList<>();
     protected final EmptyLayout emptyLayout = new EmptyLayout("暂无数据");
+    protected Function<T, Collection<T>> childProvider = null;
+    protected Function<Collection<T>, DataProvider<T, Void>> dataProviderCreator = null;
 
     public FluentCrudView() {
         emptyLayout.setVisible(false);
@@ -166,7 +173,11 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
             grid.getStyle().remove("height");
             grid.getStyle().remove("min-height");
             grid.setHeightByRows(true);
-            grid.setItems(new ListDataProvider<>(Collections.emptyList()));
+            if (grid instanceof TreeGrid) {
+                grid.setItems(new TreeDataProvider<>(new TreeData<>()));
+            } else {
+                grid.setItems(new ListDataProvider<>(Collections.emptyList()));
+            }
         }
         footer.setVisible(false);
         emptyLayout.setVisible(true);
@@ -307,11 +318,31 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     protected PageSwitchEvent createPageSwitchEvent() {
-        return (currentPageNumber, pageSize, lastPageNumber, isFromClient) -> grid.setItems(hasPagination
+        return (currentPageNumber, pageSize, lastPageNumber, isFromClient) -> setGridItem(hasPagination
                 ? this.inMemoryFilteredEntities.stream().skip((long) (Math.max(Math.min(currentPageNumber,
                 this.inMemoryFilteredEntities.size() / pageSize + 1), 1) - 1) * pageSize).limit(pageSize).collect(Collectors.toList())
                 : inMemoryFilteredEntities
         );
+    }
+
+    public FluentCrudView<T, G> setGridItem(Collection<T> items) {
+        if (dataProviderCreator != null) {
+            grid.setItems(dataProviderCreator.apply(items));
+            return this;
+        }
+
+        if (grid instanceof TreeGrid) {
+            //noinspection unchecked,rawtypes,rawtypes
+            ((TreeGrid<?>) grid).setDataProvider((HierarchicalDataProvider) new TreeDataProvider<>((new TreeData<T>()).addItems(items, getChildProvider()::apply)));
+            return this;
+        }
+
+        grid.setItems(items);
+        return this;
+    }
+
+    protected Function<T, Collection<T>> getChildProvider() {
+        return childProvider == null ? a -> Collections.emptyList() : childProvider;
     }
 
     protected FluentCrudView<T, G> addParameter(String name, HasValue<?, ?> hasValue) {

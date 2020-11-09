@@ -100,6 +100,11 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
         return (E) this;
     }
 
+    default E textOverflowEllipsis() {
+        get().getStyle().set("text-overflow", "ellipsis");
+        return (E) this;
+    }
+
     default E margin(int margin) {
         get().getStyle().set("margin", margin == 0 ? "0" : margin + "px");
         return (E) this;

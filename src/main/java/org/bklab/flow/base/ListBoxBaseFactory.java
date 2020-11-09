@@ -23,6 +23,7 @@ public interface ListBoxBaseFactory<T, C extends ListBoxBase<C, T, T>, E extends
         return (E) this;
     }
 
+    @Deprecated
     default E dataProvider(DataProvider<T, ?> dataProvider) {
         get().setDataProvider(dataProvider);
         return (E) this;
