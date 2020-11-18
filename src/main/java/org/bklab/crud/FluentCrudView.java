@@ -244,9 +244,8 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     private void handleGridGridSortOrderSortEvent(SortEvent<Grid<T>, GridSortOrder<T>> gridGridSortOrderSortEvent) {
-        List<GridSortOrder<T>> sortOrder = gridGridSortOrderSortEvent.getSortOrder();
         List<T> filteredEntities = inMemoryFilteredEntities.stream().sorted((o1, o2) -> {
-            for (GridSortOrder<T> order : sortOrder) {
+            for (GridSortOrder<T> order : gridGridSortOrderSortEvent.getSortOrder()) {
                 Grid.Column<T> sorted = order.getSorted();
                 int compare = sorted.getComparator(order.getDirection()).compare(o1, o2);
                 if (compare == 0) continue;
