@@ -49,6 +49,10 @@ public class FluentButton extends Button {
         return new FluentButton(VaadinIcon.SEARCH, "查询");
     }
 
+    public static FluentButton linkButton(String link) {
+        return new FluentButton(link).link().noPadding();
+    }
+
     public FluentButton(VaadinIcon icon) {
         super(icon.create());
     }

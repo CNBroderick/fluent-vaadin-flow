@@ -28,6 +28,7 @@ public class DownloadDialog extends FluentDialog {
     public DownloadDialog(String message, AbstractStreamResource streamResource) {
         this.message = message;
         this.anchor = new Anchor(streamResource, null);
+        anchor.setTarget("_blank");
         anchor.add(new ButtonFactory().text("下载").clickListener(e -> close()).lumoSmall().lumoPrimary().get());
         this.bottom = new LmrHorizontalLayout();
         setWidth("420px");

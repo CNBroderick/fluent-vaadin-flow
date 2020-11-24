@@ -43,19 +43,18 @@ public class ExcelDataExporter<T> {
     }
 
     public StreamResource createStreamFactory(String fileName, String title, Collection<T> entities) {
-        return new StreamResource(fileName, () -> {
-            try {
-                XSSFWorkbook workbook = createWorkbook(title, entities);
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                workbook.write(outputStream);
-                return new ByteArrayInputStream(outputStream.toByteArray());
-            } catch (Exception e) {
-                e.printStackTrace();
-                LoggerFactory.getLogger(getClass()).error("导出失败：", e);
-                new ErrorDialog(e).header("导出失败").build().open();
-            }
-            return null;
-        });
+        try {
+            XSSFWorkbook workbook = createWorkbook(title, entities);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+            byte[] byteArray = outputStream.toByteArray();
+            return new StreamResource(fileName, () -> new ByteArrayInputStream(byteArray));
+        } catch (Exception e) {
+            e.printStackTrace();
+            LoggerFactory.getLogger(getClass()).error("导出失败：", e);
+            new ErrorDialog(e).header("导出失败").build().open();
+        }
+        return null;
     }
 
     public XSSFWorkbook createWorkbook(String name, Collection<T> entities) {

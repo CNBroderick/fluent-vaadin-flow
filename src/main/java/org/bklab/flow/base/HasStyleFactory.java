@@ -82,7 +82,7 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
 
     default E limitMaxWidth(String width) {
         get().getStyle()
-                .set("width", width)
+                .set("max-width", width)
                 .set("text-overflow", "ellipsis")
                 .set("display", "block")
                 .set("white-space", "nowrap")

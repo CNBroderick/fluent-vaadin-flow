@@ -54,6 +54,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected final Div content = new Div();
     protected final Div footer = new Div();
     protected final List<T> entities = new ArrayList<>();
+    protected final List<T> inMemoryFilteredEntities = new ArrayList<>();
     protected final Map<String, Predicate<T>> inMemoryEntityFilter = new LinkedHashMap<>();
     protected final Pagination pagination = new Pagination().onePageSize(20).limit(10).customLayout(new MiddleCustomPaginationLayout());
     protected final G grid = createGrid();
@@ -61,7 +62,6 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected final EmptyLayout emptyLayout = new EmptyLayout("暂无数据");
     private final List<Consumer<Exception>> exceptionConsumers = new ArrayList<>();
     private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
-    private final List<T> inMemoryFilteredEntities = new ArrayList<>();
     protected final Button searchButton = new FluentButton(VaadinIcon.SEARCH, "查询").primary().asFactory().clickListener(e -> reloadGridData()).get();
     protected boolean hasGridMenu = true;
     protected boolean hasPagination = true;
@@ -415,4 +415,5 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         Optional.ofNullable(queryEntities(map)).ifPresent(this.entities::addAll);
         this.reloadGridDataInMemory();
     }
+
 }
