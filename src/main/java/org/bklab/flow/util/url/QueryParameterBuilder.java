@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -47,6 +48,11 @@ public class QueryParameterBuilder implements SerializableSupplier<QueryParamete
     public final <T> QueryParameterBuilder add(Predicate<T> add, String name, T... params) {
         return add(name, params == null ? Collections.emptyList()
                 : Stream.of(params).filter(add).collect(Collectors.toList()));
+    }
+
+    public QueryParameterBuilder peek(Consumer<QueryParameterBuilder> consumer) {
+        consumer.accept(this);
+        return this;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import dev.mett.vaadin.tooltip.Tooltips;
+import org.bklab.flow.base.HasReturnThis;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.textfield.KeywordField;
 import org.bklab.flow.dialog.ModalDialog;
@@ -17,7 +18,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> extends ModalDialog {
+public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> extends ModalDialog implements HasReturnThis<E> {
 
     protected final List<Consumer<Map<String, Object>>> saveListeners = new ArrayList<>();
     protected final Map<String, Supplier<Object>> parameterMap = new LinkedHashMap<>();
@@ -26,6 +27,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
     protected final List<Supplier<String>> statusBuilder = new ArrayList<>();
     protected final AdvanceSearchField<E> advanceSearchField = new AdvanceSearchField<>((E) this);
     protected final FluentButton searchButton = new FluentButton(VaadinIcon.SEARCH, "搜索").primary().clickListener(e -> search());
+    protected final Map<String, HasValue<?, ?>> componentMap = new LinkedHashMap<>();
 
     public AbstractSearchDialog() {
         build();
@@ -91,6 +93,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
         });
         statusBuilder.add(() -> Optional.ofNullable(hasValue.getValue()).map(s -> s.isBlank() ? null : s.strip())
                 .map(s -> caption + ": " + s).orElse(null));
+        componentMap.put(name, hasValue);
         clearParameterConsumer.add(hasValue::clear);
     }
 
@@ -106,6 +109,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
             if (value instanceof Collection<?> && ((Collection<?>) value).isEmpty()) return null;
             return value;
         });
+        componentMap.put(name, hasValue);
         addStatusBuilder(caption, hasValue, toStatusLabel);
         clearParameterConsumer.add(hasValue::clear);
     }
@@ -113,6 +117,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
     protected <T, V> void register(String caption, String name, HasValue<?, T> hasValue, Function<T, V> toValueFunction, Function<T, String> toStatusLabel) {
         parameterMap.put(name, () -> Optional.ofNullable(hasValue.getValue()).map(toValueFunction).orElse(null));
         addStatusBuilder(caption, hasValue, toStatusLabel);
+        componentMap.put(name, hasValue);
         clearParameterConsumer.add(hasValue::clear);
     }
 
@@ -137,6 +142,8 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
                 .orElse(null);
         parameterMap.put(minName, () -> checker.apply(min.getValue()));
         parameterMap.put(maxName, () -> checker.apply(max.getValue()));
+        componentMap.put(minName, min);
+        componentMap.put(maxName, max);
 
         clearParameterConsumer.add(min::clear);
         clearParameterConsumer.add(max::clear);
@@ -190,6 +197,27 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
 
     public List<Consumer<Map<String, Object>>> getSaveListeners() {
         return saveListeners;
+    }
+
+    public <V> E value(String name, V value) {
+        getHasValue(name).setValue(value);
+        refreshSearchFieldValue();
+        advanceSearchField.checkClearButtonVisibility();
+        return thisObject();
+    }
+
+    public <V> E bind(String name, @SuppressWarnings("OptionalUsedAsFieldOrParameterType") Optional<V> value) {
+        value.ifPresent(v -> value(name, v));
+        return thisObject();
+    }
+
+    public E peek(Consumer<E> consumer) {
+        consumer.accept(thisObject());
+        return thisObject();
+    }
+
+    public <V> HasValue<?, V> getHasValue(String name) {
+        return ((HasValue<?, V>) componentMap.get(name));
     }
 
     public interface ClearParameterListener {

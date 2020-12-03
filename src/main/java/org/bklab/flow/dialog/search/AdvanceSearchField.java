@@ -47,6 +47,11 @@ public class AdvanceSearchField<E extends Dialog> extends TextField {
         return clearButton;
     }
 
+    public AdvanceSearchField<E> checkClearButtonVisibility() {
+        clearButton.setVisible(getValue() != null && !getValue().isBlank());
+        return this;
+    }
+
     public Button getOpenButton() {
         return openButton;
     }

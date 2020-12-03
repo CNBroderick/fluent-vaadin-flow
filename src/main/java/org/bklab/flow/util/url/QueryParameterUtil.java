@@ -48,6 +48,10 @@ public class QueryParameterUtil {
         return Optional.ofNullable(parameters.get(name)).flatMap(s -> s.stream().findFirst()).orElse(null);
     }
 
+    public Optional<String> getOptional(String name) {
+        return Optional.ofNullable(parameters.get(name)).flatMap(s -> s.stream().findFirst());
+    }
+
     public List<String> getList(String name) {
         return Optional.ofNullable(parameters.get(name)).orElse(new ArrayList<>());
     }
