@@ -21,11 +21,14 @@ import com.vaadin.flow.function.SerializablePredicate;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.*;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
 public class RadioButtonGroupFactory<T> extends FlowFactory<RadioButtonGroup<T>, RadioButtonGroupFactory<T>> implements
         GeneratedVaadinRadioGroupFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
-        HasItemsAndComponentsFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
         SingleSelectFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
-        HasDataProviderFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
+        HasItemComponentsFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
         HasValidationFactory<RadioButtonGroup<T>, RadioButtonGroupFactory<T>> {
 
     public RadioButtonGroupFactory() {
@@ -86,5 +89,20 @@ public class RadioButtonGroupFactory<T> extends FlowFactory<RadioButtonGroup<T>,
     public RadioButtonGroupFactory<T> valueChangeListener(HasValue.ValueChangeListener<? super AbstractField.ComponentValueChangeEvent<RadioButtonGroup<T>, T>> valueChangeListener) {
         get().addValueChangeListener(valueChangeListener);
         return this;
+    }
+
+    public RadioButtonGroupFactory<T> items(List<T> items) {
+        get().setItems(items);
+        return this;
+    }
+
+    public RadioButtonGroupFactory<T> items(Set<T> items) {
+        get().setItems(items);
+        return this;
+    }
+
+    public RadioButtonGroupFactory<T> setItems(Collection<T> items) {
+        get().setItems(items);
+        return  this;
     }
 }

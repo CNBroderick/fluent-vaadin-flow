@@ -3,10 +3,9 @@ package org.bklab.flow.util.url;
 import com.vaadin.flow.function.SerializableSupplier;
 import com.vaadin.flow.router.QueryParameters;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -38,6 +37,12 @@ public class QueryParameterBuilder implements SerializableSupplier<QueryParamete
                 ? Collections.emptyList()
                 : Stream.of(params).map(String::valueOf).collect(Collectors.toList()));
         return this;
+    }
+
+    public QueryParameterBuilder encode(String name, Object ... params) {
+        return add(name, Arrays.stream(params).map(String::valueOf)
+                .map(s -> URLEncoder.encode(s, StandardCharsets.UTF_8))
+                .collect(Collectors.toList()).toArray(new Object[]{}));
     }
 
     public QueryParameterBuilder add(boolean add, String name, Object... params) {

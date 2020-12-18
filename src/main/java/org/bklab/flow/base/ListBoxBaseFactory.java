@@ -8,11 +8,13 @@ import com.vaadin.flow.function.SerializablePredicate;
 import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
-public interface ListBoxBaseFactory<T, C extends ListBoxBase<C, T, T>, E extends ListBoxBaseFactory<T, C, E>> extends
+public interface ListBoxBaseFactory<
+        T,
+        C extends ListBoxBase<C, T, T>,
+        E extends ListBoxBaseFactory<T, C, E>
+        > extends
         IFlowFactory<C>,
-        AbstractSinglePropertyFieldFactory<T,C,E>,
-        HasItemsAndComponentsFactory<T, C, E>,
-        HasDataProviderFactory<T, C, E>,
+        AbstractSinglePropertyFieldFactory<T, C, E>,
         HasSizeFactory<C, E> {
 
     default E renderer(ComponentRenderer<? extends Component, T> itemRenderer) {
@@ -20,6 +22,7 @@ public interface ListBoxBaseFactory<T, C extends ListBoxBase<C, T, T>, E extends
         return (E) this;
     }
 
+    @Deprecated
     default E dataProvider(DataProvider<T, ?> dataProvider) {
         get().setDataProvider(dataProvider);
         return (E) this;

@@ -15,9 +15,9 @@ import com.vaadin.flow.component.*;
 import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
-public interface ClickNotifierFactory<T extends Component & ClickNotifier<T>, E extends ClickNotifierFactory<T, E>> extends IFlowFactory<T> {
+public interface ClickNotifierFactory<C extends Component & ClickNotifier<C>, E extends ClickNotifierFactory<C, E>> extends IFlowFactory<C> {
 
-    default E clickListener(ComponentEventListener<ClickEvent<T>> listener) {
+    default E clickListener(ComponentEventListener<ClickEvent<C>> listener) {
         get().addClickListener(listener);
         return (E) this;
     }

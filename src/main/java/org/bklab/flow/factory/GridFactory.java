@@ -27,8 +27,6 @@ import java.util.Map;
 public class GridFactory<T> extends FlowFactory<Grid<T>, GridFactory<T>> implements
         HasStyleFactory<Grid<T>, GridFactory<T>>,
         HasListDataViewFactory<T, GridListDataView<T>, Grid<T>, GridFactory<T>>,
-        HasDataViewFactory<T, Void, GridDataView<T>, Grid<T>, GridFactory<T>>,
-        HasLazyDataViewFactory<T, Void, GridLazyDataView<T>, Grid<T>, GridFactory<T>>,
         HasSizeFactory<Grid<T>, GridFactory<T>>,
         FocusableFactory<Grid<T>, GridFactory<T>>,
         HasThemeFactory<Grid<T>, GridFactory<T>>,

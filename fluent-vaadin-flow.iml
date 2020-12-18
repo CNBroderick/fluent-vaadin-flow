@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_15">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$/src/main/java">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/src/main/resources">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/src/test/java">
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.vaadin.olli:clipboardhelper:1.1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-core:17.0.0.alpha6" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:flow-server:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin.external.gwt:gwt-elemental:2.8.2.vaadin2" level="project" />
+    <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.3.3" level="project" />
+    <orderEntry type="library" name="Maven: com.helger:ph-css:6.1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.helger:ph-commons:9.1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin.external:gentyref:1.2.0.vaadin1" level="project" />
+    <orderEntry type="library" name="Maven: javax.validation:validation-api:2.0.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.10.2" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.10.2" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.3.2" level="project" />
+    <orderEntry type="library" name="Maven: com.github.javaparser:javaparser-symbol-solver-core:3.15.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.javaparser:javaparser-symbol-solver-logic:3.15.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.javaparser:javaparser-symbol-solver-model:3.15.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.javaparser:javaparser-core:3.15.1" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.codegen.v3:swagger-codegen:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.core.v3:swagger-models:2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger:swagger-parser:1.0.39" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger:swagger-core:1.5.21" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger:swagger-models:1.5.21" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger:swagger-annotations:1.5.21" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.core.v3:swagger-core:2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.5" level="project" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.18" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.core.v3:swagger-annotations:2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.parser.v3:swagger-parser-core:2.0.5" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.parser.v3:swagger-parser-v3:2.0.5" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.parser.v3:swagger-parser:2.0.5" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.parser.v3:swagger-parser-v2-converter:2.0.5" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger:swagger-codegen:2.3.1" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger:swagger-compat-spec-parser:1.0.33" level="project" />
+    <orderEntry type="library" name="Maven: com.github.java-json-tools:json-schema-validator:2.2.8" level="project" />
+    <orderEntry type="library" name="Maven: com.github.java-json-tools:json-schema-core:1.2.8" level="project" />
+    <orderEntry type="library" name="Maven: com.github.fge:uri-template:0.9" level="project" />
+    <orderEntry type="library" name="Maven: javax.mail:mailapi:1.4.3" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.9.7" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.libphonenumber:libphonenumber:8.0.0" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jopt-simple:jopt-simple:5.0.3" level="project" />
+    <orderEntry type="library" name="Maven: com.github.fge:json-patch:1.6" level="project" />
+    <orderEntry type="library" name="Maven: com.github.fge:jackson-coreutils:1.6" level="project" />
+    <orderEntry type="library" name="Maven: com.github.fge:msg-simple:1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.fge:btf:1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.samskivert:jmustache:1.12" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-ext:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jknack:handlebars:4.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.5.1-1" level="project" />
+    <orderEntry type="library" name="Maven: org.mozilla:rhino:1.7R4" level="project" />
+    <orderEntry type="library" name="Maven: com.atlassian.commonmark:commonmark:0.9.0" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.codegen.v3:swagger-codegen-generators:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:flow-push:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin.external.atmosphere:atmosphere-runtime:2.4.30.slf4jvaadin1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:flow-client:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:flow-html-components:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:flow-data:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:flow-dnd:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars.npm:vaadin__vaadin-mobile-drag-drop:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars.npm:mobile-drag-drop:2.3.0-rc.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-lumo-theme:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-material-theme:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-accordion-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-button-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-checkbox-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-combo-box-flow:5.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-custom-field-flow:5.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-date-picker-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-date-time-picker-flow:3.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-details-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-time-picker-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-select-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-dialog-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-form-layout-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-grid-flow:6.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-icons-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-iron-list-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-list-box-flow:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-login-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-ordered-layout-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-progress-bar-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-radio-button-flow:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-split-layout-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-tabs-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-text-field-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-upload-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-notification-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-app-layout-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-context-menu-flow:5.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-menu-bar-flow:3.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.6" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin:17.0.0.alpha6" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-board-flow:5.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-charts-flow:9.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.10.2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-confirm-dialog-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-cookie-consent-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-crud-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-grid-pro-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-rich-text-editor-flow:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:slf4j-simple:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-testbench:17.0.0.alpha6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-testbench-core:6.3.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.11" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-remote-driver:3.141.59" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-api:3.141.59" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.commons:commons-exec:1.3" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:25.0-jre" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:1.3.9" level="project" />
+    <orderEntry type="library" name="Maven: org.checkerframework:checker-compat-qual:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.1.3" level="project" />
+    <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.squareup.okhttp3:okhttp:3.11.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.squareup.okio:okio:1.14.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-java:3.141.59" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-chrome-driver:3.141.59" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-edge-driver:3.141.59" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-firefox-driver:3.141.59" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-ie-driver:3.141.59" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-opera-driver:3.141.59" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-safari-driver:3.141.59" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-support:3.141.59" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.easymock:easymock:3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: cglib:cglib-nodep:2.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.objenesis:objenesis:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.18.1-GA" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:license-checker:1.0.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.google.gwt:gwt-elemental:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.9.13" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:flow-html-components-testbench:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-accordion-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-app-layout-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-board-testbench:5.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-button-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-charts-testbench:9.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-checkbox-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-combo-box-testbench:5.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-confirm-dialog-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-context-menu-testbench:5.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-cookie-consent-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-crud-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-custom-field-testbench:5.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-date-picker-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-date-time-picker-testbench:3.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-details-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-dialog-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-form-layout-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-grid-testbench:6.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-grid-pro-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-icons-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-iron-list-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-list-box-testbench:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-login-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-menu-bar-testbench:3.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-notification-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-ordered-layout-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-progress-bar-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-radio-button-testbench:4.0.0.alpha2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-rich-text-editor-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-select-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-split-layout-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-tabs-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-text-field-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-time-picker-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.vaadin:vaadin-upload-testbench:4.0.0.alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.github.bonigarcia:webdrivermanager:3.8.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.8.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.10" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.rauschig:jarchivelib:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.18" level="project" />
+    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.11.3" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-list-box-flow:18.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-combo-box-flow:18.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:flow-server:5.0.2" level="project" />
+    <orderEntry type="library" name="Maven: be.ceau:chart:2.5.0" level="project" />
+  </component>
+</module>

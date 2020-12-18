@@ -10,6 +10,7 @@ import com.vaadin.flow.server.VaadinSession;
 import org.bklab.flow.util.predicate.MobileBrowserPredicate;
 
 import java.util.*;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
