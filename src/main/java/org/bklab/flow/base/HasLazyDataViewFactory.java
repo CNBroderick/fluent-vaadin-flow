@@ -12,17 +12,18 @@ public interface HasLazyDataViewFactory<T, F, V extends LazyDataView<T>,
         C extends Component & HasLazyDataView<T, F, V>,
         E extends HasLazyDataViewFactory<T, F, V, C, E>> extends IFlowFactory<C> {
 
-    default E setItems(CallbackDataProvider.FetchCallback<T, F> fetchCallback) {
+    default E items(CallbackDataProvider.FetchCallback<T, F> fetchCallback) {
         get().setItems(fetchCallback);
         return (E) this;
     }
 
-    default E setItems(CallbackDataProvider.FetchCallback<T, F> fetchCallback, CallbackDataProvider.CountCallback<T, F> countCallback) {
+    default E items(CallbackDataProvider.FetchCallback<T, F> fetchCallback,
+                    CallbackDataProvider.CountCallback<T, F> countCallback) {
         get().setItems(fetchCallback, countCallback);
         return (E) this;
     }
 
-    default E setItems(BackEndDataProvider<T, F> backEndDataProvider) {
+    default E items(BackEndDataProvider<T, F> backEndDataProvider) {
         get().setItems(backEndDataProvider);
         return (E) this;
     }

@@ -36,6 +36,7 @@ import org.bklab.flow.image.ImageBase;
 import org.bklab.flow.layout.FlexBoxLayout;
 import org.bklab.flow.util.lumo.LumoStyles;
 import org.bklab.flow.util.lumo.UIUtils;
+import org.bklab.flow.util.url.QueryParameterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -445,6 +446,18 @@ public class AppBar extends Header {
 	public void setContextIconAsBackward(Component component, Class<? extends Component> navigationTarget) {
 		contextIcon.setVisible(true);
 		Registration registration = contextIcon.addClickListener(e -> UI.getCurrent().navigate(navigationTarget));
+		component.addDetachListener(e -> {
+			reset();
+			registration.remove();
+		});
+	}
+
+	public void setContextIconAsBackward(Component component, Class<? extends Component> navigationTarget, QueryParameterBuilder builder) {
+		contextIcon.setVisible(true);
+		Registration registration = contextIcon.addClickListener(e -> {
+			UI current = UI.getCurrent();
+			current.getRouter().getRegistry().getTargetUrl(navigationTarget).ifPresent(url -> current.navigate(url, builder.get()));
+		});
 		component.addDetachListener(e -> {
 			reset();
 			registration.remove();

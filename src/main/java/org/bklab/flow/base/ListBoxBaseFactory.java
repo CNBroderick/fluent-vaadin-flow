@@ -2,6 +2,7 @@ package org.bklab.flow.base;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.listbox.ListBoxBase;
+import com.vaadin.flow.component.listbox.dataview.ListBoxListDataView;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.function.SerializablePredicate;
@@ -10,9 +11,8 @@ import org.bklab.flow.IFlowFactory;
 @SuppressWarnings("unchecked")
 public interface ListBoxBaseFactory<T, C extends ListBoxBase<C, T, T>, E extends ListBoxBaseFactory<T, C, E>> extends
         IFlowFactory<C>,
-        AbstractSinglePropertyFieldFactory<T,C,E>,
-        HasItemsAndComponentsFactory<T, C, E>,
-        HasDataProviderFactory<T, C, E>,
+        AbstractSinglePropertyFieldFactory<T, C, E>,
+        HasListDataViewFactory<T, ListBoxListDataView<T>, C, E>,
         HasSizeFactory<C, E> {
 
     default E renderer(ComponentRenderer<? extends Component, T> itemRenderer) {

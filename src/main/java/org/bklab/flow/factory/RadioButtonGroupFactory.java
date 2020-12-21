@@ -15,6 +15,8 @@ import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.radiobutton.dataview.RadioButtonGroupDataView;
+import com.vaadin.flow.component.radiobutton.dataview.RadioButtonGroupListDataView;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.function.SerializablePredicate;
@@ -23,9 +25,10 @@ import org.bklab.flow.base.*;
 
 public class RadioButtonGroupFactory<T> extends FlowFactory<RadioButtonGroup<T>, RadioButtonGroupFactory<T>> implements
         GeneratedVaadinRadioGroupFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
-        HasItemsAndComponentsFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
+        HasItemComponentsFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
+        HasListDataViewFactory<T, RadioButtonGroupListDataView<T>, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
+        HasDataViewFactory<T, Void, RadioButtonGroupDataView<T>, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
         SingleSelectFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
-        HasDataProviderFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
         HasValidationFactory<RadioButtonGroup<T>, RadioButtonGroupFactory<T>> {
 
     public RadioButtonGroupFactory() {
