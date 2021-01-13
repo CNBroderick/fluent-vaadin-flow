@@ -29,21 +29,38 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
     protected final FluentButton searchButton = new FluentButton(VaadinIcon.SEARCH, "搜索").primary().clickListener(e -> search());
     protected final Map<String, HasValue<?, ?>> componentMap = new LinkedHashMap<>();
 
-    public AbstractSearchDialog() {
-        build();
+    protected final Object[] args;
 
-        refreshSearchFieldValue();
+    {
         title("高级搜索").content(formLayout).width("600px", "600px", "80vw");
         addCancelButton();
         footerRight(searchButton);
-
-        new FormLayoutFactory(formLayout).warpWhenOverflow().formItemAlignEnd().widthFull().get();
 
         advanceSearchField.getClearButton().addClickListener(e -> {
             clearParameterConsumer.forEach(ClearParameterListener::clear);
             callSaveListeners(getConditions());
             Tooltips.getCurrent().removeTooltip(e.getSource());
         });
+    }
+
+    public AbstractSearchDialog() {
+        this(new Object[]{});
+    }
+
+    public AbstractSearchDialog(Object... args) {
+        this.args = args;
+        if(args == null || args.length < 1) init();
+    }
+
+    public <T> T getArgs(int index) {
+        return (T) args[index];
+    }
+
+    protected E init() {
+        build();
+        refreshSearchFieldValue();
+        new FormLayoutFactory(formLayout).warpWhenOverflow().formItemAlignEnd().widthFull().get();
+        return thisObject();
     }
 
     protected abstract void build();

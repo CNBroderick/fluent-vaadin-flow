@@ -156,7 +156,6 @@ public class ModalDialog extends Dialog {
                 .set("outline", "0")
                 .set("cursor", "pointer")
                 .set("transition", "color .3s")
-                .set("-webkit-appearance", "button")
                 .set("color", "rgba(0,0,0,.75)")
                 .set("text-decoration", "none")
         ;

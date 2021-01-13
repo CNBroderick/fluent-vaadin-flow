@@ -28,6 +28,12 @@ public class ButtonSelector extends Span {
         return Optional.ofNullable(map.get(name));
     }
 
+    public ButtonSelector clear() {
+        removeAll();
+        map.clear();
+        return this;
+    }
+
     public ButtonSelector add(String name, ComponentEventListener<ClickEvent<Button>> listener) {
         addButton(name, listener);
         return this;
@@ -48,7 +54,9 @@ public class ButtonSelector extends Span {
 
     public ButtonSelector active(int index) {
         try {
-            new ArrayList<>(map.values()).get(index).active();
+            ArrayList<SelectButton> selectButtons = new ArrayList<>(map.values());
+            selectButtons.forEach(SelectButton::inactive);
+            selectButtons.get(index).active();
         } catch (Exception error) {
             logger.error("越界的索引" + index, error);
         }
@@ -60,7 +68,10 @@ public class ButtonSelector extends Span {
     }
 
     public ButtonSelector active(String name) {
-        get(name).ifPresent(SelectButton::active);
+        get(name).ifPresent(selectButton -> {
+            map.values().forEach(SelectButton::inactive);
+            selectButton.active();
+        });
         return this;
     }
 

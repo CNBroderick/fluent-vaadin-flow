@@ -1,5 +1,7 @@
 package org.bklab.flow.util.url;
 
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.function.SerializableSupplier;
 import com.vaadin.flow.router.QueryParameters;
 
@@ -63,5 +65,19 @@ public class QueryParameterBuilder implements SerializableSupplier<QueryParamete
     @Override
     public QueryParameters get() {
         return new QueryParameters(map);
+    }
+
+
+    public <C extends Class<? extends Component>> Consumer<UI> getNavigateConsumer(C target) {
+        return ui -> navigate(ui, target);
+    }
+
+    public <C extends Class<? extends Component>> QueryParameterBuilder navigate(C target) {
+        return navigate(UI.getCurrent(), target);
+    }
+
+    public <C extends Class<? extends Component>> QueryParameterBuilder navigate(UI ui, C target) {
+        ui.getInternals().getRouter().getRegistry().getTargetUrl(target).ifPresent(uri -> ui.navigate(uri, get()));
+        return this;
     }
 }

@@ -25,18 +25,37 @@ public class ImageCardButton extends Button {
         addClassNames(BASE_CLASS_NAME);
         label.addClassNames(BASE_CLASS_NAME + "__label", LumoStyles.Size.M);
         image.addClassNames(BASE_CLASS_NAME + "__image");
+        addToPrefix(new DivFactory(image, label).sizeFull().get());
+    }
+
+    public ImageCardButton() {
+
     }
 
     public ImageCardButton(AbstractStreamResource imageResource, String text) {
         image.setSrc(imageResource);
         image.setAlt(text);
         label.setText(text);
-        addToPrefix(new DivFactory(image, label).sizeFull().get());
+    }
+
+    public ImageCardButton build(AbstractStreamResource imageResource, String text) {
+        image.setSrc(imageResource);
+        image.setAlt(text);
+        label.setText(text);
+        return this;
     }
 
     public ImageCardButton clickListener(ComponentEventListener<ClickEvent<Button>> listener) {
         addClickListener(listener);
         return this;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public Span getLabel() {
+        return label;
     }
 
     public ButtonFactory asFactory() {

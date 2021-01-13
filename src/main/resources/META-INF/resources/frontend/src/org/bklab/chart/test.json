@@ -1,0 +1,95 @@
+{
+  "data": {
+    "labels": [
+      "1月",
+      "2月",
+      "3月",
+      "4月",
+      "5月",
+      "6月",
+      "7月",
+      "8月",
+      "9月",
+      "10月",
+      "11月",
+      "12月"
+    ],
+    "datasets": [
+      {
+        "data": [
+          339567.00,
+          580636.95,
+          37128.00,
+          266110.00,
+          458425.00,
+          0.00,
+          0.00,
+          0.00,
+          0.00,
+          0.00,
+          0.00,
+          0.00
+        ],
+        "backgroundColor": "rgba(153,102,255,0.500)",
+        "label": "实收"
+      },
+      {
+        "data": [
+          3390630.12,
+          2147727.85,
+          937210.27,
+          819130.78,
+          863839.31,
+          2272191.12,
+          3050744.17,
+          2406575.10,
+          1000659.40,
+          1006590.78,
+          1031816.00,
+          1937640.52
+        ],
+        "backgroundColor": "rgba(75,192,192,0.500)",
+        "label": "应收"
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "title": {
+      "display": true,
+      "fontSize": 16,
+      "text": "2019年资产收益"
+    },
+    "legend": {
+      "display": true,
+      "position": "bottom"
+    },
+    "tooltips": {
+      "enabled": true,
+      "callbacks": {
+        "label": "function(d,e){const c=d.index; const b=e.datasets[d.datasetIndex].label; return e.labels[c]+b+': '+Number(d.yLabel).toLocaleString('zh-cn',{maximumFractionDigits:2,useGrouping:true})+' 元'}"
+      }
+    },
+    "hover": {
+      "mode": "single"
+    },
+    "scales": {
+      "xAxes": [
+        {
+          "stacked": true
+        }
+      ],
+      "yAxes": [
+        {
+          "ticks": {
+            "callback": "function(b){return new Number(b).toLocaleString('zh-cn', {maximumFractionDigits: 2,useGrouping: true})+'元';}",
+            "beginAtZero": true
+          },
+          "stacked": true
+        }
+      ]
+    }
+  },
+  "type": "bar"
+}
