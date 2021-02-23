@@ -18,7 +18,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ExcelDataExporter<T> {
 
@@ -64,7 +66,7 @@ public class ExcelDataExporter<T> {
         buildTitle(sheet, name);
         buildHeaders(sheet);
         buildBody(sheet, entities);
-
+        computeColumnWidth(sheet);
         return workbook;
     }
 
@@ -112,5 +114,28 @@ public class ExcelDataExporter<T> {
         xssfFont.setBold(bold);
         cellStyle.setFont(xssfFont);
         return cellStyle;
+    }
+
+    private void computeColumnWidth(XSSFSheet sheet) {
+        Map<Integer, Integer> widthMap = new LinkedHashMap<>();
+        for (int i = sheet.getFirstRowNum(); i < sheet.getLastRowNum(); i++) {
+            XSSFRow row = sheet.getRow(i);
+            for (int cellNum = row.getFirstCellNum(); cellNum < row.getLastCellNum(); cellNum++) {
+                widthMap.put(cellNum, Math.max(
+                        widthMap.getOrDefault(cellNum, 1),
+                        Optional.ofNullable(row.getCell(cellNum)).map(XSSFCell::getStringCellValue).map(this::calcWidth).orElse(1)
+                ));
+            }
+        }
+        widthMap.forEach((index, width) -> sheet.setColumnWidth(index, Math.min(65280, Math.max(2843, width * 252 + 323))));
+    }
+
+    private int calcWidth(String content) {
+        if (content == null || content.isBlank()) return 1;
+        int count = 0;
+        for (char c : content.toCharArray()) {
+            count += c < 256 ? 1 : 2;
+        }
+        return count;
     }
 }

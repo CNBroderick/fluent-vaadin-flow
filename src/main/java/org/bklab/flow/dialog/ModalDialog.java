@@ -324,4 +324,10 @@ public class ModalDialog extends Dialog {
         createCloseButtonStyle(div.getStyle());
         return div;
     }
+
+    public ModalDialog size(String width, String height) {
+        this.setWidth(width);
+        this.setHeight(height);
+        return this;
+    }
 }

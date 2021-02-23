@@ -1,16 +1,28 @@
 package org.bklab.flow.dialog.search;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.function.SerializableFunction;
 import dev.mett.vaadin.tooltip.Tooltips;
 import org.bklab.flow.base.HasReturnThis;
 import org.bklab.flow.components.button.FluentButton;
+import org.bklab.flow.components.range.LocalDateRangeComboHelper;
+import org.bklab.flow.components.range.LocalDateTimeRangeComboHelper;
+import org.bklab.flow.components.range.NumberRangeTextFieldHelper;
 import org.bklab.flow.components.textfield.KeywordField;
 import org.bklab.flow.dialog.ModalDialog;
 import org.bklab.flow.factory.FormLayoutFactory;
+import org.bklab.flow.factory.RadioButtonGroupFactory;
+import org.bklab.flow.factory.TextFieldFactory;
 import org.bklab.flow.layout.ToolBar;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -59,7 +71,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
     protected E init() {
         build();
         refreshSearchFieldValue();
-        new FormLayoutFactory(formLayout).warpWhenOverflow().formItemAlignEnd().widthFull().get();
+        new FormLayoutFactory(formLayout).warpWhenOverflow().formItemAlignEnd().componentFullWidth().widthFull().get();
         return thisObject();
     }
 
@@ -227,6 +239,74 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
         value.ifPresent(v -> value(name, v));
         return thisObject();
     }
+
+    public E withNumber(String caption, String minName, String maxName, String tooltip) {
+        NumberRangeTextFieldHelper helper = new NumberRangeTextFieldHelper().limit(0d, Double.MAX_VALUE);
+        helper.add(new FluentButton(VaadinIcon.INFO_CIRCLE_O).link().noPadding().asFactory().tooltip(tooltip).get());
+        register(caption, minName, maxName, helper.getMinField(), helper.getMaxField(), Number::toString);
+        formLayout.addFormItem(helper, caption + '：');
+        return returnThis();
+    }
+
+    public E withNumber(String caption, String minName, String maxName) {
+        NumberRangeTextFieldHelper helper = new NumberRangeTextFieldHelper().limit(0d, Double.MAX_VALUE);
+        register(caption, minName, maxName, helper.getMinField(), helper.getMaxField(), Number::toString);
+        formLayout.addFormItem(helper, caption + '：');
+        return returnThis();
+    }
+
+    public E withDateRange(String caption, String minName, String maxName) {
+        LocalDateRangeComboHelper helper = new LocalDateRangeComboHelper();
+        register(caption, minName, maxName, helper.getStart(), helper.getEnd(), a -> DateTimeFormatter.ofPattern("yyyy-MM-dd").format(a));
+        formLayout.addFormItem(helper, caption + '：');
+        return returnThis();
+    }
+
+    public E withDateTimeRange(String caption, String minName, String maxName) {
+        LocalDateTimeRangeComboHelper helper = new LocalDateTimeRangeComboHelper();
+        register(caption, minName, maxName, helper.getStart(), helper.getEnd(), a -> DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(a));
+        formLayout.addFormItem(helper, caption + '：');
+        return returnThis();
+    }
+
+    public E withString(String caption, String parameterName) {
+        TextField textField = new TextFieldFactory().lumoSmall().widthFull().get();
+        register(caption, parameterName, textField);
+        formLayout.addFormItem(textField, caption + '：');
+        return returnThis();
+    }
+
+    public E withString(String caption, String parameterName, String placeholder) {
+        TextField textField = new TextFieldFactory().lumoSmall().widthFull().placeholder(placeholder).get();
+        register(caption, parameterName, textField);
+        formLayout.addFormItem(textField, caption + '：');
+        return returnThis();
+    }
+
+    public <T> E withBooleanRadio(String caption, String parameterName, String trueCaption, String falseCaption, T trueValue, T falseValue) {
+        return withRadio(caption, parameterName,
+                new ComponentRenderer<>((SerializableFunction<Boolean, Span>) b -> new Span(b ? trueCaption : falseCaption)),
+                b -> b ? trueValue : falseValue,
+                b -> b ? trueCaption : falseCaption,
+                List.of(true, false)
+        );
+    }
+
+    public E withStringRadio(String caption, String parameterName, List<String> items) {
+        return withRadio(caption, parameterName,
+                new ComponentRenderer<>((SerializableFunction<String, Span>) Span::new),
+                Function.identity(), Function.identity(), items);
+    }
+
+    public <T, V> E withRadio(String caption, String parameterName, ComponentRenderer<? extends Component, T> renderer,
+                              Function<T, V> toValueFunction, Function<T, String> toStatusLabel, List<T> items) {
+        RadioButtonGroup<T> radioButtonGroup = new RadioButtonGroupFactory<T>().lumoSmall()
+                .renderer(renderer).items(items).flexWrap().displayFlex().get();
+        register(caption, parameterName, radioButtonGroup, toValueFunction, toStatusLabel);
+        formLayout.addFormItem(radioButtonGroup, caption + '：');
+        return returnThis();
+    }
+
 
     public E peek(Consumer<E> consumer) {
         consumer.accept(thisObject());

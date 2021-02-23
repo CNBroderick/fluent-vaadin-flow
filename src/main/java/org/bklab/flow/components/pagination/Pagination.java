@@ -175,7 +175,7 @@ public class Pagination extends ToolBar {
     }
 
     public Pagination refresh() {
-        generatePagesContainer.go(false,currentPage);
+        generatePagesContainer.go(false, currentPage);
         return this;
     }
 

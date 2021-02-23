@@ -12,7 +12,6 @@ import org.bklab.flow.components.slider.PaperSlider;
 import org.bklab.flow.dialog.ErrorDialog;
 import org.bklab.flow.dialog.MessageDialog;
 import org.bklab.flow.dialog.ModalDialog;
-import org.bklab.flow.echarts.ECharts;
 import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.factory.NotificationFactory;
 import org.bklab.flow.layout.ToolBar;
@@ -88,8 +87,6 @@ public class ComponentDemoView extends Div {
         objectMultiSelectComboBox.items(IntStream.range(1, 13).mapToObj(r -> LocalDateTime.now().plusMonths(r)));
 
         add(objectMultiSelectComboBox);
-
-        add(new ECharts());
 
         setSizeFull();
 //        add( new VerticalLayoutFactory(new SimplyChart())

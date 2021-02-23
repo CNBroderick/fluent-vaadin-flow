@@ -142,13 +142,16 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         builderFactoryConsumer.accept(factory);
         ColumnDataBuilder<T> builder = factory.createBuilder();
         columnDataBuilderConsumer.accept(builder);
+        return createExportButton(fileName, excelTitle, builder);
+    }
 
+    public Button createExportButton(String fileName, String excelTitle, ColumnDataBuilder<T> columnDataBuilder) {
         return FluentButton.exportButton().clickListener(e -> {
             if (entities.isEmpty()) {
                 new ErrorDialog("当前无任何数据，无需导出。").build().open();
                 return;
             }
-            new DownloadDialog(fileName + "导出完毕，请下载。", new ExcelDataExporter<>(builder)
+            new DownloadDialog(fileName + "导出完毕，请下载。", new ExcelDataExporter<>(columnDataBuilder)
                     .createStreamFactory(fileName + "-" + DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss")
                             .format(LocalDateTime.now()) + ".xlsx", excelTitle, entities)
             ).build().open();
@@ -171,11 +174,16 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return this;
     }
 
-    public FluentCrudView<T, G> toggleEmpty() {
+    public FluentCrudView<T, G> toggleEmpty(boolean empty) {
+        return empty ? toggleEmpty() : toggleNotEmpty();
+    }
+
+    private FluentCrudView<T, G> toggleEmpty() {
         if (grid != null) {
             grid.getStyle().remove("height");
             grid.getStyle().remove("min-height");
             grid.setHeightByRows(true);
+            grid.setHeight("unset");
             if (grid instanceof TreeGrid) {
                 grid.setItems(new TreeDataProvider<>(new TreeData<>()));
             } else {
@@ -184,6 +192,14 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         }
         footer.setVisible(false);
         emptyLayout.setVisible(true);
+        return this;
+    }
+
+    private FluentCrudView<T, G> toggleNotEmpty() {
+        grid.setHeightByRows(false);
+        grid.setHeightFull();
+        emptyLayout.setVisible(false);
+        footer.setVisible(true);
         return this;
     }
 
@@ -398,13 +414,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         this.inMemoryFilteredEntities.clear();
         this.inMemoryFilteredEntities.addAll(entities);
         pagination.totalData(entities.size()).build();
-        if (entities.isEmpty()) toggleEmpty();
-        else {
-            grid.setHeightByRows(false);
-            grid.setSizeFull();
-            emptyLayout.setVisible(false);
-            footer.setVisible(true);
-        }
+        toggleEmpty(entities.isEmpty());
         afterReloadListeners.forEach(a -> a.accept(entities));
     }
 
