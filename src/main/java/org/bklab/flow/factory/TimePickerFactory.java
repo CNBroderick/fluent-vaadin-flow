@@ -6,10 +6,7 @@ import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.timepicker.GeneratedVaadinTimePicker;
 import com.vaadin.flow.component.timepicker.TimePicker;
 import org.bklab.flow.FlowFactory;
-import org.bklab.flow.base.GeneratedVaadinTimePickerFactory;
-import org.bklab.flow.base.HasEnabledFactory;
-import org.bklab.flow.base.HasSizeFactory;
-import org.bklab.flow.base.HasValidationFactory;
+import org.bklab.flow.base.*;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -19,6 +16,7 @@ public class TimePickerFactory extends FlowFactory<TimePicker, TimePickerFactory
         GeneratedVaadinTimePickerFactory<TimePicker, TimePickerFactory>,
         HasSizeFactory<TimePicker, TimePickerFactory>,
         HasValidationFactory<TimePicker, TimePickerFactory>,
+        HasHelperFactory<TimePicker, TimePickerFactory>,
         HasEnabledFactory<TimePicker, TimePickerFactory> {
 
     public TimePickerFactory() {

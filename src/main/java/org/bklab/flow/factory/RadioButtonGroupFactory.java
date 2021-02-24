@@ -29,6 +29,7 @@ public class RadioButtonGroupFactory<T> extends FlowFactory<RadioButtonGroup<T>,
         HasListDataViewFactory<T, RadioButtonGroupListDataView<T>, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
         HasDataViewFactory<T, Void, RadioButtonGroupDataView<T>, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
         SingleSelectFactory<T, RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
+        HasHelperFactory<RadioButtonGroup<T>, RadioButtonGroupFactory<T>>,
         HasValidationFactory<RadioButtonGroup<T>, RadioButtonGroupFactory<T>> {
 
     public RadioButtonGroupFactory() {

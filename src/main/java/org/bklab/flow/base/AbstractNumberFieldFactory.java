@@ -25,6 +25,7 @@ public interface AbstractNumberFieldFactory<T extends Number, C extends Abstract
         InputNotifierFactory<C, E>,
         KeyNotifierFactory<C, E>,
         CompositionNotifierFactory<C, E>,
+        HasHelperFactory<C, E>,
         HasAutocompleteFactory<C, E>,
         HasAutocapitalizeFactory<C, E>,
         HasAutocorrectFactory<C, E> {

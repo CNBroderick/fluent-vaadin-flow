@@ -16,6 +16,7 @@ public class TextFieldFactory extends FlowFactory<TextField, TextFieldFactory> i
         InputNotifierFactory<TextField, TextFieldFactory>,
         KeyNotifierFactory<TextField, TextFieldFactory>,
         CompositionNotifierFactory<TextField, TextFieldFactory>,
+        HasHelperFactory<TextField, TextFieldFactory>,
         HasAutocompleteFactory<TextField, TextFieldFactory>,
         HasAutocapitalizeFactory<TextField, TextFieldFactory>,
         HasAutocorrectFactory<TextField, TextFieldFactory> {

@@ -4,14 +4,15 @@ import com.vaadin.flow.component.Component;
 import org.bklab.flow.base.AttachNotifierFactory;
 import org.bklab.flow.base.DetachNotifierFactory;
 import org.bklab.flow.base.HasElementFactory;
+import org.bklab.flow.base.HasReturnThis;
 
 import java.util.function.Consumer;
 
-@SuppressWarnings("unchecked")
 public abstract class FlowFactory<C extends Component, E extends FlowFactory<C, E>> implements
         IFlowFactory<C>, HasElementFactory<C, E>,
         AttachNotifierFactory<C, FlowFactory<C, E>>,
-        DetachNotifierFactory<C, FlowFactory<C, E>> {
+        DetachNotifierFactory<C, FlowFactory<C, E>>,
+        HasReturnThis<E> {
 
     private final C component;
 
@@ -21,32 +22,36 @@ public abstract class FlowFactory<C extends Component, E extends FlowFactory<C, 
 
     public E onEnabledStateChanged(boolean onEnabledStateChanged) {
         get().onEnabledStateChanged(onEnabledStateChanged);
-        return (E) this;
+        return thisObject();
     }
 
     public E id(String id) {
         get().setId(id);
-        return (E) this;
+        return thisObject();
     }
 
     public E visible(boolean visible) {
         get().setVisible(visible);
-        return (E) this;
+        return thisObject();
     }
 
     public E lumoSmall() {
         get().getElement().setAttribute("theme", "small");
-        return (E) this;
+        return thisObject();
     }
 
     public E attributeTitle(String title) {
         get().getElement().setAttribute("title", title);
-        return (E) this;
+        return thisObject();
     }
 
     public E peek(Consumer<C> consumer) {
         consumer.accept(get());
-        return (E) this;
+        return thisObject();
+    }
+
+    public E peek(boolean canPeek, Consumer<C> consumer) { 
+        return canPeek ? thisObject() : peek(consumer);
     }
 
     @Override
