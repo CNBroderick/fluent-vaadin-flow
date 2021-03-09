@@ -100,6 +100,14 @@ public class FluentButton extends Button {
         return new FluentButton(VaadinIcon.EXCLAMATION_CIRCLE_O, "错误").error();
     }
 
+    public FluentButton reset() {
+        removeClassName(CLASS_NAME + "__primary");
+        removeClassName(CLASS_NAME + "__error");
+        removeClassName(CLASS_NAME + "__dashed");
+        removeClassName(CLASS_NAME + "__link");
+        return this;
+    }
+
     public FluentButton primary() {
         addClassNames(CLASS_NAME + "__primary");
         return this;

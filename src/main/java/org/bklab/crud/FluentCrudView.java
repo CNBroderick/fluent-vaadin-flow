@@ -62,7 +62,8 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected final EmptyLayout emptyLayout = new EmptyLayout("暂无数据");
     private final List<Consumer<Exception>> exceptionConsumers = new ArrayList<>();
     private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
-    protected final Button searchButton = new FluentButton(VaadinIcon.SEARCH, "查询").primary().asFactory().clickListener(e -> reloadGridData()).get();
+    protected FluentButton searchButton = (FluentButton) new FluentButton(VaadinIcon.SEARCH, "查询")
+            .primary().asFactory().clickListener(e -> reloadGridData()).get();
     protected boolean hasGridMenu = true;
     protected boolean hasPagination = true;
     protected Function<T, Collection<T>> childProvider = null;
@@ -85,10 +86,14 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         emptyLayout.setHeight("calc(100% - 5em)");
     }
 
-    public FluentCrudView<T, G> addRefreshIconButton() {
-        header.right(FluentButton.refreshIconButton().noPadding().iconOnly().clickListener(e -> reloadGridData()));
-        searchButton.setVisible(false);
+    public FluentCrudView<T, G> useRefreshIconButton() {
+        searchButton.reset().noPadding().link().iconOnly().asFactory().icon(VaadinIcon.REFRESH.create()).text(null);
         return this;
+    }
+
+    @Deprecated
+    public FluentCrudView<T, G> addRefreshIconButton() {
+        return useRefreshIconButton();
     }
 
     public FluentCrudView<T, G> addExceptionConsumer(Consumer<Exception> exceptionConsumer) {
@@ -360,16 +365,19 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     public FluentCrudView<T, G> setGridItem(Collection<T> items) {
         if (dataProviderCreator != null) {
             grid.setItems(dataProviderCreator.apply(items));
+            grid.recalculateColumnWidths();
             return this;
         }
 
         if (grid instanceof TreeGrid) {
             //noinspection unchecked,rawtypes,rawtypes
             ((TreeGrid<?>) grid).setDataProvider((HierarchicalDataProvider) new TreeDataProvider<>((new TreeData<T>()).addItems(items, getChildProvider()::apply)));
+            grid.recalculateColumnWidths();
             return this;
         }
 
         grid.setItems(items);
+        grid.recalculateColumnWidths();
         return this;
     }
 
@@ -416,6 +424,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         pagination.totalData(entities.size()).build();
         toggleEmpty(entities.isEmpty());
         afterReloadListeners.forEach(a -> a.accept(entities));
+        grid.recalculateColumnWidths();
     }
 
     public void reloadGridData() {
