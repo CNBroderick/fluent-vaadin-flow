@@ -29,7 +29,7 @@
     padding: 4px 12px;
     cursor: pointer;
     transition: all .3s ease;
-    height: 28px;
+    height: 29px;
     text-align: center;
     min-width: auto;
     background: transparent;
@@ -52,5 +52,5 @@
 .button-selector__button-active {
     border-left-width: 0;
     color: white;
-    background-color: rgb(68, 148, 240);
+    background-color: var(--lumo-primary-color);
 }

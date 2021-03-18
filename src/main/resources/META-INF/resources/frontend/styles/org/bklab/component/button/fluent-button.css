@@ -1,5 +1,5 @@
 .fluent-button {
-    line-height: 1.5715;
+    line-height: 1.5em;
     position: relative;
     display: inline-block;
     font-weight: 400;
@@ -20,7 +20,7 @@
     -ms-touch-action: manipulation;
     touch-action: manipulation;
     height: 20px;
-    padding: 4px 15px;
+    padding: 3px 15px 4px 15px;
     font-size: 14px;
     border-radius: 2px;
     color: rgba(0, 0, 0, .65);
@@ -52,8 +52,8 @@ fluent-button.fluent-button.fluent-button__primary:hover {
 
 .fluent-button__primary {
     color: #fff;
-    background: #1890ff;
-    border-color: #1890ff;
+    background: var(--lumo-primary-color);
+    border-color: var(--lumo-primary-color);
     text-shadow: 0 -1px 0 rgba(0, 0, 0, .12);
     -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, .045);
     box-shadow: 0 2px 0 rgba(0, 0, 0, .045);

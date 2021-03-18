@@ -72,7 +72,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
 
     public FluentCrudView() {
         emptyLayout.setVisible(false);
-        getStyle().set("padding", "0.5em").set("background-color", "white");
+        getStyle().set("padding", "0.5em 0 0").set("background-color", "white");
         addClassName(CLASS_NAME);
         header.addClassName(CLASS_NAME + "__header");
         content.addClassName(CLASS_NAME + "__content");
@@ -87,7 +87,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     public FluentCrudView<T, G> useRefreshIconButton() {
-        searchButton.reset().noPadding().link().iconOnly().asFactory().icon(VaadinIcon.REFRESH.create()).text(null);
+        searchButton.reset().noPadding().link().iconOnly().asFactory().tooltip("刷新").icon(VaadinIcon.REFRESH.create()).text(null);
         return this;
     }
 
