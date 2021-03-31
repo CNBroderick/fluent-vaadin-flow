@@ -38,6 +38,7 @@ public class FluentDialog extends Dialog implements IFlowFactory<FluentDialog>, 
         add(main.top(headers.right(closeButton)).bottom(bottoms));
         getElement().getStyle().set("padding", "0").set("margin", "0");
         closeButton.getStyle().set("color", "rgba(0,0,0,0.45)");
+        setDraggable(true);
     }
 
     public FluentDialog title(String title) {

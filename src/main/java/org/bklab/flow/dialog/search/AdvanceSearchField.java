@@ -25,7 +25,7 @@ public class AdvanceSearchField<E extends Dialog> extends TextField {
         clearButton = new ButtonFactory().clickListener(e -> {
             clear();
             e.getSource().setVisible(false);
-        }).icon(VaadinIcon.CLOSE).lumoIcon().lumoSmall().lumoTertiaryInline().get();
+        }).icon(VaadinIcon.CLOSE).lumoIcon().visible(false).lumoSmall().lumoTertiaryInline().get();
 
         openButton = new FluentButton(VaadinIcon.FILTER.create()).asFactory().border("0").enabled(true).padding("0").clickListener(e -> dialog.open()).get();
         addValueChangeListener(e -> clearButton.setVisible(e.getValue() != null && !placeholder.equals(e.getValue())));

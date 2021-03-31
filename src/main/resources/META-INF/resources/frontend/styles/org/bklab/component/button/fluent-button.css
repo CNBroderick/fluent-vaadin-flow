@@ -129,6 +129,7 @@ fluent-button.fluent-button.fluent-button__primary:hover {
     border-color: transparent;
     -webkit-box-shadow: none;
     box-shadow: none;
+    font-size: var(--lumo-font-size-s);
 }
 
 .fluent-button__link:hover, .fluent-button__link:focus {

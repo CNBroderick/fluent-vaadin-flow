@@ -137,6 +137,14 @@ public class Pagination extends ToolBar {
         return this;
     }
 
+    public int getPageSize() {
+        return pageSize.getValue();
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
     /**
      * 初始化组件
      *

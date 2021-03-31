@@ -33,6 +33,7 @@ public class ErrorDialog extends MessageDialog {
         icon(icon);
         copyButton = new ButtonFactory("复制详情").lumoSmall().lumoTertiaryInline().get();
         getMessage().getElement().getStyle().set("overflow-y", "auto").set("max-height", "30vh");
+        setDraggable(true);
     }
 
     public ErrorDialog() {

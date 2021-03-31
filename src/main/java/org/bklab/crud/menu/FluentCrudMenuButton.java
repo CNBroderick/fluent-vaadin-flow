@@ -1,14 +1,15 @@
-package org.bklab.crud;
+package org.bklab.crud.menu;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.grid.Grid;
+import org.bklab.crud.FluentCrudView;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
-class FluentCrudMenuButton<T, G extends Grid<T>> {
+public class FluentCrudMenuButton<T, G extends Grid<T>> {
 
     private final Button button;
     private final ContextMenu contextMenu;

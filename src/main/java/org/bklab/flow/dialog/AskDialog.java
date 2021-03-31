@@ -33,6 +33,10 @@ public class AskDialog extends FluentDialog {
     private String message;
     private boolean hasConfirmed = false;
 
+    {
+        setDraggable(true);
+    }
+
     public AskDialog(String message, Consumer<Void> whenConfirmed) {
         this.message = message;
         this.confirm = new ButtonFactory().text("确定").clickListener(e -> {

@@ -9,6 +9,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.server.VaadinSession;
 import dev.mett.vaadin.tooltip.Tooltips;
+import org.apache.commons.collections4.map.UnmodifiableMap;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.dialog.ErrorDialog;
 import org.bklab.flow.dialog.ModalDialog;
@@ -25,6 +26,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -44,7 +46,7 @@ public class TimeRangeDialog extends ModalDialog implements ITimeRangeSupplier, 
     private ITimeRangeSupplier globalTimeRangeSupplier;
     private boolean memoryMode = true;
 
-    private int defaultMaxDurationDay = 31;
+    private final int defaultMaxDurationDay;
 
     private ITimeRangeSupplier[] initTimeRangeSupplier;
 
@@ -57,49 +59,15 @@ public class TimeRangeDialog extends ModalDialog implements ITimeRangeSupplier, 
                 .suffixComponent(new ButtonFactory().clickListener(e -> {
                     if (!isOpened()) open();
                 }).icon(VaadinIcon.CLOCK).lumoIcon().lumoSmall().lumoTertiaryInline().get()).get();
+        defaultMaxDurationDay = 366;
     }
 
     public TimeRangeDialog() {
+        build();
     }
 
     public TimeRangeDialog(ITimeRangeSupplier... initTimeRangeSupplier) {
         initTimeRangeSupplier(initTimeRangeSupplier);
-    }
-
-    public static ITimeRangeSupplier createTimeRangeSupplier(QueryParameterUtil util) {
-        return createTimeRangeSupplier(util, 0);
-    }
-
-    public static ITimeRangeSupplier createTimeRangeSupplier(QueryParameterUtil util, int maxDuration) {
-        long minDatetime = util.getLong("minDatetime");
-        long maxDatetime = util.getLong("maxDatetime");
-        if (maxDatetime > 0 && minDatetime <= 0 || maxDatetime - minDatetime > maxDuration)
-            minDatetime = maxDatetime - maxDuration;
-        if (minDatetime > 0 && maxDatetime <= 0 || maxDatetime > minDatetime + maxDuration)
-            maxDatetime = minDatetime + maxDuration;
-
-        return TimeRangeSupplier.appoint(
-                LocalDateTime.ofEpochSecond(minDatetime, 0, ZoneOffset.ofHours(8)),
-                LocalDateTime.ofEpochSecond(maxDatetime, 0, ZoneOffset.ofHours(8))
-        );
-    }
-
-    public static String extend(QueryParameterUtil util, Map<String, Supplier<Object>> map) {
-        ITimeRangeSupplier timeRangeSupplier = createTimeRangeSupplier(util);
-        if (map != null) {
-            map.put("minDatetime", timeRangeSupplier::getMin);
-            map.put("maxDatetime", timeRangeSupplier::getMax);
-        }
-        return timeRangeSupplier.getLabel();
-    }
-
-    public static void write(Map<String, Supplier<Object>> parameterMap, QueryParameterBuilder builder) {
-        Optional.ofNullable(parameterMap.get("minDatetime")).map(Supplier::get)
-                .map(d -> ((LocalDateTime) d).toEpochSecond(ZoneOffset.ofHours(8)))
-                .ifPresent(s -> builder.add("minDatetime", s));
-        Optional.ofNullable(parameterMap.get("maxDatetime")).map(Supplier::get)
-                .map(d -> ((LocalDateTime) d).toEpochSecond(ZoneOffset.ofHours(8)))
-                .ifPresent(s -> builder.add("maxDatetime", s));
     }
 
     public TimeRangeDialog initTimeRangeSupplier(ITimeRangeSupplier... initTimeRangeSupplier) {
@@ -107,12 +75,6 @@ public class TimeRangeDialog extends ModalDialog implements ITimeRangeSupplier, 
         return this;
     }
 
-    public TimeRangeDialog setDefaultMaxDurationDay(int defaultMaxDurationDay) {
-        this.defaultMaxDurationDay = defaultMaxDurationDay;
-        return this;
-    }
-
-    @SuppressWarnings("UnusedReturnValue")
     public TimeRangeDialog defaultInitTimeRangeSupplier() {
         return this.initTimeRangeSupplier(
                 TimeRangeSupplier.lastMinutes(5),
@@ -154,6 +116,39 @@ public class TimeRangeDialog extends ModalDialog implements ITimeRangeSupplier, 
         return this;
     }
 
+    public static ITimeRangeSupplier createTimeRangeSupplier(QueryParameterUtil util) {
+        long minDatetime = util.getLong("minDatetime");
+        long maxDatetime = util.getLong("maxDatetime");
+        int maxDuration = 366 * 24 * 60 * 60;
+        if (maxDatetime > 0 && minDatetime <= 0 || maxDatetime - minDatetime > maxDuration)
+            minDatetime = maxDatetime - maxDuration;
+        if (minDatetime > 0 && maxDatetime <= 0 || maxDatetime > minDatetime + maxDuration)
+            maxDatetime = minDatetime + maxDuration;
+
+        return TimeRangeSupplier.appoint(
+                LocalDateTime.ofEpochSecond(minDatetime, 0, ZoneOffset.ofHours(8)),
+                LocalDateTime.ofEpochSecond(maxDatetime, 0, ZoneOffset.ofHours(8))
+        );
+    }
+
+    public static String extend(QueryParameterUtil util, Map<String, Supplier<Object>> map) {
+        ITimeRangeSupplier timeRangeSupplier = createTimeRangeSupplier(util);
+        if (map != null && !(map instanceof UnmodifiableMap)) {
+            map.put("minDatetime", timeRangeSupplier::getMin);
+            map.put("maxDatetime", timeRangeSupplier::getMax);
+        }
+        return timeRangeSupplier.getLabel();
+    }
+
+    public static void write(Map<String, Supplier<Object>> parameterMap, QueryParameterBuilder builder) {
+        Optional.ofNullable(parameterMap.get("minDatetime")).map(Supplier::get)
+                .map(d -> ((LocalDateTime) d).toEpochSecond(ZoneOffset.ofHours(8)))
+                .ifPresent(s -> builder.add("minDatetime", s));
+        Optional.ofNullable(parameterMap.get("maxDatetime")).map(Supplier::get)
+                .map(d -> ((LocalDateTime) d).toEpochSecond(ZoneOffset.ofHours(8)))
+                .ifPresent(s -> builder.add("maxDatetime", s));
+    }
+
     public ITimeRangeSupplier getDefaultGlobalTimeRangeSupplier() {
         return new ITimeRangeSupplier() {
             private LocalDateTime globalMin = null;
@@ -166,31 +161,22 @@ public class TimeRangeDialog extends ModalDialog implements ITimeRangeSupplier, 
             @Override
             public LocalDateTime getMin() {
                 if (globalMin == null) {
-                    globalMin = getGlobalMin();
+                    globalMin = LocalDateTime.MIN;
                 }
                 return globalMin;
             }
 
             @Override
             public LocalDateTime getMax() {
-                return getGlobalMax();
+                return LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
             }
         };
-    }
-
-    protected LocalDateTime getGlobalMin() {
-        return LocalDateTime.of(LocalDate.now().minusYears(1).withDayOfYear(1), LocalTime.MIN);
-    }
-
-
-    protected LocalDateTime getGlobalMax() {
-        return LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
     }
 
     public TimeRangeDialog build() {
         if (this.timeRangeSupplier == null) this.timeRangeSupplier = TimeRangeSupplier.lastDays(30);
         if (this.globalTimeRangeSupplier == null) this.globalTimeRangeSupplier = getDefaultGlobalTimeRangeSupplier();
-        if (this.initTimeRangeSupplier == null) this.defaultInitTimeRangeSupplier();
+        if (initTimeRangeSupplier == null) defaultInitTimeRangeSupplier();
 
         minDatetimePicker.setMin(globalTimeRangeSupplier.getMin());
         maxDatetimePicker.setMin(globalTimeRangeSupplier.getMin());
@@ -199,6 +185,7 @@ public class TimeRangeDialog extends ModalDialog implements ITimeRangeSupplier, 
 
         minDatetimePicker.addValueChangeListener(e -> {
             LocalDateTime minDateTime = e.getValue();
+            if (minDateTime == null) return;
             LocalDateTime maxDateTime = minDateTime.plusDays(defaultMaxDurationDay);
             maxDatetimePicker.getOptionalValue().ifPresent(value -> {
                 if (maxDateTime.isBefore(value)) {
@@ -209,9 +196,10 @@ public class TimeRangeDialog extends ModalDialog implements ITimeRangeSupplier, 
 
         maxDatetimePicker.addValueChangeListener(e -> {
             LocalDateTime maxDateTime = e.getValue();
+            if (maxDateTime == null) return;
             LocalDateTime minDateTime = maxDateTime.minusDays(defaultMaxDurationDay);
             minDatetimePicker.getOptionalValue().ifPresent(value -> {
-                if (maxDateTime.isAfter(value)) {
+                if (minDateTime.isAfter(value)) {
                     minDatetimePicker.setValue(minDateTime);
                 }
             });
@@ -223,25 +211,27 @@ public class TimeRangeDialog extends ModalDialog implements ITimeRangeSupplier, 
 
         content(createTimeSelector(appointForm), appointForm);
 
-        getDefaultSelectTimeRange().ifPresent(value -> {
-            Optional.ofNullable(buttonMap.get(value)).ifPresent(Button::clickInClient);
-            Optional.ofNullable(timeRangeSupplierMap.get(value)).ifPresent(this::setTimeRangeSupplier);
-        });
+        AtomicReference<ITimeRangeSupplier> lastSelectRangeSupplier = new AtomicReference<>(timeRangeSupplier);
 
-        addCancelButton().addButton(new FluentButton(VaadinIcon.CHECK, "确定", this::processSave).primary());
+        addButton(FluentButton.cancelButton().asFactory().clickListener(event -> {
+            close();
+            ITimeRangeSupplier timeRangeSupplier = lastSelectRangeSupplier.get();
+            minDatetimePicker.setValue(timeRangeSupplier.getMin());
+            maxDatetimePicker.setValue(timeRangeSupplier.getMax());
+            selectButton(timeRangeSupplier.getName());
+            appointForm.setVisible("自定义".equals(timeRangeSupplier.getName()));
+        }).get());
+        addButton(new FluentButton(VaadinIcon.CHECK, "确定", this::processSave).primary());
 
         title("选择时间").width("720px", "720px", "90vw").setMinHeight("350px");
 
         addSaveListeners(e -> doMemory());
+        addSaveListeners(e -> lastSelectRangeSupplier.set(getTimeRangeSupplier()));
         doRestore();
 
         refreshStatusField();
 
         return this;
-    }
-
-    protected Optional<String> getDefaultSelectTimeRange() {
-        return Optional.empty();
     }
 
     public TimeRangeDialog write(QueryParameterBuilder builder) {
@@ -428,6 +418,10 @@ public class TimeRangeDialog extends ModalDialog implements ITimeRangeSupplier, 
         }).peek(b -> buttonMap.put(text, b)).get();
     }
 
+    private void setTimeRangeSupplier(ITimeRangeSupplier timeRangeSupplier) {
+        this.timeRangeSupplier = timeRangeSupplier;
+    }
+
     public boolean isMemoryMode() {
         return memoryMode;
     }
@@ -485,9 +479,5 @@ public class TimeRangeDialog extends ModalDialog implements ITimeRangeSupplier, 
 
     public ITimeRangeSupplier getTimeRangeSupplier() {
         return timeRangeSupplier;
-    }
-
-    private void setTimeRangeSupplier(ITimeRangeSupplier timeRangeSupplier) {
-        this.timeRangeSupplier = timeRangeSupplier;
     }
 }

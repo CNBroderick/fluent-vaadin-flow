@@ -70,7 +70,7 @@ public class FormLayoutFactory extends FlowFactory<FormLayout, FormLayoutFactory
             if (component instanceof FormLayout.FormItem) {
                 component.getElement().getChildren().forEach(s -> {
                     if (Objects.equals("label", s.getAttribute("slot"))) {
-                        s.getStyle().set("display", "flex").set("flex-direction", "row-reverse");
+                        s.getStyle().set("display", "flex").set("flex-direction", "row-reverse").set("text-align", "right");
                     }
                 });
             }
@@ -97,4 +97,7 @@ public class FormLayoutFactory extends FlowFactory<FormLayout, FormLayoutFactory
         return this;
     }
 
+    public FormLayoutFactory initFormLayout() {
+        return formItemAlignEnd().formItemAlignVerticalCenter().warpWhenOverflow().componentFullWidth();
+    }
 }

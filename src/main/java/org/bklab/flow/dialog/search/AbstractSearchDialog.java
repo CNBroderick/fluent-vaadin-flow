@@ -51,6 +51,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
         advanceSearchField.getClearButton().addClickListener(e -> {
             clearParameterConsumer.forEach(ClearParameterListener::clear);
             callSaveListeners(getConditions());
+            refreshSearchFieldValue();
             Tooltips.getCurrent().removeTooltip(e.getSource());
         });
     }
@@ -70,8 +71,8 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
 
     protected E init() {
         build();
-        refreshSearchFieldValue();
         new FormLayoutFactory(formLayout).warpWhenOverflow().formItemAlignEnd().componentFullWidth().widthFull().get();
+        refreshSearchFieldValue();
         return thisObject();
     }
 
@@ -88,11 +89,17 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
         if (status != null && !status.isBlank()) {
             advanceSearchField.setValue(status);
             Tooltips.getCurrent().setTooltip(advanceSearchField, status);
+            advanceSearchField.getClearButton().setVisible(true);
+        } else {
+            advanceSearchField.clear();
+            Tooltips.getCurrent().removeTooltip(advanceSearchField);
+            advanceSearchField.getClearButton().setVisible(false);
         }
     }
 
     public String createStatus() {
-        return statusBuilder.stream().map(Supplier::get).filter(Objects::nonNull).collect(Collectors.joining(", \n"));
+        List<String> status = statusBuilder.stream().map(Supplier::get).filter(Objects::nonNull).filter(s -> !s.isBlank()).collect(Collectors.toList());
+        return status.isEmpty() ? null : String.join(", \n", status);
     }
 
     public Map<String, Object> getConditions() {

@@ -10,6 +10,7 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.dom.Style;
+import com.vaadin.flow.shared.Registration;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.factory.DialogFactory;
@@ -27,6 +28,7 @@ public class ModalDialog extends Dialog {
     private final Div content = new Div();
     private final ToolBar footer = new ToolBar();
     private final TitleLabel title = new TitleLabel("提示");
+    private final Registration enableDragRegistration;
 
     public ModalDialog() {
         VerticalLayoutFactory main = new VerticalLayoutFactory(toolBar, content, footer);
@@ -49,6 +51,15 @@ public class ModalDialog extends Dialog {
         setDraggable(true);
         setModal(true);
         setResizable(true);
+        enableDragRegistration = addAttachListener(event -> event.getUI().getPage().executeJs(
+                "let element = document.querySelector('#overlay > flow-component-renderer > div'); if(element!==null) element.classList.remove('draggable-leaf-only')"
+        ));
+    }
+
+    public ModalDialog disableDrag() {
+        setDraggable(false);
+        this.enableDragRegistration.remove();
+        return this;
     }
 
     private void createContainerStyle(Style style) {
@@ -215,6 +226,10 @@ public class ModalDialog extends Dialog {
     public ModalDialog addUpdateButton(ComponentEventListener<ClickEvent<Button>> listener) {
         footerRight(FluentButton.updateButton().primary().asFactory().clickListener(listener).get());
         return this;
+    }
+
+    public ModalDialog addSaveButton(boolean updateMode, ComponentEventListener<ClickEvent<Button>> listener) {
+        return updateMode ? addUpdateButton(listener) : addSaveButton(listener);
     }
 
     public ModalDialog addCloseButton() {

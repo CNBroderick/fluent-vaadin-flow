@@ -25,6 +25,10 @@ public class DownloadDialog extends FluentDialog {
     private String message;
     private Component preview;
 
+    {
+        setDraggable(true);
+    }
+
     public DownloadDialog(String message, AbstractStreamResource streamResource) {
         this.message = message;
         this.anchor = new Anchor(streamResource, null);
