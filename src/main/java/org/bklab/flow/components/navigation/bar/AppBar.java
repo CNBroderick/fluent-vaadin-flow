@@ -464,6 +464,24 @@ public class AppBar extends Header {
 		});
 	}
 
+	public void setContextIconAsBackward(Component component, String navigationTarget, QueryParameterBuilder builder) {
+		contextIcon.setVisible(true);
+		Registration registration = contextIcon.addClickListener(e -> UI.getCurrent().navigate(navigationTarget, builder.get()));
+		component.addDetachListener(e -> {
+			reset();
+			registration.remove();
+		});
+	}
+
+	public void setContextIconAsBackward(Component component, String navigationTarget) {
+		contextIcon.setVisible(true);
+		Registration registration = contextIcon.addClickListener(e -> UI.getCurrent().navigate(navigationTarget));
+		component.addDetachListener(e -> {
+			reset();
+			registration.remove();
+		});
+	}
+
 	public <T, C extends Component & HasUrlParameter<T>>
 	void setContextIconAsBack(Class<? extends C> navigationTarget, T parameter) {
 		contextIcon.setVisible(true);

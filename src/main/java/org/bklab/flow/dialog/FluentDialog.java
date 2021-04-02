@@ -24,7 +24,7 @@ import org.bklab.flow.layout.LmrHorizontalLayout;
 import org.bklab.flow.layout.TmbVerticalLayout;
 import org.bklab.flow.text.TitleLabel;
 
-@CssImport(value = "./styles/components/vaadin-dialog-overlay.css", themeFor = "vaadin-dialog-overlay")
+@CssImport(value = "./styles/org/bklab/component/dialog/vaadin-dialog-overlay.css", themeFor = "vaadin-dialog-overlay")
 public class FluentDialog extends Dialog implements IFlowFactory<FluentDialog>, HasSizeFactory<FluentDialog, FluentDialog> {
 
     private final LmrHorizontalLayout headers = new LmrHorizontalLayout();

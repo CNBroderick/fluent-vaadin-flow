@@ -152,6 +152,10 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
 
     private FluentCrudView<T, G> toggleEmpty() {
         if (grid != null) {
+            if (!grid.getFooterRows().isEmpty()) {
+                return toggleNotEmpty();
+            }
+
             grid.getStyle().remove("height");
             grid.getStyle().remove("min-height");
             grid.setHeightByRows(true);
@@ -195,6 +199,17 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return this;
     }
 
+    public FluentCrudView<T, G> menuColumnAtFirst() {
+        Grid.Column<T> menuColumn = grid.getColumnByKey("menuColumn");
+        if (menuColumn == null) return this;
+
+        List<Grid.Column<T>> columns = new ArrayList<>(grid.getColumns());
+        columns.remove(menuColumn);
+        columns.add(0, menuColumn);
+        grid.setColumnOrder(columns);
+        return this;
+    }
+
     public FluentCrudView<T, G> addMenuColumn(Supplier<Button> buttonSupplier, IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
         Grid.Column<T> column = grid.addComponentColumn(entity -> {
             Button button = buttonSupplier.get();
@@ -213,8 +228,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
             contextMenu.setOpenOnClick(true);
             menuEntityBiConsumer.safeBuild(this, contextMenu, entity);
             return button;
-        }).setHeader("操作").setKey("operationButton").setSortable(false)
-                .setTextAlign(ColumnTextAlign.CENTER).setAutoWidth(true).setFrozen(true);
+        }).setHeader("操作").setKey("menuColumn").setSortable(false).setWidth("5em").setTextAlign(ColumnTextAlign.CENTER);
         return this;
     }
 
@@ -342,28 +356,21 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     protected PageSwitchEvent createPageSwitchEvent() {
-        return (currentPageNumber, pageSize, lastPageNumber, isFromClient) -> setGridItem(hasPagination
-                                                                                          ? this.inMemoryFilteredEntities.stream().skip((long) (Math.max(Math.min(currentPageNumber,
-                this.inMemoryFilteredEntities.size() / pageSize + 1), 1) - 1) * pageSize).limit(pageSize).collect(Collectors.toList())
-                                                                                          : inMemoryFilteredEntities
+        return (currentPageNumber, pageSize, lastPageNumber, isFromClient) -> setGridItem(
+                hasPagination ? this.inMemoryFilteredEntities.stream().skip((long) (Math.max(Math.min(currentPageNumber, this.inMemoryFilteredEntities.size()
+                        / pageSize + 1), 1) - 1) * pageSize).limit(pageSize).collect(Collectors.toList()) : inMemoryFilteredEntities
         );
     }
 
     public FluentCrudView<T, G> setGridItem(Collection<T> items) {
         if (dataProviderCreator != null) {
             grid.setItems(dataProviderCreator.apply(items));
-            grid.recalculateColumnWidths();
-            return this;
-        }
-
-        if (grid instanceof TreeGrid) {
+        } else if (grid instanceof TreeGrid) {
             //noinspection unchecked,rawtypes,rawtypes
             ((TreeGrid<?>) grid).setDataProvider((HierarchicalDataProvider) new TreeDataProvider<>((new TreeData<T>()).addItems(items, getChildProvider()::apply)));
-            grid.recalculateColumnWidths();
-            return this;
+        } else {
+            grid.setItems(items);
         }
-
-        grid.setItems(items);
         grid.recalculateColumnWidths();
         return this;
     }
@@ -417,7 +424,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
                 logger.warn("afterReloadListeners throws an error.", e);
             }
         });
-        grid.recalculateColumnWidths();
+//        grid.recalculateColumnWidths();
     }
 
     public void reloadGridData() {
