@@ -12,7 +12,7 @@
 
 
 
-##### Need Java 14+ and Vaadin 17+, Better experience in China.
+##### Need Java 15+ and Vaadin 19+, Better experience in China.
 
 
 
