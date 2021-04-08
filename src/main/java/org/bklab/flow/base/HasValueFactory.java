@@ -2,7 +2,11 @@ package org.bklab.flow.base;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
+import com.vaadin.flow.component.grid.Grid;
+import org.bklab.crud.FluentCrudView;
 import org.bklab.flow.IFlowFactory;
+
+import java.util.function.Function;
 
 @SuppressWarnings("unchecked")
 public interface HasValueFactory<T, A extends HasValue.ValueChangeEvent<T>, C extends Component & HasValue<A, T>, E extends HasValueFactory<T, A, C, E>> extends IFlowFactory<C> {
@@ -30,4 +34,20 @@ public interface HasValueFactory<T, A extends HasValue.ValueChangeEvent<T>, C ex
         get().setRequiredIndicatorVisible(requiredIndicatorVisible);
         return (E) this;
     }
+
+    default <N, G extends FluentCrudView<N, ? extends Grid<N>>> E addFluentCrudViewParameter(G view, String name) {
+        view.addParameter(name, get());
+        return (E) this;
+    }
+
+    default <N, G extends FluentCrudView<N, ? extends Grid<N>>> E addFluentCrudViewParameter(G view, String name, Function<T, ?> mapValue) {
+        view.addParameter(name, get(), mapValue);
+        return (E) this;
+    }
+
+    default <N, G extends FluentCrudView<N, ? extends Grid<N>>> E watch(G view) {
+        view.watch(get());
+        return (E) this;
+    }
+
 }

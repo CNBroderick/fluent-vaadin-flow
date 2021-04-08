@@ -1,4 +1,4 @@
-package org.bklab.flow.components.selector;
+package org.bklab.flow.components.selector.button;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;

@@ -195,6 +195,13 @@ public class ModalDialog extends Dialog {
 
     public ModalDialog noFooter() {
         this.footer.setVisible(false);
+        this.content.addClassName("modal-dialog-no-footer");
+        return this;
+    }
+
+    public ModalDialog hasFooter() {
+        this.footer.setVisible(true);
+        this.content.removeClassName("modal-dialog-no-footer");
         return this;
     }
 

@@ -7,7 +7,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.select.MultiSelectComboBox;
-import org.bklab.flow.components.selector.ButtonSelector;
+import org.bklab.flow.components.selector.button.ButtonSelector;
 import org.bklab.flow.components.slider.PaperSlider;
 import org.bklab.flow.dialog.ErrorDialog;
 import org.bklab.flow.dialog.MessageDialog;

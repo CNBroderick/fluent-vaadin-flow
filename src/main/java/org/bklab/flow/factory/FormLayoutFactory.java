@@ -2,12 +2,15 @@ package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Label;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.ClickNotifierFactory;
 import org.bklab.flow.base.GeneratedVaadinFormLayoutFactory;
 import org.bklab.flow.base.HasComponentsFactory;
 import org.bklab.flow.base.HasSizeFactory;
+import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,19 +66,57 @@ public class FormLayoutFactory extends FlowFactory<FormLayout, FormLayoutFactory
      * Align right for label, must be calling after add all component.
      *
      * @return this
-     * @see FormLayout.FormItem only support change this label to align end
+     *
+     * @see FormLayout.FormItem only support change has been added label to align end
      */
     public FormLayoutFactory formItemAlignEnd() {
+        getItemLabels().forEach(label -> label.getStyle().set("display", "flex").set("flex-direction", "row-reverse").set("text-align", "right"));
+        return this;
+    }
+
+    public FormLayoutFactory formLabelsWidth(String width) {
+        getItemLabels().forEach(a -> a.setWidth(width));
+        return this;
+    }
+
+    public FormLayoutFactory formLabelsWidth(String minWidth, String maxWidth) {
+        getItemLabels().forEach(a -> {
+            a.setMinWidth(minWidth);
+            a.setMaxWidth(maxWidth);
+        });
+        return this;
+    }
+
+    public FormLayoutFactory formLabelsWidth(String minWidth, String width, String maxWidth) {
+        getItemLabels().forEach(a -> {
+            a.setMinWidth(minWidth);
+            a.setWidth(width);
+            a.setMaxWidth(maxWidth);
+        });
+        return this;
+    }
+
+    /**
+     * @return form layout FormLayout.FormItem labels
+     *
+     * @see FormLayout.FormItem only support get form layout labels.
+     */
+    public List<Label> getItemLabels() {
+        List<Label> labels = new ArrayList<>();
         get().getChildren().forEach(component -> {
             if (component instanceof FormLayout.FormItem) {
                 component.getElement().getChildren().forEach(s -> {
                     if (Objects.equals("label", s.getAttribute("slot"))) {
-                        s.getStyle().set("display", "flex").set("flex-direction", "row-reverse").set("text-align", "right");
+                        try {
+                            labels.add(s.as(Label.class));
+                        } catch (Exception e) {
+                            LoggerFactory.getLogger(getClass()).warn("获取Form Layout Labels失败。", e);
+                        }
                     }
                 });
             }
         });
-        return this;
+        return labels;
     }
 
     public FormLayoutFactory formItemAlignVerticalCenter() {

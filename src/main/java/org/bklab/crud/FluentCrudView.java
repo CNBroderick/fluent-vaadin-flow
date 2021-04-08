@@ -371,7 +371,6 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         } else {
             grid.setItems(items);
         }
-        grid.recalculateColumnWidths();
         return this;
     }
 
@@ -379,11 +378,11 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return childProvider == null ? a -> Collections.emptyList() : childProvider;
     }
 
-    protected FluentCrudView<T, G> addParameter(String name, HasValue<?, ?> hasValue) {
+    public FluentCrudView<T, G> addParameter(String name, HasValue<?, ?> hasValue) {
         return addParameter(name, hasValue, s -> s instanceof String ? ((String) s).trim().isEmpty() ? null : ((String) s).trim() : s);
     }
 
-    protected <V> FluentCrudView<T, G> addParameter(String name, HasValue<?, V> hasValue, Function<V, ?> mapValue) {
+    public <V> FluentCrudView<T, G> addParameter(String name, HasValue<?, V> hasValue, Function<V, ?> mapValue) {
         parameterMap.put(name, () -> Optional.ofNullable(hasValue.getValue()).map(mapValue).orElse(null));
         return this;
     }
@@ -424,7 +423,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
                 logger.warn("afterReloadListeners throws an error.", e);
             }
         });
-//        grid.recalculateColumnWidths();
+        grid.recalculateColumnWidths();
     }
 
     public void reloadGridData() {
