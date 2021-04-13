@@ -48,6 +48,12 @@ public class ColumnDataBuilder<T> {
         return this;
     }
 
+    public ColumnDataBuilder<T> add(String name, HorizontalAlignment textAlign, IColumnDataSupplier<T> supplier) {
+        this.map.put(name, supplier);
+        this.alignMap.put(name, textAlign);
+        return this;
+    }
+
     public ColumnDataBuilder<T> disableExport(String... names) {
         Collections.addAll(disableExport, names);
         return this;

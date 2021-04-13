@@ -2,42 +2,56 @@ package org.bklab.crud;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.HasValue;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.component.treegrid.TreeGrid;
+import com.vaadin.flow.data.event.SortEvent;
+import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.data.provider.hierarchy.HierarchicalDataProvider;
+import com.vaadin.flow.data.provider.hierarchy.TreeData;
+import com.vaadin.flow.data.provider.hierarchy.TreeDataProvider;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.shared.Registration;
-import org.bklab.export.data.ColumnDataBuilder;
-import org.bklab.export.grid.GridColumnDataBuilderFactory;
-import org.bklab.export.xlsx.ExcelDataExporter;
+import org.bklab.crud.core.ICrudViewExcelExportSupporter;
+import org.bklab.crud.core.IFluentCrudViewCommonField;
+import org.bklab.crud.menu.FluentCrudMenuButton;
+import org.bklab.crud.menu.ICrudViewMenuColumnSupporter;
+import org.bklab.crud.menu.IFluentGridMenuBuilder;
+import org.bklab.flow.base.HasReturnThis;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.pagination.PageSwitchEvent;
 import org.bklab.flow.components.pagination.Pagination;
 import org.bklab.flow.components.pagination.layout.MiddleCustomPaginationLayout;
 import org.bklab.flow.components.textfield.KeywordField;
-import org.bklab.flow.dialog.DownloadDialog;
 import org.bklab.flow.dialog.ErrorDialog;
-import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.layout.EmptyLayout;
 import org.bklab.flow.layout.ToolBar;
-import org.bklab.flow.util.function.EmptyFunctions;
+import org.bklab.flow.util.url.QueryParameterUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+@SuppressWarnings("UnusedReturnValue")
 @CssImport("./styles/org/bklab/component/crud/fluent-crud-view.css")
-public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayout {
+public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayout implements
+        IFluentCrudViewCommonField<T, G, FluentCrudView<T, G>>,
+        ICrudViewMenuColumnSupporter<T, G, FluentCrudView<T, G>>,
+        ICrudViewExcelExportSupporter<T, G, FluentCrudView<T, G>>,
+        HasReturnThis<FluentCrudView<T, G>>,
+        BeforeEnterObserver {
+
+    protected final List<Consumer<QueryParameterUtil>> effectQueryParameterUtils = new ArrayList<>();
 
     private final static String CLASS_NAME = "fluent-crud-view";
     private static final Logger logger = LoggerFactory.getLogger(FluentCrudView.class);
@@ -46,38 +60,53 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected final Div content = new Div();
     protected final Div footer = new Div();
     protected final List<T> entities = new ArrayList<>();
+    protected final List<T> inMemoryFilteredEntities = new ArrayList<>();
     protected final Map<String, Predicate<T>> inMemoryEntityFilter = new LinkedHashMap<>();
     protected final Pagination pagination = new Pagination().onePageSize(20).limit(10).customLayout(new MiddleCustomPaginationLayout());
-    protected final G grid = createGrid();
+    protected final List<Consumer<List<T>>> afterReloadListeners = new ArrayList<>();
     private final List<Consumer<Exception>> exceptionConsumers = new ArrayList<>();
-    protected final Button searchButton = new FluentButton(VaadinIcon.SEARCH, "查询").primary().asFactory().clickListener(e -> reloadGridData()).get();
+    private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
+    protected final EmptyLayout emptyLayout = new EmptyLayout("暂无数据");
+    protected FluentButton searchButton = (FluentButton) new FluentButton(VaadinIcon.SEARCH, "查询")
+            .primary().asFactory().clickListener(e -> reloadGridData()).get();
     protected boolean hasGridMenu = true;
     protected boolean hasPagination = true;
-    private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
-    protected final List<Consumer<List<T>>> afterReloadListeners = new ArrayList<>();
-    private final List<T> inMemoryFilteredEntities = new ArrayList<>();
-    protected final EmptyLayout emptyLayout = new EmptyLayout("暂无数据");
+    protected Function<T, Collection<T>> childProvider = null;
+    protected Function<Collection<T>, DataProvider<T, Void>> dataProviderCreator = null;
+    protected BiPredicate<T, T> sameEntityBiPredicate = Objects::equals;
+    protected final G grid;
+    protected QueryParameterUtil queryParameterUtil;
 
     public FluentCrudView() {
         emptyLayout.setVisible(false);
-        getStyle().set("padding", "0.5em").set("background-color", "white");
+        getStyle().set("padding", "0.5em 0 0").set("background-color", "white");
         addClassName(CLASS_NAME);
         header.addClassName(CLASS_NAME + "__header");
         content.addClassName(CLASS_NAME + "__content");
         footer.addClassName(CLASS_NAME + "__footer");
         emptyLayout.addClassName(CLASS_NAME + "__empty");
         add(header, content, footer);
-        grid.addClassName(CLASS_NAME + "__grid");
-        addExceptionConsumer(e -> new ErrorDialog(e).header("错误").build().open());
-        addExceptionConsumer(e -> logger.error("错误", e));
         emptyLayout.getElement().getStyle().set("flex-grow", "1");
         emptyLayout.setHeight("calc(100% - 5em)");
+        addExceptionConsumer(e -> new ErrorDialog(e).header("错误").build().open());
+        addExceptionConsumer(e -> logger.error(Optional.ofNullable(e.getLocalizedMessage()).orElse("错误"), e));
+
+        beforeInitGrid();
+        this.grid = createGrid();
+        grid.addClassName(CLASS_NAME + "__grid");
     }
 
-    public FluentCrudView<T, G> addRefreshIconButton() {
-        header.right(FluentButton.refreshIconButton().noPadding().iconOnly().clickListener(e -> reloadGridData()));
-        searchButton.setVisible(false);
+    protected void beforeInitGrid() {
+    }
+
+    public FluentCrudView<T, G> useRefreshIconButton() {
+        searchButton.reset().noPadding().link().iconOnly().asFactory().tooltip("刷新").icon(VaadinIcon.REFRESH.create()).text(null);
         return this;
+    }
+
+    @Deprecated
+    public FluentCrudView<T, G> addRefreshIconButton() {
+        return useRefreshIconButton();
     }
 
     public FluentCrudView<T, G> addExceptionConsumer(Consumer<Exception> exceptionConsumer) {
@@ -100,50 +129,6 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return this;
     }
 
-    public FluentCrudView<T, G> enableExport() {
-        PageTitle annotation = getClass().getAnnotation(PageTitle.class);
-        return annotation != null ? enableExport(annotation.value()) : enableExport("导出");
-    }
-
-    public FluentCrudView<T, G> enableExport(String fileName) {
-        return enableExport(fileName, fileName);
-    }
-
-    public FluentCrudView<T, G> enableExport(String fileName, String excelTitle) {
-        return enableExport(fileName, excelTitle, EmptyFunctions.emptyConsumer(), EmptyFunctions.emptyConsumer());
-    }
-
-    public FluentCrudView<T, G> enableExport(String fileName, String excelTitle, Map<String, String> keyHeaderMap) {
-        return enableExport(fileName, excelTitle, factory -> factory.headers(keyHeaderMap), EmptyFunctions.emptyConsumer());
-    }
-
-    public FluentCrudView<T, G> enableExport(String fileName, String excelTitle,
-                                             Consumer<GridColumnDataBuilderFactory<T>> builderFactoryConsumer,
-                                             Consumer<ColumnDataBuilder<T>> columnDataBuilderConsumer) {
-        header.right(createExportButton(fileName, excelTitle, builderFactoryConsumer, columnDataBuilderConsumer));
-        return this;
-    }
-
-    public Button createExportButton(String fileName, String excelTitle,
-                                     Consumer<GridColumnDataBuilderFactory<T>> builderFactoryConsumer,
-                                     Consumer<ColumnDataBuilder<T>> columnDataBuilderConsumer) {
-        GridColumnDataBuilderFactory<T> factory = new GridColumnDataBuilderFactory<>(grid);
-        builderFactoryConsumer.accept(factory);
-        ColumnDataBuilder<T> builder = factory.createBuilder();
-        columnDataBuilderConsumer.accept(builder);
-
-        return FluentButton.exportButton().clickListener(e -> {
-            if (entities.isEmpty()) {
-                new ErrorDialog("当前无任何数据，无需导出。").build().open();
-                return;
-            }
-            new DownloadDialog(fileName + "导出完毕，请下载。", new ExcelDataExporter<>(builder)
-                    .createStreamFactory(fileName + "-" + DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss")
-                            .format(LocalDateTime.now()) + ".xlsx", excelTitle, entities)
-            ).build().open();
-        }).iconOnly();
-    }
-
     public FluentCrudView<T, G> watch(HasValue<?, ?> hasValue) {
         Registration registration = hasValue.addValueChangeListener(e -> reloadGridData());
         addDetachListener(e -> registration.remove());
@@ -160,23 +145,38 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return this;
     }
 
-    public FluentCrudView<T, G> toggleEmpty() {
+    public FluentCrudView<T, G> toggleEmpty(boolean empty) {
+        return empty ? toggleEmpty() : toggleNotEmpty();
+    }
+
+    private FluentCrudView<T, G> toggleEmpty() {
         if (grid != null) {
+            if (!grid.getFooterRows().isEmpty()) {
+                return toggleNotEmpty();
+            }
+
             grid.getStyle().remove("height");
             grid.getStyle().remove("min-height");
             grid.setHeightByRows(true);
+            grid.setHeight("unset");
+            if (grid instanceof TreeGrid) {
+                grid.setItems(new TreeDataProvider<>(new TreeData<>()));
+            } else {
+                grid.setItems(new ListDataProvider<>(Collections.emptyList()));
+            }
         }
         footer.setVisible(false);
         emptyLayout.setVisible(true);
         return this;
     }
 
-    public FluentCrudView<T, G> addMenuColumn(IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
-        return this.addMenuColumn(() -> new ButtonFactory().icon(VaadinIcon.ELLIPSIS_DOTS_H.create())
-                .lumoIcon().lumoSmall().lumoTertiaryInline().get(), menuEntityBiConsumer);
+    private FluentCrudView<T, G> toggleNotEmpty() {
+        grid.setHeightByRows(false);
+        grid.setHeightFull();
+        emptyLayout.setVisible(false);
+        footer.setVisible(true);
+        return this;
     }
-
-    protected BiPredicate<T, T> sameEntityBiPredicate = Objects::equals;
 
     public BiPredicate<T, T> getSameEntityBiPredicate() {
         if (sameEntityBiPredicate == null) this.sameEntityBiPredicate = Objects::equals;
@@ -188,33 +188,21 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return this;
     }
 
-    public FluentCrudView<T, G> addMenuColumn(Supplier<Button> buttonSupplier, IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
-        Grid.Column<T> column = grid.addComponentColumn(entity -> {
-            Button button = buttonSupplier.get();
-            ContextMenu contextMenu = new ContextMenu(button);
-            contextMenu.addOpenedChangeListener(e -> {
-                if (e.isOpened()) {
-                    if (contextMenu.getItems().isEmpty()) {
-                        menuEntityBiConsumer.safeBuild(this, contextMenu, entity);
-                        contextMenu.setVisible(true);
-                    }
-                    grid.select(entity);
-                }
-            });
-            FluentCrudMenuButton<T, G> crudMenuButton = new FluentCrudMenuButton<>(this, entity, button, contextMenu, menuEntityBiConsumer);
-            menuButtons.add(crudMenuButton);
-            contextMenu.setOpenOnClick(true);
-            menuEntityBiConsumer.safeBuild(this, contextMenu, entity);
-            return button;
-        }).setHeader("操作").setKey("operationButton").setSortable(false)
-                .setTextAlign(ColumnTextAlign.CENTER).setAutoWidth(true).setFrozen(true);
+    public FluentCrudView<T, G> menuColumnAtFirst() {
+        Grid.Column<T> menuColumn = grid.getColumnByKey("menuColumn");
+        if (menuColumn == null) return this;
+
+        List<Grid.Column<T>> columns = new ArrayList<>(grid.getColumns());
+        columns.remove(menuColumn);
+        columns.add(0, menuColumn);
+        grid.setColumnOrder(columns);
         return this;
     }
 
     public FluentCrudView<T, G> reloadContextMenu(T entity, Predicate<T> samePredicate) {
         for (FluentCrudMenuButton<T, G> menuButton : menuButtons) {
             menuButton.reload(entity, samePredicate != null
-                    ? samePredicate : t -> getSameEntityBiPredicate().test(entity, t));
+                                      ? samePredicate : t -> getSameEntityBiPredicate().test(entity, t));
         }
         return this;
     }
@@ -229,10 +217,30 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return this;
     }
 
+    private void handleGridGridSortOrderSortEvent(SortEvent<Grid<T>, GridSortOrder<T>> gridGridSortOrderSortEvent) {
+        List<T> filteredEntities = inMemoryFilteredEntities.stream().sorted((o1, o2) -> {
+            for (GridSortOrder<T> order : gridGridSortOrderSortEvent.getSortOrder()) {
+                Grid.Column<T> sorted = order.getSorted();
+                int compare = sorted.getComparator(order.getDirection()).compare(o1, o2);
+                if (compare == 0) continue;
+                return compare;
+            }
+            return 0;
+        }).collect(Collectors.toList());
+        inMemoryFilteredEntities.clear();
+        inMemoryFilteredEntities.addAll(filteredEntities);
+        pagination.refresh();
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
+        this.queryParameterUtil = new QueryParameterUtil(beforeEnterEvent);
+    }
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
+
         header.right(searchButton);
         content.remove(grid, emptyLayout);
         content.add(grid, emptyLayout);
@@ -243,14 +251,22 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
             content.getStyle().set("border-bottom", "none");
         }
         pagination.pageSwitchEvent(createPageSwitchEvent());
+        grid.addSortListener(this::handleGridGridSortOrderSortEvent);
 
+        this.effectQueryParameterUtils.forEach(a -> a.accept(queryParameterUtil));
         reloadGridData();
+        onAfterAttach();
+    }
+
+    protected void onAfterAttach() {
+
     }
 
     public void insertEntity(T entity) {
         this.entities.add(entity);
         this.inMemoryFilteredEntities.add(entity);
         this.pagination.totalData(this.entities.size()).build();
+        toggleNotEmpty();
     }
 
     public void deleteEntity(T entity) {
@@ -258,6 +274,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         this.inMemoryFilteredEntities.remove(entity);
         this.pagination.totalData(this.entities.size()).build();
         this.removeContextMenu(entity);
+        toggleEmpty(inMemoryFilteredEntities.isEmpty());
     }
 
     public void deleteEntity(T entity, BiPredicate<T, T> isEquals) {
@@ -266,6 +283,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         this.inMemoryFilteredEntities.removeAll(entities);
         this.pagination.totalData(this.entities.size()).build();
         this.removeContextMenu(entity, isEquals == null ? getSameEntityBiPredicate() : isEquals);
+        toggleEmpty(inMemoryFilteredEntities.isEmpty());
     }
 
     public void updateEntity(T entity) {
@@ -305,18 +323,33 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     protected PageSwitchEvent createPageSwitchEvent() {
-        return (currentPageNumber, pageSize, lastPageNumber, isFromClient) -> grid.setItems(hasPagination
-                ? this.inMemoryFilteredEntities.stream().skip((long) (Math.max(Math.min(currentPageNumber,
-                this.inMemoryFilteredEntities.size() / pageSize + 1), 1) - 1) * pageSize).limit(pageSize).collect(Collectors.toList())
-                : inMemoryFilteredEntities
+        return (currentPageNumber, pageSize, lastPageNumber, isFromClient) -> setGridItem(
+                hasPagination ? this.inMemoryFilteredEntities.stream().skip((long) (Math.max(Math.min(currentPageNumber, this.inMemoryFilteredEntities.size()
+                        / pageSize + 1), 1) - 1) * pageSize).limit(pageSize).collect(Collectors.toList()) : inMemoryFilteredEntities
         );
     }
 
-    protected FluentCrudView<T, G> addParameter(String name, HasValue<?, ?> hasValue) {
+    public FluentCrudView<T, G> setGridItem(Collection<T> items) {
+        if (dataProviderCreator != null) {
+            grid.setItems(dataProviderCreator.apply(items));
+        } else if (grid instanceof TreeGrid) {
+            //noinspection unchecked,rawtypes,rawtypes
+            ((TreeGrid<?>) grid).setDataProvider((HierarchicalDataProvider) new TreeDataProvider<>((new TreeData<T>()).addItems(items, getChildProvider()::apply)));
+        } else {
+            grid.setItems(items);
+        }
+        return this;
+    }
+
+    protected Function<T, Collection<T>> getChildProvider() {
+        return childProvider == null ? a -> Collections.emptyList() : childProvider;
+    }
+
+    public FluentCrudView<T, G> addParameter(String name, HasValue<?, ?> hasValue) {
         return addParameter(name, hasValue, s -> s instanceof String ? ((String) s).trim().isEmpty() ? null : ((String) s).trim() : s);
     }
 
-    protected <V> FluentCrudView<T, G> addParameter(String name, HasValue<?, V> hasValue, Function<V, ?> mapValue) {
+    public <V> FluentCrudView<T, G> addParameter(String name, HasValue<?, V> hasValue, Function<V, ?> mapValue) {
         parameterMap.put(name, () -> Optional.ofNullable(hasValue.getValue()).map(mapValue).orElse(null));
         return this;
     }
@@ -349,14 +382,15 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         this.inMemoryFilteredEntities.clear();
         this.inMemoryFilteredEntities.addAll(entities);
         pagination.totalData(entities.size()).build();
-        if (entities.isEmpty()) toggleEmpty();
-        else {
-            grid.setHeightByRows(false);
-            grid.setSizeFull();
-            emptyLayout.setVisible(false);
-            footer.setVisible(true);
-        }
-        afterReloadListeners.forEach(a -> a.accept(entities));
+        toggleEmpty(entities.isEmpty());
+        afterReloadListeners.forEach(a -> {
+            try {
+                a.accept(entities);
+            } catch (Exception e) {
+                logger.warn("afterReloadListeners throws an error.", e);
+            }
+        });
+        grid.recalculateColumnWidths();
     }
 
     public void reloadGridData() {
@@ -365,5 +399,35 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         parameterMap.forEach((k, v) -> Optional.ofNullable(v).map(Supplier::get).ifPresent(v1 -> map.put(k, v1)));
         Optional.ofNullable(queryEntities(map)).ifPresent(this.entities::addAll);
         this.reloadGridDataInMemory();
+    }
+
+    public void switchEntityPage(Predicate<T> predicate) {
+        IntStream.range(0, inMemoryFilteredEntities.size()).filter(i -> predicate.test(inMemoryFilteredEntities.get(i)))
+                .findFirst().ifPresent(i -> pagination.setCurrentPage(i / pagination.getPageSize() + 1).refresh());
+    }
+
+    @Override
+    public ToolBar header() {
+        return header;
+    }
+
+    @Override
+    public Collection<T> getEntities() {
+        return entities;
+    }
+
+    @Override
+    public G getGrid() {
+        return grid;
+    }
+
+    @Override
+    public List<FluentCrudMenuButton<T, G>> getMenuButtons() {
+        return menuButtons;
+    }
+
+    @Override
+    public FluentCrudView<T, G> getCrudView() {
+        return this;
     }
 }

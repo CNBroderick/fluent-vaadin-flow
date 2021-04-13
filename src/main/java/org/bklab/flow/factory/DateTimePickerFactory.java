@@ -32,6 +32,7 @@ public class DateTimePickerFactory extends FlowFactory<DateTimePicker, DateTimeP
         HasSizeFactory<DateTimePicker, DateTimePickerFactory>,
         HasThemeFactory<DateTimePicker, DateTimePickerFactory>,
         HasValidationFactory<DateTimePicker, DateTimePickerFactory>,
+        HasHelperFactory<DateTimePicker, DateTimePickerFactory>,
         FocusableFactory<DateTimePicker, DateTimePickerFactory> {
 
     public DateTimePickerFactory() {

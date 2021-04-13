@@ -5,7 +5,7 @@ import com.vaadin.flow.component.HasTheme;
 import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
-public interface HasThemeFactory<T extends Component & HasTheme, E extends HasThemeFactory<T, E>> extends IFlowFactory<T> {
+public interface HasThemeFactory<C extends Component & HasTheme, E extends HasThemeFactory<C, E>> extends IFlowFactory<C> {
 
     default E removeThemeName(String removeThemeName) {
         get().removeThemeName(removeThemeName);

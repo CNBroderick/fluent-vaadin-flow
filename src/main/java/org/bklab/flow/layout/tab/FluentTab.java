@@ -60,4 +60,12 @@ public class FluentTab extends Tab {
         this.cacheMode = false;
         return this;
     }
+
+    public String getTabId() {
+        return id;
+    }
+
+    public boolean isCacheMode() {
+        return cacheMode;
+    }
 }

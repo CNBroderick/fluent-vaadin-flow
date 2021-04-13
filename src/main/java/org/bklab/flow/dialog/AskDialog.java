@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2020. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-01 19:26:02
+ * Modify date：2020-11-09 10:46:02
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.dialog.AskDialog
@@ -31,15 +31,28 @@ public class AskDialog extends FluentDialog {
     private Icon icon;
     private String header;
     private String message;
+    private boolean hasConfirmed = false;
+
+    {
+        setDraggable(true);
+    }
 
     public AskDialog(String message, Consumer<Void> whenConfirmed) {
         this.message = message;
         this.confirm = new ButtonFactory().text("确定").clickListener(e -> {
+            this.hasConfirmed = true;
             close();
             whenConfirmed.accept(null);
         }).lumoSmall().lumoPrimary().get();
         this.bottom = new LmrHorizontalLayout();
         setWidth("420px");
+    }
+
+    public AskDialog(String message, Consumer<Void> whenConfirmed, Consumer<Void> whenConfused) {
+        this(message, whenConfirmed);
+        addOpenedChangeListener(e -> {
+            if (!e.isOpened() && !hasConfirmed) whenConfused.accept(null);
+        });
     }
 
     public Button getConfirm() {

@@ -1,0 +1,23 @@
+vaadin-context-menu-item[fluent-menu-item]::before {
+    font-size: var(--lumo-font-size-xs);
+    width: 0.2em;
+}
+
+vaadin-context-menu-item[fluent-menu-item] {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.fluent-menu-item-iron-icon {
+    padding: 0 var(--lumo-space-m);
+    color: #999999;
+    width: var(--lumo-font-size-xs);
+    height: var(--lumo-font-size-xs);
+}
+
+.fluent-menu-item {
+    font-size: var(--lumo-font-size-xs);
+    color: var(--lumo-body-text-color);
+    display: flex;
+    padding-right: var(--lumo-space-xl);
+}

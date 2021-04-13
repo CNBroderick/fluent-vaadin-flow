@@ -16,8 +16,7 @@
 }
 
 :host([theme~="pagination"]) .pagination-page-size__normal [part="input-field"] {
-    height: 100%;
-!important;
+    height: 100% !important;
 }
 
 :host([theme~="pagination"]) [part="input-field"] {

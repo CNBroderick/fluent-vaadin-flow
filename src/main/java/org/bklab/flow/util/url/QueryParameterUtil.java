@@ -5,6 +5,8 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.Location;
 import com.vaadin.flow.router.QueryParameters;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +48,14 @@ public class QueryParameterUtil {
 
     public String get(String name) {
         return Optional.ofNullable(parameters.get(name)).flatMap(s -> s.stream().findFirst()).orElse(null);
+    }
+
+    public String decode(String name) {
+        return Optional.ofNullable(get(name)).map(value -> URLDecoder.decode(value, StandardCharsets.UTF_8)).orElse(null);
+    }
+
+    public Optional<String> getOptional(String name) {
+        return Optional.ofNullable(parameters.get(name)).flatMap(s -> s.stream().findFirst());
     }
 
     public List<String> getList(String name) {

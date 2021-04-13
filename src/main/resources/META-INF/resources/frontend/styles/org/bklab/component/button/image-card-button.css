@@ -1,0 +1,23 @@
+.image-card-button {
+    height: 150px;
+    width: 240px;
+    border-radius: 5px;
+    border:1px solid #C5C5C5;
+    background-color: white;
+    padding: 0 !important;
+    margin: var(--lumo-space-s);
+}
+
+.image-card-button__image {
+    width: 240px;
+    display: block;
+    min-height: 120px;
+}
+
+.image-card-button__label {
+    font-weight: 400;
+    display: block;
+    padding: 0.5em 0;
+    font-size: var(--lumo-font-size-m);
+    text-align: center;
+}

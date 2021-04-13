@@ -46,7 +46,7 @@ public class MessageDialog extends Dialog implements IFlowFactory<MessageDialog>
         setMaxWidth("90vw");
         this.confirm = new ButtonFactory().text("确定").clickListener(e -> close()).lumoSmall().lumoPrimary().get();
         this.bottom = new LmrHorizontalLayout();
-
+        setDraggable(true);
     }
 
     public Button getConfirm() {

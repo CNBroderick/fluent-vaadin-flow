@@ -3,6 +3,7 @@ package org.bklab.flow.layout.tab;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import org.bklab.flow.factory.DivFactory;
 
@@ -97,5 +98,17 @@ public class FluentTabView extends Div {
 
     public Div getContent() {
         return content;
+    }
+
+    public String getCurrentSelectTabId() {
+        Tab selectedTab = getTabs().getSelectedTab();
+        for (Map.Entry<String, FluentTab> entry : getFluentTabMap().entrySet()) {
+            if (entry.getValue() == selectedTab) return entry.getKey();
+        }
+        return getFluentTabMap().keySet().stream().findFirst().orElse(null);
+    }
+
+    public FluentTab getCurrentSelectTab() {
+        return getFluentTabMap().get(getCurrentSelectTabId());
     }
 }

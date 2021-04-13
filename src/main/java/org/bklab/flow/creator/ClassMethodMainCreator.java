@@ -11,16 +11,26 @@
 
 package org.bklab.flow.creator;
 
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.checkbox.CheckboxGroup;
+import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
+import com.vaadin.flow.component.textfield.BigDecimalField;
+import com.vaadin.flow.component.textfield.IntegerField;
+import com.vaadin.flow.data.selection.MultiSelect;
 import dev.mett.vaadin.tooltip.config.TooltipConfiguration;
+import org.bklab.flow.base.MultiSelectFactory;
+import org.bklab.flow.factory.BigDecimalFieldFactory;
+import org.bklab.flow.factory.CheckboxGroupFactory;
+import org.bklab.flow.factory.IntegerFieldFactory;
 import org.bklab.flow.factory.TooltipConfigurationFactory;
 
 public class ClassMethodMainCreator {
 
     public static void main(String[] args) {
 
-        Class<?> factoryClass = TooltipConfigurationFactory.class;
-        Class<?> targetClass = TooltipConfiguration.class;
-//        Class<? extends Enum<?>> variantClass = ButtonVariant.class;
+        Class<?> factoryClass = IntegerFieldFactory.class;
+        Class<?> targetClass = IntegerField.class;
+//        Class<? extends Enum<?>> variantClass = CheckboxGroupVariant.class;
         new PrintClassMethod(factoryClass, targetClass).print();
 //        new PrintLumoTheme(factoryClass, targetClass).print(variantClass);
     }

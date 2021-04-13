@@ -25,12 +25,12 @@ public class DialogFactory extends FlowFactory<Dialog, DialogFactory>
         super(component);
     }
 
-    public DialogFactory add(Component[] add) {
+    public DialogFactory add(Component... add) {
         get().add(add);
         return this;
     }
 
-    public DialogFactory remove(Component[] remove) {
+    public DialogFactory remove(Component... remove) {
         get().remove(remove);
         return this;
     }

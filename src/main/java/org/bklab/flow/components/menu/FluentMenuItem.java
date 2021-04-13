@@ -10,9 +10,14 @@ import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import org.bklab.flow.factory.IconFactory;
+import org.bklab.flow.factory.NotificationFactory;
+import org.bklab.flow.factory.SpanFactory;
+import org.vaadin.olli.ClipboardHelper;
 
 @Tag("fluent-menu-item")
-@CssImport("./styles/components/menu/fluent-menu-item.css")
+@CssImport("./styles/org/bklab/component/menu/fluent-menu-item.css")
+@CssImport(id = "vaadin-context-menu-overlay-transparent", value = "./styles/org/bklab/component/menu/vaadin-context-menu-overlay.css", themeFor = "vaadin-context-menu-overlay")
 public class FluentMenuItem extends Span {
 
     private FluentMenuItem() {
@@ -24,9 +29,7 @@ public class FluentMenuItem extends Span {
 
     public FluentMenuItem(Icon icon, String text) {
         add(icon, new Span(text));
-        icon.getElement().getStyle().set("padding", "0 var(--lumo-space-s)").set("color", "#999999")
-                .set("width", "var(--lumo-font-size-s)").set("height", "var(--lumo-font-size-s)");
-        getElement().getStyle().set("font-size", "var(--lumo-font-size-s)").set("color", "#191919").set("display", "flex");
+        icon.addClassName("fluent-menu-item-iron-icon");
     }
 
     public static void addSeparator(ContextMenu contextMenu) {
@@ -39,6 +42,14 @@ public class FluentMenuItem extends Span {
 
     public static FluentMenuItem forDetail(String text) {
         return new FluentMenuItem(VaadinIcon.BOOK, text);
+    }
+
+    public static FluentMenuItem forCopy(String text, String content, String successMessage) {
+        FluentMenuItem fluentMenuItem = new FluentMenuItem();
+        Icon icon = new IconFactory(VaadinIcon.COPY_O).color("#999999").size("var(--lumo-font-size-xs)").padding("0 var(--lumo-space-m)").get();
+        fluentMenuItem.add(new ClipboardHelper(content, new SpanFactory(icon, new Span(text)).displayFlex().get()));
+        fluentMenuItem.addClickListener(event -> new NotificationFactory(successMessage).lumoSuccess().duration(1000).positionTopEnd().open());
+        return fluentMenuItem;
     }
 
     public static FluentMenuItem forEdit(String text) {
@@ -63,6 +74,7 @@ public class FluentMenuItem extends Span {
 
     private MenuItem peek(MenuItem menuItem) {
         menuItem.getElement().setAttribute("fluent-menu-item", true);
+        menuItem.getElement().getClassList().add("fluent-menu-item");
         return menuItem;
     }
 }

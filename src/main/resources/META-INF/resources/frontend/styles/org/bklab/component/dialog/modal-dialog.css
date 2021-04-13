@@ -1,0 +1,137 @@
+.modal-dialog-toolbar {
+    margin-top: 1em;
+    color: rgba(0, 0, 0, 0.65);
+    display: flex;
+    font-size: 14px;
+    line-height: 1.5715;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgb(240, 240, 240);
+    pointer-events: auto;
+    border-radius: 2px 2px 0px 0px;
+    font-variant: tabular-nums;
+    font-feature-settings: "tnum";
+    background: rgb(255, 255, 255);
+    width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", Roboto, "helvetica neue", Arial, "noto sans", sans-serif, "apple color emoji", "segoe ui emoji", "segoe ui symbol", "noto color emoji";
+    align-items: baseline;
+    list-style: none;
+    padding: 0 24px 16px;
+}
+
+.modal-dialog-content {
+    margin: 0.5em 1em;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    line-height: 1.5715;
+    box-sizing: border-box;
+    pointer-events: auto;
+    flex-grow: 1;
+    font-variant: tabular-nums;
+    overflow: auto;
+    font-feature-settings: "tnum";
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", Roboto, "helvetica neue", Arial, "noto sans", sans-serif, "apple color emoji", "segoe ui emoji", "segoe ui symbol", "noto color emoji";
+    list-style: none;
+    width: calc(100% - 2em);
+    height: calc(100% - 8.3em);
+}
+
+.modal-dialog-no-footer {
+    height: calc(100% - 5em);
+}
+
+.modal-dialog-footer {
+    border-top: 1px solid rgb(240, 240, 240);
+    color: rgba(0, 0, 0, 0.65);
+    display: flex;
+    font-size: 14px;
+    line-height: 1.5715;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    pointer-events: auto;
+    border-radius: 0px 0px 2px 2px;
+    font-variant: tabular-nums;
+    font-feature-settings: "tnum";
+    background: 0px 0px;
+    width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", Roboto, "helvetica neue", Arial, "noto sans", sans-serif, "apple color emoji", "segoe ui emoji", "segoe ui symbol", "noto color emoji";
+    align-items: baseline;
+    list-style: none;
+    text-align: right;
+    margin-bottom: 10px;
+    padding: 10px 16px 0;
+}
+
+.dialog-modal-close-button {
+    background: transparent !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent;
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    pointer-events: auto;
+    touch-action: manipulation;
+    font-size: inherit;
+    font-family: inherit;
+    overflow: visible;
+    text-transform: none;
+    margin: 0;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    padding: 0;
+    font-weight: 700;
+    line-height: 1;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: color .3s;
+    -webkit-appearance: button;
+    color: rgba(0, 0, 0, .75);
+    text-decoration: none;
+}
+
+.dialog-modal-close-button-inner-html {
+    pointer-events: auto;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    color: rgba(0, 0, 0, .75);
+    box-sizing: border-box;
+    display: block;
+    width: 56px;
+    height: 56px;
+    font-size: 16px;
+    font-style: normal;
+    line-height: 56px;
+    text-align: center;
+    text-transform: none;
+    text-rendering: auto;
+}
+
+.dialog-modal-close-button .dialog-modal-close-button-x {
+    -webkit-tap-highlight-color: transparent;
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    pointer-events: auto;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 16px;
+    box-sizing: border-box;
+    display: inline-block;
+    color: inherit;
+    font-style: normal;
+    line-height: 0;
+    text-align: center;
+    text-transform: none;
+    vertical-align: -.125em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}

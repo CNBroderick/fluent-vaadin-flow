@@ -2,6 +2,8 @@ package org.bklab.flow.components.badge;
 
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Span;
+import dev.mett.vaadin.tooltip.Tooltips;
+import org.bklab.flow.factory.SpanFactory;
 
 @CssImport("./styles/components/badge/badge-tag.css")
 public class BadgeTag extends Span {
@@ -30,5 +32,14 @@ public class BadgeTag extends Span {
                 .set("background-color", backgroundColor)
                 .set("border", "1px solid " + borderColor)
                 .set("color", color);
+    }
+
+    public BadgeTag tooltip(String text) {
+        Tooltips.getCurrent().setTooltip(this, text);
+        return this;
+    }
+
+    public SpanFactory asFactory() {
+        return new SpanFactory(this);
     }
 }

@@ -18,6 +18,7 @@ public class TextAreaFactory extends FlowFactory<TextArea, TextAreaFactory> impl
         InputNotifierFactory<TextArea, TextAreaFactory>,
         KeyNotifierFactory<TextArea, TextAreaFactory>,
         CompositionNotifierFactory<TextArea, TextAreaFactory>,
+        HasHelperFactory<TextArea, TextAreaFactory>,
         HasAutocompleteFactory<TextArea, TextAreaFactory>,
         HasAutocapitalizeFactory<TextArea, TextAreaFactory>,
         HasAutocorrectFactory<TextArea, TextAreaFactory>

@@ -49,6 +49,10 @@ public class FluentButton extends Button {
         return new FluentButton(VaadinIcon.SEARCH, "查询");
     }
 
+    public static FluentButton linkButton(String link) {
+        return new FluentButton(link).link().noPadding();
+    }
+
     public FluentButton(VaadinIcon icon) {
         super(icon.create());
     }
@@ -94,6 +98,14 @@ public class FluentButton extends Button {
 
     public static FluentButton errorButton() {
         return new FluentButton(VaadinIcon.EXCLAMATION_CIRCLE_O, "错误").error();
+    }
+
+    public FluentButton reset() {
+        removeClassName(CLASS_NAME + "__primary");
+        removeClassName(CLASS_NAME + "__error");
+        removeClassName(CLASS_NAME + "__dashed");
+        removeClassName(CLASS_NAME + "__link");
+        return this;
     }
 
     public FluentButton primary() {

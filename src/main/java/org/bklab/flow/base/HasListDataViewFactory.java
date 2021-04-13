@@ -13,17 +13,17 @@ import java.util.Collection;
 public interface HasListDataViewFactory<T, V extends ListDataView<T, ?>,
         C extends Component & HasListDataView<T, V>,
         E extends HasListDataViewFactory<T, V, C, E>> extends IFlowFactory<C> {
-    default E setItems(ListDataProvider<T> listDataProvider) {
+    default E items(ListDataProvider<T> listDataProvider) {
         get().setItems(listDataProvider);
         return (E) this;
     }
 
-    default E setItems(Collection<T> items) {
+    default E items(Collection<T> items) {
         get().setItems(DataProvider.ofCollection(items));
         return (E) this;
     }
 
-    default E setItems(T... items) {
+    default E items(T... items) {
         get().setItems(DataProvider.ofItems(items));
         return (E) this;
     }

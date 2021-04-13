@@ -67,5 +67,17 @@ public class PaginationJumpField extends Span {
         return this;
     }
 
+    public PaginationJumpField setFix(String prefix, String suffix) {
+        this.prefix.setText(prefix);
+        this.suffix.setText(suffix);
+        return this;
+    }
 
+    public Span getPrefix() {
+        return prefix;
+    }
+
+    public Span getSuffix() {
+        return suffix;
+    }
 }

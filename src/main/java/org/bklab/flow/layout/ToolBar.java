@@ -21,6 +21,7 @@ public class ToolBar extends FlexLayout {
                 .alignSelfStart(left)
                 .alignSelfCenter(middle)
                 .alignSelfEnd(right)
+                .alignItemsBaseline()
         ;
 
         asLeftFactory().className("tool-bar-left").displayFlex();

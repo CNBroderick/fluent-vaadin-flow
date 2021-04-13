@@ -1,12 +1,14 @@
 package org.bklab.flow.util.url;
 
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.function.SerializableSupplier;
 import com.vaadin.flow.router.QueryParameters;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -39,6 +41,12 @@ public class QueryParameterBuilder implements SerializableSupplier<QueryParamete
         return this;
     }
 
+    public QueryParameterBuilder encode(String name, Object ... params) {
+        return add(name, Arrays.stream(params).map(String::valueOf)
+                .map(s -> URLEncoder.encode(s, StandardCharsets.UTF_8))
+                .collect(Collectors.toList()).toArray(new Object[]{}));
+    }
+
     public QueryParameterBuilder add(boolean add, String name, Object... params) {
         return add ? add(name, params) : this;
     }
@@ -49,8 +57,27 @@ public class QueryParameterBuilder implements SerializableSupplier<QueryParamete
                 : Stream.of(params).filter(add).collect(Collectors.toList()));
     }
 
+    public QueryParameterBuilder peek(Consumer<QueryParameterBuilder> consumer) {
+        consumer.accept(this);
+        return this;
+    }
+
     @Override
     public QueryParameters get() {
         return new QueryParameters(map);
+    }
+
+
+    public <C extends Class<? extends Component>> Consumer<UI> getNavigateConsumer(C target) {
+        return ui -> navigate(ui, target);
+    }
+
+    public <C extends Class<? extends Component>> QueryParameterBuilder navigate(C target) {
+        return navigate(UI.getCurrent(), target);
+    }
+
+    public <C extends Class<? extends Component>> QueryParameterBuilder navigate(UI ui, C target) {
+        ui.getInternals().getRouter().getRegistry().getTargetUrl(target).ifPresent(uri -> ui.navigate(uri, get()));
+        return this;
     }
 }

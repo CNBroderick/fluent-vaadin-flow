@@ -80,6 +80,16 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
         return (E) this;
     }
 
+    default E limitMaxWidth(String width) {
+        get().getStyle()
+                .set("max-width", width)
+                .set("text-overflow", "ellipsis")
+                .set("display", "block")
+                .set("white-space", "nowrap")
+                .set("overflow", "hidden");
+        return (E) this;
+    }
+
     default E hasSpacingDivContainer() {
         get().addClassName("has-spacing-div-container");
         return (E) this;
@@ -97,6 +107,11 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
 
     default E textAlign(String textAlign) {
         get().getStyle().set("text-align", textAlign);
+        return (E) this;
+    }
+
+    default E textOverflowEllipsis() {
+        get().getStyle().set("text-overflow", "ellipsis");
         return (E) this;
     }
 

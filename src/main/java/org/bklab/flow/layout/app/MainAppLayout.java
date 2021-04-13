@@ -43,6 +43,7 @@ import java.util.function.Consumer;
 @CssImport("./styles/misc/box-shadow-borders.css")
 @CssImport(value = "./styles/styles.css", include = "lumo-badge")
 @CssImport("./styles/org/bklab/component/fluent-flow-shared-styles.css")
+@JsModule("./styles/org/bklab/component/fluent-vaadin-flow-shared-styles.js")
 @JsModule("@vaadin/vaadin-lumo-styles/badge")
 public abstract class MainAppLayout extends FlexBoxLayout implements RouterLayout, AfterNavigationObserver {
 

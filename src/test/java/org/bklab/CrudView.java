@@ -5,7 +5,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.bklab.crud.FluentCrudView;
-import org.bklab.crud.IFluentMenuBuilder;
+import org.bklab.crud.menu.IFluentMenuBuilder;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.menu.FluentMenuItem;
 import org.bklab.flow.factory.GridFactory;
@@ -28,6 +28,7 @@ public class CrudView extends FluentCrudView<FluentColor, Grid<FluentColor>> {
         addMenuColumn(new FluentColorMenuBuilder());
         FluentColor[] values = FluentColor.values();
         header.right(FluentButton.addButton().clickListener(e -> insertEntity(values[i++])));
+        enableExport();
     }
 
     @Override

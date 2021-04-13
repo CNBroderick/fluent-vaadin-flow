@@ -14,7 +14,6 @@
     flex-direction: column;
     position: relative;
     z-index: 1;
-    min-height: 60px;
 }
 
 /* Container */

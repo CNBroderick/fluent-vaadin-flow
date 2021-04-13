@@ -1,13 +1,19 @@
 .tool-bar-left {
     align-items: center;
+    flex-wrap: wrap;
+    place-content: flex-start;
 }
 
 .tool-bar-middle {
     align-items: center;
+    flex-wrap: wrap;
+    place-content: center;
 }
 
 .tool-bar-right {
     align-items: center;
+    flex-wrap: wrap;
+    place-content: flex-end;
 }
 
 .tool-bar-left > *:not(:last-child) {

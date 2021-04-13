@@ -1,18 +1,22 @@
 .fluent-title-layout {
     width: calc(100% - 1em);
+    box-sizing: border-box;
 }
 
 .fluent-title-layout__header {
-    width: calc(100% - 1em) !important;
-    padding: 0.5em;
+    padding: var(--lumo-space-s);
+    box-sizing: border-box;
+    width: 100%;
+    align-items: baseline;
 }
 
 .fluent-title-layout__content {
     border-top: 1px solid #d9d9d9;
     padding: 0.5em;
-    width: calc(100% - 1em) !important;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .fluent-title-layout__content:not(:last-child) {
-    padding-bottom: 0.5em;
+    padding-bottom: var(--lumo-space-s);
 }

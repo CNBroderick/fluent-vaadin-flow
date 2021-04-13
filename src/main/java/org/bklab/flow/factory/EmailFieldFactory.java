@@ -15,9 +15,10 @@ public class EmailFieldFactory extends FlowFactory<EmailField, EmailFieldFactory
         InputNotifierFactory<EmailField, EmailFieldFactory>,
         KeyNotifierFactory<EmailField, EmailFieldFactory>,
         CompositionNotifierFactory<EmailField, EmailFieldFactory>,
+        HasHelperFactory<EmailField, EmailFieldFactory>,
         HasAutocompleteFactory<EmailField, EmailFieldFactory>,
         HasAutocapitalizeFactory<EmailField, EmailFieldFactory>,
-        HasAutocorrectFactory<EmailField, EmailFieldFactory> {
+        HasAutocorrectFactory<EmailField, EmailFieldFactory>{
 
     public EmailFieldFactory() {
         this(new EmailField());

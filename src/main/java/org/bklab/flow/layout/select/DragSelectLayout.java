@@ -54,9 +54,15 @@ public class DragSelectLayout<T> extends Div implements MultiSelect<DragSelectLa
 
         candidateLayout.header().setMinHeight("38px");
         selectedLayout.header().setMinHeight("38px");
+        candidateLayout.getTitleLabel().getStyle().set("line-height", "38px");
+        selectedLayout.getTitleLabel().getStyle().set("line-height", "38px");
 
-        candidateContainer.getStyle().set("border", "1px solid #d9d9d9").set("flex-wrap", "wrap").set("min-height", "100px").set("padding", "var(--lumo-space-m)").set("overflow-y", "auto").set("flex-direction", "row").set("align-content", "flex-start");
-        selectedContainer.getStyle().set("border", "1px solid #d9d9d9").set("flex-wrap", "wrap").set("min-height", "100px").set("padding", "var(--lumo-space-m)").set("overflow-y", "auto").set("flex-direction", "row").set("align-content", "flex-start");
+        candidateContainer.getStyle().set("border", "1px solid #d9d9d9").set("flex-wrap", "wrap").set("min-height", "100px")
+                .set("padding", "var(--lumo-space-m)").set("overflow-y", "auto").set("flex-direction", "row")
+                .set("align-content", "flex-start").set("box-sizing", "border-box");
+        selectedContainer.getStyle().set("border", "1px solid #d9d9d9").set("flex-wrap", "wrap").set("min-height", "100px")
+                .set("padding", "var(--lumo-space-m)").set("overflow-y", "auto").set("flex-direction", "row")
+                .set("align-content", "flex-start").set("box-sizing", "border-box");
 
         candidateContainer.addClassName(LumoStyles.Spacing.Right.M);
         selectedContainer.addClassName(LumoStyles.Spacing.Right.M);
