@@ -34,6 +34,7 @@
     font-family: -apple-system, BlinkMacSystemFont, "segoe ui", Roboto, "helvetica neue", Arial, "noto sans", sans-serif, "apple color emoji", "segoe ui emoji", "segoe ui symbol", "noto color emoji";
     list-style: none;
     width: calc(100% - 2em);
+    height: calc(100% - 8.3em);
 }
 
 .modal-dialog-no-footer {

@@ -2,10 +2,7 @@ package org.bklab.crud;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.HasValue;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
@@ -25,15 +22,15 @@ import com.vaadin.flow.shared.Registration;
 import org.bklab.crud.core.ICrudViewExcelExportSupporter;
 import org.bklab.crud.core.IFluentCrudViewCommonField;
 import org.bklab.crud.menu.FluentCrudMenuButton;
+import org.bklab.crud.menu.ICrudViewMenuColumnSupporter;
 import org.bklab.crud.menu.IFluentGridMenuBuilder;
-import org.bklab.crud.menu.IFluentMenuBuilder;
+import org.bklab.flow.base.HasReturnThis;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.pagination.PageSwitchEvent;
 import org.bklab.flow.components.pagination.Pagination;
 import org.bklab.flow.components.pagination.layout.MiddleCustomPaginationLayout;
 import org.bklab.flow.components.textfield.KeywordField;
 import org.bklab.flow.dialog.ErrorDialog;
-import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.layout.EmptyLayout;
 import org.bklab.flow.layout.ToolBar;
 import org.bklab.flow.util.url.QueryParameterUtil;
@@ -49,7 +46,9 @@ import java.util.stream.IntStream;
 @CssImport("./styles/org/bklab/component/crud/fluent-crud-view.css")
 public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayout implements
         IFluentCrudViewCommonField<T, G, FluentCrudView<T, G>>,
+        ICrudViewMenuColumnSupporter<T, G, FluentCrudView<T, G>>,
         ICrudViewExcelExportSupporter<T, G, FluentCrudView<T, G>>,
+        HasReturnThis<FluentCrudView<T, G>>,
         BeforeEnterObserver {
 
     protected final List<Consumer<QueryParameterUtil>> effectQueryParameterUtils = new ArrayList<>();
@@ -179,16 +178,6 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return this;
     }
 
-    public FluentCrudView<T, G> addMenuColumn(IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
-        return this.addMenuColumn(() -> new ButtonFactory().icon(VaadinIcon.ELLIPSIS_DOTS_H.create())
-                .lumoIcon().lumoSmall().lumoTertiaryInline().get(), menuEntityBiConsumer);
-    }
-
-    public FluentCrudView<T, G> addEditIconMenuColumn(IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
-        return this.addMenuColumn(() -> new ButtonFactory().icon(VaadinIcon.EDIT.create())
-                .lumoIcon().lumoSmall().lumoTertiaryInline().get(), menuEntityBiConsumer);
-    }
-
     public BiPredicate<T, T> getSameEntityBiPredicate() {
         if (sameEntityBiPredicate == null) this.sameEntityBiPredicate = Objects::equals;
         return sameEntityBiPredicate;
@@ -207,28 +196,6 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         columns.remove(menuColumn);
         columns.add(0, menuColumn);
         grid.setColumnOrder(columns);
-        return this;
-    }
-
-    public FluentCrudView<T, G> addMenuColumn(Supplier<Button> buttonSupplier, IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
-        Grid.Column<T> column = grid.addComponentColumn(entity -> {
-            Button button = buttonSupplier.get();
-            ContextMenu contextMenu = new ContextMenu(button);
-            contextMenu.addOpenedChangeListener(e -> {
-                if (e.isOpened()) {
-                    if (contextMenu.getItems().isEmpty()) {
-                        menuEntityBiConsumer.safeBuild(this, contextMenu, entity);
-                        contextMenu.setVisible(true);
-                    }
-                    grid.select(entity);
-                }
-            });
-            FluentCrudMenuButton<T, G> crudMenuButton = new FluentCrudMenuButton<>(this, entity, button, contextMenu, menuEntityBiConsumer);
-            menuButtons.add(crudMenuButton);
-            contextMenu.setOpenOnClick(true);
-            menuEntityBiConsumer.safeBuild(this, contextMenu, entity);
-            return button;
-        }).setHeader("操作").setKey("menuColumn").setSortable(false).setWidth("5em").setTextAlign(ColumnTextAlign.CENTER);
         return this;
     }
 
@@ -452,6 +419,11 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     @Override
     public G getGrid() {
         return grid;
+    }
+
+    @Override
+    public List<FluentCrudMenuButton<T, G>> getMenuButtons() {
+        return menuButtons;
     }
 
     @Override

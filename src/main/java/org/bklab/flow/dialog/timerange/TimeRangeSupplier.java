@@ -1,5 +1,6 @@
 package org.bklab.flow.dialog.timerange;
 
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -10,10 +11,10 @@ import java.util.function.Supplier;
 
 public class TimeRangeSupplier implements ITimeRangeSupplier {
 
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final Supplier<LocalDateTime> min;
     private final Supplier<LocalDateTime> max;
     private final String name;
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public TimeRangeSupplier(LocalDateTime min, LocalDateTime max) {
         this(() -> min, () -> max);
@@ -55,23 +56,17 @@ public class TimeRangeSupplier implements ITimeRangeSupplier {
             @Override
             public LocalDateTime getMin() {
                 return switch (suffix) {
-                    case "分钟" -> LocalDateTime.now().minusMinutes(duration).withSecond(0).withNano(0);
-                    case "小时" -> LocalDateTime.now().minusHours(duration).withMinute(0).withSecond(0).withNano(0);
-                    case "天" -> LocalDateTime.of(LocalDate.now().minusDays(duration), LocalTime.MIN);
-                    case "月" -> LocalDateTime.of(LocalDate.now().minusMonths(duration).withDayOfMonth(1), LocalTime.MIN);
+                    case "分钟" -> LocalDateTime.now().minusMinutes(duration);
+                    case "小时" -> LocalDateTime.now().minusHours(duration);
+                    case "天" -> LocalDateTime.now().minusDays(duration);
+                    case "月" -> LocalDateTime.now().minusMonths(duration);
                     default -> throw new IllegalStateException("Unexpected value: " + suffix);
                 };
             }
 
             @Override
             public LocalDateTime getMax() {
-                return switch (suffix) {
-                    case "分钟" -> LocalDateTime.now().withSecond(0).withNano(0).minusNanos(1);
-                    case "小时" -> LocalDateTime.now().withMinute(0).withSecond(0).withNano(0).minusNanos(1);
-                    case "天" -> LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MAX);
-                    case "月" -> LocalDateTime.of(LocalDate.now().minusMonths(1).withDayOfMonth(1), LocalTime.MIN);
-                    default -> throw new IllegalStateException("Unexpected value: " + suffix);
-                };
+                return LocalDateTime.now();
             }
         };
 
@@ -150,7 +145,7 @@ public class TimeRangeSupplier implements ITimeRangeSupplier {
 
     @Override
     public String getName() {
-        return name;
+        return "自定义";
     }
 
     @Override
@@ -165,6 +160,11 @@ public class TimeRangeSupplier implements ITimeRangeSupplier {
 
     @Override
     public String getLabel() {
-        return dateTimeFormatter.format(getMin()) + " - " + dateTimeFormatter.format(getMax());
+        LocalDateTime min = getMin();
+        LocalDateTime max = getMax();
+        if (min == null && max != null) return dateTimeFormatter.format(max) + " 以前";
+        if (min != null && max == null) return dateTimeFormatter.format(min) + " 以后";
+        if (min != null) return dateTimeFormatter.format(min) + " - " + dateTimeFormatter.format(max);
+        return "全部时间";
     }
 }
