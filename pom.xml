@@ -1,15 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ~ Copyright (c) 2008 - 2021. - Broderick Labs.
+  ~ Author: Broderick Johansson
+  ~ E-mail: z@bkLab.org
+  ~ Modify date：2021-04-15 10:23:55
+  ~ _____________________________
+  ~ Project name: fluent-vaadin-flow
+  ~ Class name：D:/broderick/develop/bklab/fluent-vaadin-flow-20/pom.xml
+  ~ Copyright (c) 2008 - 2021. - Broderick Labs.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.bklab</groupId>
     <artifactId>fluent-vaadin-flow</artifactId>
-    <version>20.0.0.alpha6</version>
+    <version>20.0.0.alpha7</version>
     <name>fluent-vaadin-flow</name>
     <description>Broderick Labs for fluent Vaadin flow. Inherits common Vaadin components.</description>
     <packaging>jar</packaging>
 
     <properties>
-        <vaadin.version>20.0.0.alpha6</vaadin.version>
+        <vaadin.version>20.0.0.alpha7</vaadin.version>
 
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
@@ -117,18 +128,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.vaadin.olli</groupId>
-            <artifactId>clipboardhelper</artifactId>
-            <version>1.1.2</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>vaadin-core</artifactId>
-                    <groupId>com.vaadin</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
             <groupId>dev.mett.vaadin</groupId>
             <artifactId>tooltip</artifactId>
             <version>1.6.0</version>
@@ -209,6 +208,26 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.0</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
@@ -261,7 +280,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
-                        <version>3.1.0</version>
+                        <version>3.3.0</version>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <descriptors>
@@ -279,8 +298,18 @@
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.8.1</version>
+                        <configuration>
+                            <source>${maven.compiler.source}</source>
+                            <target>${maven.compiler.target}</target>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>3.2.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -294,7 +323,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>3.2.0</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -305,14 +334,17 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                            <source>${maven.compiler.source}</source>
                             <quiet>true</quiet>
                             <doclint>none</doclint>
+                            <encoding>UTF-8</encoding>
                         </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
-                        <version>3.1.2</version>
+                        <version>3.2.0</version>
                         <configuration>
                             <!-- Generated file that shouldn't be included in add-ons -->
                             <excludes>
@@ -378,9 +410,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>3.2.0</version>
-                        <configuration>
-                            <doclint>none</doclint>
-                        </configuration>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -389,6 +418,14 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                            <source>${maven.compiler.source}</source>
+                            <quiet>true</quiet>
+                            <doclint>none</doclint>
+                            <encoding>UTF-8</encoding>
+                            <doclint>none</doclint>
+                        </configuration>
                     </plugin>
 
                     <!-- GPG -->

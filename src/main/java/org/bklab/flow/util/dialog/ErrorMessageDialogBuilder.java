@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-13 14:13:33
+ * Modify date：2021-04-13 15:36:55
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.util.dialog.ErrorMessageDialogBuilder
@@ -78,7 +78,7 @@ public class ErrorMessageDialogBuilder implements Collector<String, ErrorMessage
             return true;
         }
         hasErrorListeners.forEach(a -> a.onHasErrors(this));
-        ErrorDialog errorDialog = new ErrorDialog(IntStream.range(0, messages.size())
+        ErrorDialog errorDialog = new ErrorDialog(messages.size() <= 1 ? messages : IntStream.range(0, messages.size())
                 .mapToObj(i -> (i + 1) + ". " + messages.get(i)).collect(Collectors.toList()));
         if (header != null && !header.isBlank()) {
             errorDialog.header(header);
