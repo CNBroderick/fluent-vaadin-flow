@@ -1,6 +1,17 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-19 16:57:05
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.crud.menu.FluentCrudMenuButton
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.crud.menu;
 
-import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.grid.Grid;
 import org.bklab.crud.FluentCrudView;
@@ -11,7 +22,7 @@ import java.util.function.Predicate;
 
 public class FluentCrudMenuButton<T, G extends Grid<T>> {
 
-    private final Button button;
+    private final Component button;
     private final ContextMenu contextMenu;
     private final IFluentMenuBuilder<T, G> menuEntityBiConsumer;
     private final FluentCrudView<T, G> fluentCrudView;
@@ -19,7 +30,7 @@ public class FluentCrudMenuButton<T, G extends Grid<T>> {
     private T entity;
 
     public FluentCrudMenuButton(FluentCrudView<T, G> fluentCrudView,
-                                T entity, Button button, ContextMenu contextMenu,
+                                T entity, Component button, ContextMenu contextMenu,
                                 IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
         this.fluentCrudView = fluentCrudView;
         this.entity = entity;

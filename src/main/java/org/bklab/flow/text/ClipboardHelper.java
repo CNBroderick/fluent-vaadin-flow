@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-15 10:24:51
+ * Modify date：2021-04-19 16:57:06
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.text.ClipboardHelper
@@ -50,14 +50,12 @@ public class ClipboardHelper {
 
     private static String getJsExpression() {
         //language=JavaScript
-        return "try{console.log('start copy '+$0+' which title is '+$1);const el=document" +
-               ".createElement('textarea');el.value=$0;el" +
-               ".setAttribute('readonly','');el.style.position='absolute';el.style.left='-9999px';document.body.appendChild(el);" +
+        return "try{console.log('start copy '+$0+' which title is '+$1);const el=document.createElement('textarea');el.value=$0;" +
+               "el.setAttribute('readonly','');el.style.position='absolute';el.style.left='-9999px';document.body.appendChild(el);" +
                "const selected=document.getSelection().rangeCount>0?document.getSelection().getRangeAt(0):false;el.select();" +
                "document.execCommand('copy');document.body.removeChild(el);if(selected){document.getSelection().removeAllRanges();" +
-               "document.getSelection().addRange(selected);return{'success':true,'message':'复制'+$1+'['+$0+']成功'}}" +
-               "return{'success':false,'message':'复制'+$1+'['+$0+']失败，原因：选择创建节点错误。\\n'+e}}catch(e){console.log('复制失败：');" +
-               "console.log(e);return{'success':false,'message':'复制'+$1+'['+$0+']失败，原因：\\n'+e}}";
+               "document.getSelection().addRange(selected);}return{'success':true,'message':'复制'+$1+'['+$0+']成功'}}" +
+               "catch(e){console.log('复制失败：');console.log(e);return{'success':false,'message':'复制'+$1+'['+$0+']失败，原因：\\n'+e}}";
     }
 
     public <C extends Component & ClickNotifier<C>> ClipboardHelper extend(Map<C, String> map) {
@@ -84,21 +82,18 @@ public class ClipboardHelper {
 
     public <C extends Component & ClickNotifier<C>> ClipboardHelper extend(C component, String content, String title, SerializableConsumer<OnClipboardResult> resultConsumer) {
         registrationMap.remove(component);
-        Registration registration = component.addClickListener(componentClickEvent -> {
-            UI ui = UI.getCurrent();
-            ui.getPage().executeJs(JS_EXPRESSION, content, title)
-                    .then(jsonValue -> {
-                        if (jsonValue == null) {
-                            Optional.ofNullable(resultConsumer).orElse(defaultResultConsumer).accept(new OnClipboardResult(false, "返回结果为空。"));
-                            return;
-                        }
-                        Optional.ofNullable(resultConsumer).orElse(defaultResultConsumer)
-                                .accept(OnClipboardResult.create(jsonValue.toJson()));
-                    }, error -> {
-                        Optional.ofNullable(resultConsumer).orElse(defaultResultConsumer).accept(new OnClipboardResult(false, error));
-                        LoggerFactory.getLogger(getClass()).trace("复制[" + content + "]到浏览器失败，目标类：" + component.getClass().getName());
-                    });
-        });
+        Registration registration = component.addClickListener(componentClickEvent ->
+                UI.getCurrent().getPage().executeJs(JS_EXPRESSION, content, title).then(jsonValue -> {
+                    if (jsonValue == null) {
+                        Optional.ofNullable(resultConsumer).orElse(defaultResultConsumer).accept(new OnClipboardResult(false, "返回结果为空。"));
+                        return;
+                    }
+                    Optional.ofNullable(resultConsumer).orElse(defaultResultConsumer).accept(OnClipboardResult.create(jsonValue.toJson()));
+                }, error -> {
+                    Optional.ofNullable(resultConsumer).orElse(defaultResultConsumer).accept(new OnClipboardResult(false, error));
+                    LoggerFactory.getLogger(getClass()).trace("复制[" + content + "]到浏览器失败，目标类：" + component.getClass().getName());
+                })
+        );
 
         component.addDetachListener(detachEvent -> registrationMap.put(component, registration));
         registrationMap.remove(component);
@@ -137,8 +132,6 @@ public class ClipboardHelper {
         }
 
         public static OnClipboardResult create(String json) {
-            LoggerFactory.getLogger(OnClipboardResult.class).info("create by \n" + json);
-            System.out.println("create by \n" + json);
             try {
                 return new Gson().fromJson(json, OnClipboardResult.class);
             } catch (Exception e) {

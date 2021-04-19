@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-19 10:09:29
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.crud.FluentCrudView
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.crud;
 
 import com.vaadin.flow.component.AttachEvent;
@@ -185,17 +196,6 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
 
     public FluentCrudView<T, G> setSameEntityBiPredicate(BiPredicate<T, T> sameEntityBiPredicate) {
         this.sameEntityBiPredicate = Objects.requireNonNull(sameEntityBiPredicate, "sameEntityBiPredicate is null");
-        return this;
-    }
-
-    public FluentCrudView<T, G> menuColumnAtFirst() {
-        Grid.Column<T> menuColumn = grid.getColumnByKey("menuColumn");
-        if (menuColumn == null) return this;
-
-        List<Grid.Column<T>> columns = new ArrayList<>(grid.getColumns());
-        columns.remove(menuColumn);
-        columns.add(0, menuColumn);
-        grid.setColumnOrder(columns);
         return this;
     }
 
