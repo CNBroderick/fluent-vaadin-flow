@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-23 15:50:26
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.chartjs.AbstractChartJs
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.chartjs;
 
 import be.ceau.chart.Chart;
@@ -7,6 +18,7 @@ import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
+import org.bklab.flow.base.HasSizeFactory;
 import org.bklab.flow.util.predicate.MobileBrowserPredicate;
 
 import java.util.*;
@@ -14,7 +26,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"unchecked", "UnusedReturnValue"})
-public abstract class AbstractChartJs<T extends AbstractChartJs<T>> extends VerticalLayout {
+public abstract class AbstractChartJs<T extends AbstractChartJs<T>> extends VerticalLayout implements HasSizeFactory<AbstractChartJs<T>, AbstractChartJs<T>> {
 
     protected Map<String, Number> data = new LinkedHashMap<>();
     protected Map<String, Map<String, Number>> bigData = new LinkedHashMap<>();
@@ -145,7 +157,7 @@ public abstract class AbstractChartJs<T extends AbstractChartJs<T>> extends Vert
         return (T) this;
     }
 
-    public T fulHeight() {
+    public T fullHeight() {
         setHeightFull();
         return (T) this;
     }
@@ -251,6 +263,11 @@ public abstract class AbstractChartJs<T extends AbstractChartJs<T>> extends Vert
 
     public AbstractChartJs<T> setFractionDigits(int fractionDigits) {
         this.fractionDigits = fractionDigits;
+        return this;
+    }
+
+    @Override
+    public AbstractChartJs<T> get() {
         return this;
     }
 

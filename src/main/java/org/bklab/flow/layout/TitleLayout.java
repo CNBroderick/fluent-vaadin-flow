@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-22 15:52:55
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.layout.TitleLayout
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.layout;
 
 import com.vaadin.flow.component.Component;
@@ -107,6 +118,21 @@ public class TitleLayout extends Div {
     public TitleLayout setContent(Component... components) {
         this.content.removeAll();
         this.content.add(components);
+        return this;
+    }
+
+    public TitleLayout contentHeightFull() {
+        this.content.setHeight("calc(100% - 3.5em)");
+        return this;
+    }
+
+    public TitleLayout contentWidthFull() {
+        this.content.setWidthFull();
+        return this;
+    }
+
+    public TitleLayout contentSizeFull() {
+        this.content.setSizeFull();
         return this;
     }
 

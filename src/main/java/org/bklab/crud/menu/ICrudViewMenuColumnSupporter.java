@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-19 15:25:19
+ * Modify date：2021-04-22 10:27:43
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.crud.menu.ICrudViewMenuColumnSupporter
@@ -12,7 +12,6 @@
 package org.bklab.crud.menu;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -43,6 +42,10 @@ public interface ICrudViewMenuColumnSupporter<T, G extends Grid<T>, C extends Fl
         return addMenuColumn(entity -> FluentButton.linkButton(buttonNameFunction.apply(entity)), menuEntityBiConsumer);
     }
 
+    default C addMenuButtonColumn(Function<T, String> buttonNameFunction, Function<T, String> tooltipFunction, IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
+        return addMenuColumn(entity -> FluentButton.linkButton(buttonNameFunction.apply(entity)).tooltip(tooltipFunction.apply(entity)), menuEntityBiConsumer);
+    }
+
     default C addMenuColumn(Supplier<Component> menuContentSupplier, IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
         return addMenuColumn(entity -> menuContentSupplier.get(), menuEntityBiConsumer);
     }
@@ -61,26 +64,14 @@ public interface ICrudViewMenuColumnSupporter<T, G extends Grid<T>, C extends Fl
                 FluentButton.linkButton(buttonNameFunction.apply(entity)), menuEntityBiConsumer));
     }
 
+    default Grid.Column<T> menuButtonColumn(Function<T, String> buttonNameFunction, Function<T, String> tooltipFunction, IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
+        return getCrudView().getGrid().addComponentColumn(createMenuColumnComponentProvider(entity ->
+                FluentButton.linkButton(buttonNameFunction.apply(entity)).tooltip(tooltipFunction.apply(entity)), menuEntityBiConsumer));
+    }
+
     default ValueProvider<T, Component> createMenuColumnComponentProvider(
             Function<T, Component> menuContentSupplier, IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
-        return entity -> {
-            Component button = menuContentSupplier.apply(entity);
-            ContextMenu contextMenu = new ContextMenu(button);
-            contextMenu.addOpenedChangeListener(e -> {
-                if (e.isOpened()) {
-                    if (contextMenu.getItems().isEmpty()) {
-                        menuEntityBiConsumer.safeBuild(getCrudView(), contextMenu, entity);
-                        contextMenu.setVisible(true);
-                    }
-                    getCrudView().getGrid().select(entity);
-                }
-            });
-            FluentCrudMenuButton<T, G> crudMenuButton = new FluentCrudMenuButton<>(getCrudView(), entity, button, contextMenu, menuEntityBiConsumer);
-            getMenuButtons().add(crudMenuButton);
-            contextMenu.setOpenOnClick(true);
-            menuEntityBiConsumer.safeBuild(getCrudView(), contextMenu, entity);
-            return button;
-        };
+        return new FluentCrudViewComponentMenuValueProvider<>(getCrudView(), menuContentSupplier, menuEntityBiConsumer);
     }
 
     default <V extends Component> C addMenuColumn(ValueProvider<T, V> componentProvider) {
