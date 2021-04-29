@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-23 15:50:47
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.base.HasSizeFactory
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.base;
 
 import com.vaadin.flow.component.Component;
@@ -28,6 +39,32 @@ public interface HasSizeFactory<T extends Component & HasSize, E extends HasSize
 
     default E height(String height) {
         get().setHeight(height);
+        return (E) this;
+    }
+
+    default E height(String minHeight, String maxHeight) {
+        get().setMinHeight(minHeight);
+        get().setMaxHeight(maxHeight);
+        return (E) this;
+    }
+
+    default E height(String minHeight, String height, String maxHeight) {
+        get().setMinHeight(minHeight);
+        get().setHeight(height);
+        get().setMaxHeight(maxHeight);
+        return (E) this;
+    }
+
+    default E width(String minWidth, String maxWidth) {
+        get().setMinWidth(minWidth);
+        get().setMaxWidth(maxWidth);
+        return (E) this;
+    }
+
+    default E width(String minWidth, String width, String maxWidth) {
+        get().setMinWidth(minWidth);
+        get().setWidth(width);
+        get().setMaxWidth(maxWidth);
         return (E) this;
     }
 

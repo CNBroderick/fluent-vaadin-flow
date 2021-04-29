@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-20 11:45:28
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.crud.menu.IFluentMenuBuilder
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.crud.menu;
 
 import com.vaadin.flow.component.Component;
@@ -5,16 +16,10 @@ import com.vaadin.flow.component.HasEnabled;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.grid.Grid;
 import org.bklab.crud.FluentCrudView;
-import org.bklab.flow.components.menu.FluentMenuItem;
 import org.bklab.flow.dialog.ErrorDialog;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-public interface IFluentMenuBuilder<T, G extends Grid<T>> {
+public interface IFluentMenuBuilder<T, G extends Grid<T>> extends IFluentMenuSeparatorSupporter {
 
     void build(FluentCrudView<T, G> fluentCrudView, ContextMenu contextMenu, T entity);
 
@@ -31,28 +36,5 @@ public interface IFluentMenuBuilder<T, G extends Grid<T>> {
             new ErrorDialog(e).build().open();
             LoggerFactory.getLogger(getClass()).error("构建菜单错误", e);
         }
-    }
-
-    default void addSeparator(ContextMenu contextMenu) {
-        FluentMenuItem.addSeparator(contextMenu);
-    }
-
-    default void removeDuplicateSeparator(ContextMenu contextMenu) {
-        Set<Component> separators = new HashSet<>();
-
-        Component last = null;
-        for (Component item : contextMenu.getChildren().collect(Collectors.toCollection(ArrayList::new))) {
-            if (last != null && isSeparator(item) && isSeparator(last)) {
-                separators.add(last);
-            }
-            last = item;
-        }
-        if (isSeparator(last)) separators.add(last);
-
-        separators.forEach(contextMenu::remove);
-    }
-
-    default boolean isSeparator(Component component) {
-        return component != null && "hr".equals(component.getElement().getTag());
     }
 }

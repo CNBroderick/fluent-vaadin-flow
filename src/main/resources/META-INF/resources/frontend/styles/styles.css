@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-29 09:15:16
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：D:/broderick/develop/bklab/fluent-vaadin-flow-20/src/main/resources/META-INF/resources/frontend/styles/styles.css
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 :root {
     --app-bar-height: var(--lumo-size-xl);
 
@@ -57,9 +68,33 @@ body {
 }
 
 vaadin-grid-cell-content {
-  text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 vaadin-text-field {
-  align-self: auto;
+    align-self: auto;
+}
+
+.container-left-items-no-border-left:not(:first-child) {
+    border-left: 0;
+}
+
+.container-right-items-no-border-right:not(:last-child) {
+    border-right: 0;
+}
+
+.container-items-spacing:not(:last-child) {
+    margin-right: var(--lumo-space-s);
+}
+
+.container-items-spacing-s:not(:last-child) {
+    margin-right: var(--lumo-space-s);
+}
+
+.container-items-spacing-m:not(:last-child) {
+    margin-right: var(--lumo-space-m);
+}
+
+.container-items-spacing-l:not(:last-child) {
+    margin-right: var(--lumo-space-l);
 }

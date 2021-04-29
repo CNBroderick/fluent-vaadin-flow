@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-27 13:58:07
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.factory.FormLayoutFactory
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.Component;
@@ -55,6 +66,14 @@ public class FormLayoutFactory extends FlowFactory<FormLayout, FormLayoutFactory
     public FormLayoutFactory formItem(Component field, Component label) {
         get().addFormItem(field, label);
         return this;
+    }
+
+    public FormLayoutFactory formItem(boolean canAdd, Component field, String label) {
+        return canAdd ? formItem(field, label) : this;
+    }
+
+    public FormLayoutFactory formItem(boolean canAdd, Component field, Component label) {
+        return canAdd ? formItem(field, label) : this;
     }
 
     public FormLayoutFactory colspan(Component component, int colspan) {
@@ -140,5 +159,9 @@ public class FormLayoutFactory extends FlowFactory<FormLayout, FormLayoutFactory
 
     public FormLayoutFactory initFormLayout() {
         return formItemAlignEnd().formItemAlignVerticalCenter().warpWhenOverflow().componentFullWidth();
+    }
+
+    public FormLayoutFactory fitModalDialogWidth() {
+        return width("fit-content").style("margin-right", "3em");
     }
 }

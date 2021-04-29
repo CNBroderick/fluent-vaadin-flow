@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-01 19:23:03
+ * Modify date：2021-04-14 14:00:53
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.dialog.ErrorDialog
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 package org.bklab.flow.dialog;
@@ -15,8 +15,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import org.bklab.flow.factory.ButtonFactory;
-import org.bklab.flow.factory.NotificationFactory;
-import org.vaadin.olli.ClipboardHelper;
+import org.bklab.flow.text.ClipboardHelper;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -69,10 +68,8 @@ public class ErrorDialog extends MessageDialog {
     }
 
     private void addCopyButton(String message) {
-        copyButton.addClickListener(e -> new NotificationFactory("复制成功")
-                .positionTopEnd().duration(1500).lumoSuccess().open()
-        );
-        getBottom().right(new ClipboardHelper(message, copyButton));
+        ClipboardHelper.getInstance().extend(copyButton, message);
+        getBottom().right(copyButton);
     }
 
     private static String toString(Throwable throwable) {

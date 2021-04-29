@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-19 13:27:19
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.util.url.QueryParameterUtil
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.util.url;
 
 import com.vaadin.flow.function.SerializableFunction;
@@ -7,15 +18,24 @@ import com.vaadin.flow.router.QueryParameters;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class QueryParameterUtil {
 
+    private static QueryParameterUtil EMPTY_QUERY_PARAMETER;
+
     private final Map<String, List<String>> parameters;
     private final String queryString;
+
+    private QueryParameterUtil() {
+        this.parameters = Collections.emptyMap();
+        this.queryString = "";
+    }
+
+    public static QueryParameterUtil emptyParameter() {
+        if (EMPTY_QUERY_PARAMETER == null) EMPTY_QUERY_PARAMETER = new QueryParameterUtil();
+        return EMPTY_QUERY_PARAMETER;
+    }
 
     public QueryParameterUtil(Location location) {
         this(location.getQueryParameters());

@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-29 09:15:16
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.components.range.LocalDateRangeComboHelper
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.components.range;
 
 import com.vaadin.flow.component.Unit;
@@ -6,7 +17,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import dev.mett.vaadin.tooltip.Tooltips;
-import org.bklab.flow.factory.ButtonFactory;
+import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.factory.DatePickerFactory;
 import org.bklab.flow.factory.DivFactory;
 import org.bklab.flow.util.lumo.LumoStyles;
@@ -30,23 +41,27 @@ public class LocalDateRangeComboHelper extends HorizontalLayout {
     public LocalDateRangeComboHelper(DatePicker startField, DatePicker endField) {
         this.start = startField;
         this.end = endField;
-        start.setWidth(100, Unit.PERCENTAGE);
-        end.setWidth(100, Unit.PERCENTAGE);
-        setWidth(100, Unit.PERCENTAGE);
 
         Div div = new DivFactory(
-                new ButtonFactory("本月", e -> setToCurrentMonth()).lumoSmall().className(LumoStyles.Padding.Right.S).get(),
-                new ButtonFactory("本季", e -> setToCurrentQuarter()).lumoSmall().className(LumoStyles.Padding.Right.S).get(),
-                new ButtonFactory("本年", e -> setToCurrentYear()).lumoSmall().className(LumoStyles.Padding.Right.S).get()
-        ).displayFlex().className(LumoStyles.Padding.Left.M).get();
+                new FluentButton("本月", e -> setToCurrentMonth()),
+                new FluentButton("本季", e -> setToCurrentQuarter()),
+                new FluentButton("本年", e -> setToCurrentYear())
+        ).displayFlex().alignSelfCenter().className("container-right-items-no-border-right", LumoStyles.Padding.Left.S).get();
 
         add(start, end, div);
-        setWidth(100, Unit.PERCENTAGE);
         setMargin(false);
     }
 
     private static DatePicker createMinimalDatePicker(String placeholder) {
-        return new DatePickerFactory().lumoSmall().placeholder(placeholder).widthFull().get();
+        return new DatePickerFactory().lumoSmall().widthMinimal().clearButtonVisible(true).placeholder(placeholder).get();
+    }
+
+    public LocalDateRangeComboHelper limit(LocalDate start, LocalDate end) {
+        this.start.setMin(start);
+        this.end.setMin(start);
+        this.start.setMin(end);
+        this.end.setMin(end);
+        return this;
     }
 
     private Button minimalWidth(Button b) {

@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-14 15:05:00
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.components.menu.FluentMenuItem
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.components.menu;
 
 import com.vaadin.flow.component.ClickEvent;
@@ -10,10 +21,10 @@ import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.function.SerializableConsumer;
 import org.bklab.flow.factory.IconFactory;
-import org.bklab.flow.factory.NotificationFactory;
 import org.bklab.flow.factory.SpanFactory;
-import org.vaadin.olli.ClipboardHelper;
+import org.bklab.flow.text.ClipboardHelper;
 
 @Tag("fluent-menu-item")
 @CssImport("./styles/org/bklab/component/menu/fluent-menu-item.css")
@@ -44,11 +55,26 @@ public class FluentMenuItem extends Span {
         return new FluentMenuItem(VaadinIcon.BOOK, text);
     }
 
-    public static FluentMenuItem forCopy(String text, String content, String successMessage) {
+    public static FluentMenuItem forCopy(String text, String content) {
+        return createCopy(text).clipboard(content);
+    }
+
+    public static FluentMenuItem forCopy(String text, String content, String title) {
+        return createCopy(text).clipboard(content, title);
+    }
+
+    public static FluentMenuItem forCopy(String text, String content, SerializableConsumer<ClipboardHelper.OnClipboardResult> resultConsumer) {
+        return createCopy(text).clipboard(content, resultConsumer);
+    }
+
+    public static FluentMenuItem forCopy(String text, String content, String title, SerializableConsumer<ClipboardHelper.OnClipboardResult> resultConsumer) {
+        return createCopy(text).clipboard(content, title, resultConsumer);
+    }
+
+    private static FluentMenuItem createCopy(String text) {
         FluentMenuItem fluentMenuItem = new FluentMenuItem();
         Icon icon = new IconFactory(VaadinIcon.COPY_O).color("#999999").size("var(--lumo-font-size-xs)").padding("0 var(--lumo-space-m)").get();
-        fluentMenuItem.add(new ClipboardHelper(content, new SpanFactory(icon, new Span(text)).displayFlex().get()));
-        fluentMenuItem.addClickListener(event -> new NotificationFactory(successMessage).lumoSuccess().duration(1000).positionTopEnd().open());
+        fluentMenuItem.add(new SpanFactory(icon, new Span(text)).displayFlex().get());
         return fluentMenuItem;
     }
 
@@ -70,6 +96,26 @@ public class FluentMenuItem extends Span {
 
     public MenuItem add(ContextMenu contextMenu) {
         return peek(contextMenu.addItem(this));
+    }
+
+    public FluentMenuItem clipboard(String content) {
+        ClipboardHelper.getInstance().extend(this, content);
+        return this;
+    }
+
+    public FluentMenuItem clipboard(String content, SerializableConsumer<ClipboardHelper.OnClipboardResult> resultConsumer) {
+        ClipboardHelper.getInstance().extend(this, content, resultConsumer);
+        return this;
+    }
+
+    public FluentMenuItem clipboard(String content, String title) {
+        ClipboardHelper.getInstance().extend(this, content, title);
+        return this;
+    }
+
+    public FluentMenuItem clipboard(String content, String title, SerializableConsumer<ClipboardHelper.OnClipboardResult> resultConsumer) {
+        ClipboardHelper.getInstance().extend(this, content, title, resultConsumer);
+        return this;
     }
 
     private MenuItem peek(MenuItem menuItem) {

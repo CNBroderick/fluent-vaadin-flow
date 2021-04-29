@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-20 11:07:22
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.components.textfield.KeywordField
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.components.textfield;
 
 import com.vaadin.flow.component.ComponentEvent;
@@ -14,7 +25,7 @@ import java.util.function.BiConsumer;
 
 public class KeywordField extends TextField {
 
-    private final Button keywordButton = new ButtonFactory()
+    private final Button keywordButton = new ButtonFactory().cursorPointer()
             .icon(VaadinIcon.SEARCH).lumoSmall().lumoTertiaryInline().get();
 
     {

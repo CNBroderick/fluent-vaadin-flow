@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-25 14:31:10
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.dialog.ModalDialog
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.dialog;
 
 import com.vaadin.flow.component.ClickEvent;
@@ -50,6 +61,16 @@ public class ModalDialog extends Dialog {
     public ModalDialog title(Component... components) {
         this.title.removeAll();
         this.title.add(components);
+        return this;
+    }
+
+    public ModalDialog modal() {
+        this.setModal(true);
+        return this;
+    }
+
+    public ModalDialog modal(boolean modal) {
+        this.setModal(modal);
         return this;
     }
 
@@ -112,6 +133,18 @@ public class ModalDialog extends Dialog {
 
     public ModalDialog width(String width) {
         setWidth(width);
+        return this;
+    }
+
+    public ModalDialog width(String minWidth, String maxWidth) {
+        setMinWidth(minWidth);
+        setMaxWidth(maxWidth);
+        return this;
+    }
+
+    public ModalDialog height(String minHeight, String maxHeight) {
+        setMinHeight(minHeight);
+        setMaxHeight(maxHeight);
         return this;
     }
 

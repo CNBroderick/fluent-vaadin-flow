@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-15 09:57:47
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.CrudView
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab;
 
 import com.vaadin.flow.component.contextmenu.ContextMenu;
@@ -37,6 +48,7 @@ public class CrudView extends FluentCrudView<FluentColor, Grid<FluentColor>> {
                 .peek(grid -> grid.addComponentColumn(c -> new SpanFactory("☻ ₡ ■").height("1em").width("1em")
                         .style("color", c.rgb()).style("font-size", "1em").get()
                 ).setHeader("#").setKey("span").setWidth("2em"))
+                .peek(grid -> grid.addComponentColumn(c -> FluentMenuItem.forCopy("复制", c.rgb(), "颜色")))
                 .sizeFull().columnAutoWidth().columnAlignCenter().get();
     }
 

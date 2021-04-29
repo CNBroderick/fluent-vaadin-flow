@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-20 11:07:22
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.base.HasStyleFactory
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.base;
 
 import com.vaadin.flow.component.Component;
@@ -236,6 +247,16 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
 
     default E fontSizeXXXL() {
         get().getStyle().set("font-size", "var(--lumo-font-size-xxxl)");
+        return (E) this;
+    }
+
+    default E cursorPointer() {
+        get().getStyle().set("cursor", "pointer");
+        return (E) this;
+    }
+
+    default E cursor(String cursorName) {
+        get().getStyle().set("cursor", cursorName);
         return (E) this;
     }
 

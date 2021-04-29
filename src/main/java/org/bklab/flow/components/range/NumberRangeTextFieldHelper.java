@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-25 14:43:25
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.components.range.NumberRangeTextFieldHelper
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.components.range;
 
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -26,12 +37,11 @@ public class NumberRangeTextFieldHelper extends HorizontalLayout {
         this.minField = minField;
         this.maxField = maxField;
         add(minField, maxField);
-        setWidthFull();
         setMargin(false);
     }
 
     private static NumberField createNumberField(String placeHolder) {
-        return new NumberFieldFactory().lumoSmall().widthFull().placeholder(placeHolder).get();
+        return new NumberFieldFactory().lumoSmall().width("10.8em").placeholder(placeHolder).get();
     }
 
     public Double getMin() {

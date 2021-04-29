@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-25 11:25:31
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.dialog.search.AdvanceSearchField
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.dialog.search;
 
 import com.vaadin.flow.component.button.Button;
@@ -7,6 +18,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.factory.DivFactory;
+import org.bklab.flow.factory.IconFactory;
 import org.bklab.flow.factory.TextFieldFactory;
 
 import java.util.Objects;
@@ -22,12 +34,11 @@ public class AdvanceSearchField<E extends Dialog> extends TextField {
         this.dialog = dialog;
         asFactory().lumoSmall().minWidth("200px").width("25vw").maxWidth("50vw").readOnly().value(placeholder);
 
-        clearButton = new ButtonFactory().clickListener(e -> {
-            clear();
-            e.getSource().setVisible(false);
-        }).icon(VaadinIcon.CLOSE).lumoIcon().visible(false).lumoSmall().lumoTertiaryInline().get();
+        clearButton = new ButtonFactory().icon(new IconFactory(VaadinIcon.CLOSE).color("var(--lumo-secondary-text-color)").size("13px").get())
+                .lumoIcon().visible(false).lumoSmall().lumoTertiaryInline().get();
 
-        openButton = new FluentButton(VaadinIcon.FILTER.create()).asFactory().border("0").enabled(true).padding("0").clickListener(e -> dialog.open()).get();
+        openButton = new FluentButton(new IconFactory(VaadinIcon.FILTER).color("var(--lumo-secondary-text-color)").size("13px").get())
+                .asFactory().border("0").enabled(true).padding("0").clickListener(e -> dialog.open()).get();
         addValueChangeListener(e -> clearButton.setVisible(e.getValue() != null && !placeholder.equals(e.getValue())));
         dialog.addOpenedChangeListener(e -> openButton.setEnabled(!e.isOpened()));
         setSuffixComponent(new DivFactory(clearButton, openButton).displayFlex().get());

@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-06 09:39:17
+ * Modify date：2021-04-29 09:15:13
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.factory.DatePickerFactory
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 package org.bklab.flow.factory;
@@ -171,5 +171,9 @@ public class DatePickerFactory extends FlowFactory<DatePicker, DatePickerFactory
     public DatePickerFactory opened(boolean opened) {
         get().setOpened(opened);
         return this;
+    }
+
+    public DatePickerFactory widthMinimal() {
+        return width("10em");
     }
 }

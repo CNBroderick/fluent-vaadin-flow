@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-21 11:26:34
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.components.selector.button.entity.EntityButtonSelector
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.components.selector.button.entity;
 
 import com.vaadin.flow.component.ClickEvent;
@@ -136,6 +147,7 @@ public class EntityButtonSelector<T> extends Span implements
         get(entity).ifPresent(selectButton -> {
             this.listDataView.getButtonMap().values().forEach(SelectButton::inactive);
             selectButton.active();
+            selectButton.click();
         });
         return this;
     }
