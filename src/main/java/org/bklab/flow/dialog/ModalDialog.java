@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-19 13:37:49
+ * Modify date：2021-04-25 14:31:10
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.dialog.ModalDialog
@@ -133,6 +133,18 @@ public class ModalDialog extends Dialog {
 
     public ModalDialog width(String width) {
         setWidth(width);
+        return this;
+    }
+
+    public ModalDialog width(String minWidth, String maxWidth) {
+        setMinWidth(minWidth);
+        setMaxWidth(maxWidth);
+        return this;
+    }
+
+    public ModalDialog height(String minHeight, String maxHeight) {
+        setMinHeight(minHeight);
+        setMaxHeight(maxHeight);
         return this;
     }
 

@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-25 15:20:54
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.factory.CheckboxGroupFactory
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.ItemLabelGenerator;
@@ -31,6 +42,7 @@ public class CheckboxGroupFactory<T> extends FlowFactory<CheckboxGroup<T>, Check
 
     public CheckboxGroupFactory(CheckboxGroup<T> checkbox) {
         super(checkbox);
+        checkbox.getStyle().set("align-items", "flex-end");
     }
 
     public CheckboxGroupFactory<T> readOnly(boolean readOnly) {

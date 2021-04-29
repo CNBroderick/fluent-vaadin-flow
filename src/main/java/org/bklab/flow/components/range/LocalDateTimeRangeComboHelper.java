@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-29 09:15:16
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.components.range.LocalDateTimeRangeComboHelper
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.components.range;
 
 import com.vaadin.flow.component.Unit;
@@ -6,7 +17,7 @@ import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import dev.mett.vaadin.tooltip.Tooltips;
-import org.bklab.flow.factory.ButtonFactory;
+import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.factory.DateTimePickerFactory;
 import org.bklab.flow.factory.DivFactory;
 import org.bklab.flow.util.lumo.LumoStyles;
@@ -33,26 +44,31 @@ public class LocalDateTimeRangeComboHelper extends HorizontalLayout {
     public LocalDateTimeRangeComboHelper(DateTimePicker startField, DateTimePicker endField) {
         this.start = startField;
         this.end = endField;
-        start.setWidth(100, Unit.PERCENTAGE);
-        end.setWidth(100, Unit.PERCENTAGE);
-        setWidth(100, Unit.PERCENTAGE);
 
         Div div = new DivFactory(
-                new ButtonFactory("本日", e -> setToCurrentDay()).lumoSmall().className(LumoStyles.Padding.Right.S).get(),
-                new ButtonFactory("本周", e -> setToCurrentWeek()).lumoSmall().className(LumoStyles.Padding.Right.S).get(),
-                new ButtonFactory("本月", e -> setToCurrentMonth()).lumoSmall().className(LumoStyles.Padding.Right.S).get()
-        ).displayFlex().className(LumoStyles.Padding.Left.M).get();
+                new FluentButton("本日", e -> setToCurrentDay()),
+                new FluentButton("本周", e -> setToCurrentWeek()),
+                new FluentButton("本月", e -> setToCurrentMonth())
+        ).displayFlex().alignSelfCenter().className("container-right-items-no-border-right", LumoStyles.Padding.Left.S).get();
 
         add(start, end, div);
-        setWidth(100, Unit.PERCENTAGE);
         setMargin(false);
     }
 
-    private static DateTimePicker createMinimalDateTimePicker( String placeholder) {
+    private static DateTimePicker createMinimalDateTimePicker(String placeholder) {
         return new DateTimePickerFactory().lumoSmall()
+                .clearButtonVisible(true)
                 .datePlaceholder(placeholder + "日期")
                 .timePlaceholder(placeholder + "时间")
                 .widthMinimal().get();
+    }
+
+    public LocalDateTimeRangeComboHelper limit(LocalDateTime start, LocalDateTime end) {
+        this.start.setMin(start);
+        this.end.setMin(start);
+        this.start.setMin(end);
+        this.end.setMin(end);
+        return this;
     }
 
     private Button minimalWidth(Button b) {

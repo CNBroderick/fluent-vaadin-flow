@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-19 09:11:05
+ * Modify date：2021-04-27 13:58:07
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.factory.FormLayoutFactory
@@ -159,5 +159,9 @@ public class FormLayoutFactory extends FlowFactory<FormLayout, FormLayoutFactory
 
     public FormLayoutFactory initFormLayout() {
         return formItemAlignEnd().formItemAlignVerticalCenter().warpWhenOverflow().componentFullWidth();
+    }
+
+    public FormLayoutFactory fitModalDialogWidth() {
+        return width("fit-content").style("margin-right", "3em");
     }
 }

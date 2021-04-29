@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-25 14:23:24
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.dialog.search.AbstractSearchDialog
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.dialog.search;
 
 import com.vaadin.flow.component.Component;
@@ -48,12 +59,7 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
         addCancelButton();
         footerRight(searchButton);
 
-        advanceSearchField.getClearButton().addClickListener(e -> {
-            clearParameterConsumer.forEach(ClearParameterListener::clear);
-            callSaveListeners(getConditions());
-            refreshSearchFieldValue();
-            Tooltips.getCurrent().removeTooltip(e.getSource());
-        });
+        advanceSearchField.getClearButton().addClickListener(e -> reset());
     }
 
     public AbstractSearchDialog() {
@@ -70,8 +76,9 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
     }
 
     protected E init() {
+        FormLayoutFactory factory = new FormLayoutFactory(formLayout).width("fit-content").style("margin-right", "3em");
         build();
-        new FormLayoutFactory(formLayout).warpWhenOverflow().formItemAlignEnd().componentFullWidth().widthFull().get();
+        factory.warpWhenOverflow().formItemAlignEnd().componentFullWidth().formItemAlignVerticalCenter().get();
         refreshSearchFieldValue();
         return thisObject();
     }
@@ -322,6 +329,16 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
 
     public <V> HasValue<?, V> getHasValue(String name) {
         return ((HasValue<?, V>) componentMap.get(name));
+    }
+
+    public E reset() {
+        advanceSearchField.clear();
+        clearParameterConsumer.forEach(ClearParameterListener::clear);
+        callSaveListeners(getConditions());
+        refreshSearchFieldValue();
+        advanceSearchField.getClearButton().setVisible(false);
+        Tooltips.getCurrent().removeTooltip(advanceSearchField);
+        return thisObject();
     }
 
     public interface ClearParameterListener {

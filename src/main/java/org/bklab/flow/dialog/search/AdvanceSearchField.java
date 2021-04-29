@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-22 17:09:07
+ * Modify date：2021-04-25 11:25:31
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.dialog.search.AdvanceSearchField
@@ -34,11 +34,7 @@ public class AdvanceSearchField<E extends Dialog> extends TextField {
         this.dialog = dialog;
         asFactory().lumoSmall().minWidth("200px").width("25vw").maxWidth("50vw").readOnly().value(placeholder);
 
-        clearButton = new ButtonFactory().clickListener(e -> {
-            clear();
-            e.getSource().setVisible(false);
-        })
-                .icon(new IconFactory(VaadinIcon.CLOSE).color("var(--lumo-secondary-text-color)").size("13px").get())
+        clearButton = new ButtonFactory().icon(new IconFactory(VaadinIcon.CLOSE).color("var(--lumo-secondary-text-color)").size("13px").get())
                 .lumoIcon().visible(false).lumoSmall().lumoTertiaryInline().get();
 
         openButton = new FluentButton(new IconFactory(VaadinIcon.FILTER).color("var(--lumo-secondary-text-color)").size("13px").get())
