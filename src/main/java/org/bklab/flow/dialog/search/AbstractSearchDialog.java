@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-25 14:23:24
+ * Modify date：2021-04-30 09:32:37
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.dialog.search.AbstractSearchDialog
@@ -197,14 +197,18 @@ public abstract class AbstractSearchDialog<E extends AbstractSearchDialog<E>> ex
 
             if (minValue == null && maxValue == null) return null;
 
+            String minStatusLabel = toStatusLabel.apply(minValue);
+            String maxStatusLabel = toStatusLabel.apply(maxValue);
             if (minValue != null && maxValue != null) {
-                return name + ": " + toStatusLabel.apply(minValue) + "-" + toStatusLabel.apply(maxValue);
+                if (minStatusLabel.indexOf('-') > 0 || maxStatusLabel.indexOf('-') > 0) {
+                    return name + ": [" + minStatusLabel + ", " + maxStatusLabel + ']';
+                }
+                return name + ": " + minStatusLabel + "-" + toStatusLabel.apply(maxValue);
             }
             if (minValue != null) {
-                return name + ": ≥" + toStatusLabel.apply(minValue);
+                return name + ": ≥" + minStatusLabel;
             }
-
-            return name + ": ≤" + toStatusLabel.apply(maxValue);
+            return name + ": ≤" + maxStatusLabel;
         });
 
     }

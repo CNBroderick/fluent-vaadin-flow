@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-06-24 15:16:28
+ * Modify date：2021-04-29 09:42:32
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.components.navigation.bar.AppBar
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 package org.bklab.flow.components.navigation.bar;
@@ -435,12 +435,18 @@ public class AppBar extends Header {
 
 	public void setContextIconAsBack() {
 		contextIcon.setVisible(true);
-		registrations.add(contextIcon.addClickListener(e -> UI.getCurrent().getPage().getHistory().back()));
+		registrations.add(contextIcon.addClickListener(e -> {
+			reset();
+			UI.getCurrent().getPage().getHistory().back();
+		}));
 	}
 
 	public void setContextIconAsBack(Class<? extends Component> navigationTarget) {
 		contextIcon.setVisible(true);
-		registrations.add(contextIcon.addClickListener(e -> UI.getCurrent().navigate(navigationTarget)));
+		registrations.add(contextIcon.addClickListener(e -> {
+			reset();
+			UI.getCurrent().navigate(navigationTarget);
+		}));
 	}
 
 	public void setContextIconAsBackward(Component component, Class<? extends Component> navigationTarget) {

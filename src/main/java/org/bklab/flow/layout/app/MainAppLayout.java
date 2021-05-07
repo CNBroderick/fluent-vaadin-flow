@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-04-29 10:12:39
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.layout.app.MainAppLayout
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.layout.app;
 
 import com.vaadin.flow.component.AttachEvent;
@@ -194,6 +205,8 @@ public abstract class MainAppLayout extends FlexBoxLayout implements RouterLayou
         // - When tabbed navigation is turned off they appear in the AppBar.
 
         appBar = new AppBar("");
+
+        naviDrawer.getMenu().getNaviItems().forEach(a -> a.addClickListener(event -> appBar.reset()));
 
         // Tabbed navigation
         if (navigationTabs) {
