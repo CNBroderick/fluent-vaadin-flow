@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-06-25 20:27:59
+ * Modify date：2021-05-16 14:44:23
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.login.BklabLoginForm
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Class name：org.bklab.flow.login.BklabLoginView
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
-package org.bklab.login;
+package org.bklab.flow.login;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -17,26 +17,28 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.polymertemplate.Id;
-import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.component.littemplate.LitTemplate;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.template.Id;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.ValidationResult;
-import com.vaadin.flow.dom.Element;
-import com.vaadin.flow.templatemodel.TemplateModel;
 
 import java.util.function.Consumer;
 
 /**
- * A Designer generated component for the bklab-login-form template.
+ * A Designer generated component for the bklab-login-view template.
  * <p>
  * Designer will add and remove fields with @Id mappings but
  * does not overwrite or otherwise change this file.
  */
-@Tag("bklab-login-form")
-@JsModule("./src/org/bklab/login/bklab-login-form.js")
-public class BklabLoginForm extends PolymerTemplate<BklabLoginForm.BklabLoginFormModel> {
+@Tag("bklab-login-view")
+@JsModule("./src/org/bklab/flow/login/bklab-login-view.ts")
+public class BklabLoginView extends LitTemplate {
 
+    @Id("content")
+    private VerticalLayout vaadinVerticalLayout;
     @Id("logo")
     private Image logo;
     @Id("account")
@@ -50,26 +52,26 @@ public class BklabLoginForm extends PolymerTemplate<BklabLoginForm.BklabLoginFor
     @Id("signup")
     private Button signup;
     @Id("copyright")
-    private Element copyright;
+    private HorizontalLayout copyright;
 
     /**
-     * Creates a new BklabLoginForm.
+     * Creates a new BklabLoginView.
      */
-    public BklabLoginForm() {
+    public BklabLoginView() {
         // You can initialise any data required for the connected UI components here.
     }
 
-    public BklabLoginForm loginListener(DoLoginListener doLoginListener) {
+    public BklabLoginView loginListener(DoLoginListener doLoginListener) {
         login.addClickListener(event -> doLoginListener.doLogin(account.getValue(), password.getValue()));
         return this;
     }
 
-    public BklabLoginForm forgotPassword(Consumer<String> forgotPassword) {
+    public BklabLoginView forgotPassword(Consumer<String> forgotPassword) {
         forgot.addClickListener(event -> forgotPassword.accept(account.getValue()));
         return this;
     }
 
-    public BklabLoginForm signup(ComponentEventListener<ClickEvent<Button>> listener) {
+    public BklabLoginView signup(ComponentEventListener<ClickEvent<Button>> listener) {
         signup.addClickListener(listener);
         return this;
     }
@@ -78,65 +80,28 @@ public class BklabLoginForm extends PolymerTemplate<BklabLoginForm.BklabLoginFor
         return logo;
     }
 
-    public BklabLoginForm setLogo(Image logo) {
-        this.logo = logo;
-        return this;
-    }
-
     public TextField getAccount() {
         return account;
-    }
-
-    public BklabLoginForm setAccount(TextField account) {
-        this.account = account;
-        return this;
     }
 
     public PasswordField getPassword() {
         return password;
     }
 
-    public BklabLoginForm setPassword(PasswordField password) {
-        this.password = password;
-        return this;
-    }
-
     public Button getLogin() {
         return login;
-    }
-
-    public BklabLoginForm setLogin(Button login) {
-        this.login = login;
-        return this;
     }
 
     public Button getForgot() {
         return forgot;
     }
 
-    public BklabLoginForm setForgot(Button forgot) {
-        this.forgot = forgot;
-        return this;
-    }
-
     public Button getSignup() {
         return signup;
     }
 
-    public BklabLoginForm setSignup(Button signup) {
-        this.signup = signup;
-        return this;
-    }
-
-    public Element getCopyright() {
+    public HorizontalLayout getCopyright() {
         return copyright;
-    }
-
-    /**
-     * This model binds properties between BklabLoginForm and bklab-login-form
-     */
-    public interface BklabLoginFormModel extends TemplateModel {
-        // Add setters and getters for template properties here.
     }
 
     public interface DoLoginListener {

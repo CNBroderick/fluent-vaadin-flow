@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-20 11:07:22
+ * Modify date：2021-05-16 14:44:23
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.base.HasStyleFactory
@@ -14,8 +14,10 @@ package org.bklab.flow.base;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasStyle;
 import dev.mett.vaadin.tooltip.Tooltips;
+import dev.mett.vaadin.tooltip.config.TC_FOLLOW_CURSOR;
 import dev.mett.vaadin.tooltip.config.TooltipConfiguration;
 import org.bklab.flow.IFlowFactory;
+import org.bklab.flow.factory.TooltipConfigurationFactory;
 
 @SuppressWarnings("unchecked")
 public interface HasStyleFactory<C extends Component & HasStyle, E extends HasStyleFactory<C, E>> extends IFlowFactory<C> {
@@ -301,12 +303,19 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
     }
 
     default E tooltip(String text) {
-        if (text != null && !text.isBlank()) Tooltips.getCurrent().setTooltip(get(), text);
-        return (E) this;
+        return tooltip(text, new TooltipConfigurationFactory().theme("light-border").followCursor(TC_FOLLOW_CURSOR.HORIZONTAL).get());
+    }
+
+    default E tooltipHtml(String text) {
+        return tooltip(text, new TooltipConfigurationFactory().theme("light-border").allowHTML(true).followCursor(TC_FOLLOW_CURSOR.HORIZONTAL).get());
     }
 
     default E tooltip(String text, TooltipConfiguration tooltipConfiguration) {
+        if (tooltipConfiguration.getTheme() == null || tooltipConfiguration.getTheme().isBlank()) {
+            tooltipConfiguration.setTheme("light-border");
+        }
         if (text != null && !text.isBlank()) Tooltips.getCurrent().setTooltip(get(), tooltipConfiguration);
+        else Tooltips.getCurrent().removeTooltip(get());
         return (E) this;
     }
 
