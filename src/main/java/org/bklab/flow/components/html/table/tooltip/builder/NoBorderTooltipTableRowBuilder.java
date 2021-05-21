@@ -2,16 +2,17 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-05-16 14:44:20
+ * Modify date：2021-05-17 14:50:48
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.components.html.table.NoBorderTooltipTableRowBuilder
+ * Class name：org.bklab.flow.components.html.table.tooltip.builder.NoBorderTooltipTableRowBuilder
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
-package org.bklab.flow.components.html.table;
+package org.bklab.flow.components.html.table.tooltip.builder;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.dom.Element;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ public class NoBorderTooltipTableRowBuilder implements Collector<Element, NoBord
     }
 
     public NoBorderTooltipTableRowBuilder add(String td) {
-        return add(Element.createText(td));
+        return add(new Span(td));
     }
 
     public NoBorderTooltipTableRowBuilder add(Component td) {
@@ -43,6 +44,9 @@ public class NoBorderTooltipTableRowBuilder implements Collector<Element, NoBord
     public NoBorderTooltipTableRowBuilder add(Element element) {
         Element td = new Element("td");
         td.getClassList().add(baseClassName + "-c" + this.element.getChildCount());
+        if (element.isTextNode()) {
+            element = new Span(element.getText()).getElement();
+        }
         td.appendChild(element);
         this.element.appendChild(td);
         return this;

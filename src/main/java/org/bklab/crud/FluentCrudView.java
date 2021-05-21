@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-23 15:50:47
+ * Modify date：2021-05-19 17:22:55
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.crud.FluentCrudView
@@ -437,6 +437,12 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     public void switchEntityPage(Predicate<T> predicate) {
         IntStream.range(0, inMemoryFilteredEntities.size()).filter(i -> predicate.test(inMemoryFilteredEntities.get(i)))
                 .findFirst().ifPresent(i -> pagination.setCurrentPage(i / pagination.getPageSize() + 1).refresh());
+    }
+
+    public FluentCrudView<T, G> setEntitiesDirectly(Collection<T> items) {
+        entities.clear();
+        entities.addAll(items);
+        return this;
     }
 
     @Override

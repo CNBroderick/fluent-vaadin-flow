@@ -2,14 +2,14 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-05-16 14:39:11
+ * Modify date：2021-05-17 15:07:23
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.components.html.table.NoBorderTooltipTable
+ * Class name：org.bklab.flow.components.html.table.tooltip.NoBorderTooltipTable
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
-package org.bklab.flow.components.html.table;
+package org.bklab.flow.components.html.table.tooltip;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Html;
@@ -18,8 +18,10 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.dom.Style;
 import org.bklab.flow.base.HasFlowFactory;
+import org.bklab.flow.components.html.table.tooltip.builder.NoBorderTooltipTableRowBuilder;
 import org.bklab.flow.factory.DivFactory;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -53,11 +55,6 @@ public class NoBorderTooltipTable extends Element implements HasFlowFactory<Div,
         tableBody = new Element("tbody");
         content.appendChild(tableBody);
         appendChild(style, content);
-    }
-
-    public static void main(String[] args) {
-        Element element = new NoBorderTooltipTable(2).addRow("a", "a").addRow("a", "a").addRow("a", "a");
-        System.out.println(element);
     }
 
     private Style createStyle() {
@@ -117,6 +114,10 @@ public class NoBorderTooltipTable extends Element implements HasFlowFactory<Div,
         return addRow(createRowBuilder("th").addAll(tds));
     }
 
+    public NoBorderTooltipTable addHead(String name, Element value) {
+        return addRow(createRowBuilder("th").add(name).add(value));
+    }
+
     public NoBorderTooltipTable addHead(Component... tds) {
         return addRow(createRowBuilder("th").addAll(tds));
     }
@@ -129,11 +130,27 @@ public class NoBorderTooltipTable extends Element implements HasFlowFactory<Div,
         return addRow(createRowBuilder("tr").addAll(tds));
     }
 
+    public NoBorderTooltipTable addStringRow(Collection<String> tds) {
+        return addRow(createRowBuilder("tr").addAll(tds.toArray(new String[]{})));
+    }
+
+    public NoBorderTooltipTable addRow(String name, Element value) {
+        return addRow(createRowBuilder("tr").add(name).add(value));
+    }
+
     public NoBorderTooltipTable addRow(Component... tds) {
         return addRow(createRowBuilder("tr").addAll(tds));
     }
 
+    public NoBorderTooltipTable addComponentRow(Collection<Component> tds) {
+        return addRow(createRowBuilder("tr").addAll(tds.toArray(new Component[]{})));
+    }
+
     public NoBorderTooltipTable addRow(Element... tds) {
+        return addRow(createRowBuilder("tr").addAll(tds));
+    }
+
+    public NoBorderTooltipTable addElementRow(Collection<Element> tds) {
         return addRow(createRowBuilder("tr").addAll(tds));
     }
 
@@ -141,14 +158,33 @@ public class NoBorderTooltipTable extends Element implements HasFlowFactory<Div,
         return new NoBorderTooltipTableRowBuilder(tagName, baseClassName);
     }
 
+    public NoBorderTooltipTable addRow(Consumer<NoBorderTooltipTableRowBuilder> consumer) {
+        NoBorderTooltipTableRowBuilder builder = createRowBuilder("tr");
+        consumer.accept(builder);
+        return addRow(builder);
+    }
+
     public NoBorderTooltipTable addRow(NoBorderTooltipTableRowBuilder rowBuilder) {
         tableBody.appendChild(rowBuilder.getElement());
         return this;
     }
 
-    @Override
-    public DivFactory asFactory() {
-        return new DivFactory(this.as(Div.class));
+    public NoBorderTooltipTable style(Consumer<Style> styleConsumer) {
+        styleConsumer.accept(getStyle());
+        return this;
     }
 
+    public NoBorderTooltipTable style(String name, String value) {
+        getStyle().set(name, value);
+        return this;
+    }
+
+    @Override
+    public DivFactory asFactory() {
+        return new DivFactory(asComponent());
+    }
+
+    public Div asComponent() {
+        return this.as(Div.class);
+    }
 }

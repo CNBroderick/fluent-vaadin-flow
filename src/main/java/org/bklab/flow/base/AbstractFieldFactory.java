@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-02 09:33:44
+ * Modify date：2021-05-21 13:12:38
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.base.AbstractFieldFactory
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 package org.bklab.flow.base;
@@ -19,7 +19,8 @@ import org.bklab.flow.IFlowFactory;
 public interface AbstractFieldFactory<T, C extends AbstractField<C, T>, E extends AbstractFieldFactory<T, C, E>>
         extends IFlowFactory<C>, HasValueAndElementFactory<T, AbstractField.ComponentValueChangeEvent<C, T>, C, E> {
     default E value(T value) {
-        get().setValue(value);
+        if (value == null) get().clear();
+        else get().setValue(value);
         return (E) this;
     }
 

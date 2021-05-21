@@ -1,8 +1,21 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-05-17 14:40:57
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.flow.components.pagination.PagingList
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.components.pagination;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class PagingList<T> implements Function<Integer, List<T>> {
 
@@ -79,6 +92,15 @@ public class PagingList<T> implements Function<Integer, List<T>> {
     public PagingList<T> update(Collection<T> instance, Integer singlePageSize) {
         this.instance = instance == null ? this.instance : new ArrayList<>(instance);
         this.singlePageSize = singlePageSize == 0 ? this.singlePageSize : singlePageSize;
+        return this;
+    }
+
+    public List<List<T>> split() {
+        return IntStream.range(1, length() + 1).mapToObj(this::apply).collect(Collectors.toList());
+    }
+
+    public PagingList<T> forEach(Consumer<List<T>> consumer) {
+        split().forEach(consumer);
         return this;
     }
 

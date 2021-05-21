@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-05-16 14:44:23
+ * Modify date：2021-05-17 13:23:46
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.base.HasStyleFactory
@@ -13,11 +13,13 @@ package org.bklab.flow.base;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasStyle;
+import com.vaadin.flow.dom.Element;
 import dev.mett.vaadin.tooltip.Tooltips;
 import dev.mett.vaadin.tooltip.config.TC_FOLLOW_CURSOR;
 import dev.mett.vaadin.tooltip.config.TooltipConfiguration;
 import org.bklab.flow.IFlowFactory;
 import org.bklab.flow.factory.TooltipConfigurationFactory;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("unchecked")
 public interface HasStyleFactory<C extends Component & HasStyle, E extends HasStyleFactory<C, E>> extends IFlowFactory<C> {
@@ -303,23 +305,44 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
     }
 
     default E tooltip(String text) {
-        return tooltip(text, new TooltipConfigurationFactory().theme("light-border").followCursor(TC_FOLLOW_CURSOR.HORIZONTAL).get());
+        return tooltip(new TooltipConfigurationFactory().theme("light-border")
+                .followCursor(TC_FOLLOW_CURSOR.HORIZONTAL)
+                .maxWidthNone().content(text).get());
     }
 
-    default E tooltipHtml(String text) {
-        return tooltip(text, new TooltipConfigurationFactory().theme("light-border").allowHTML(true).followCursor(TC_FOLLOW_CURSOR.HORIZONTAL).get());
-    }
-
-    default E tooltip(String text, TooltipConfiguration tooltipConfiguration) {
-        if (tooltipConfiguration.getTheme() == null || tooltipConfiguration.getTheme().isBlank()) {
-            tooltipConfiguration.setTheme("light-border");
+    default E tooltip(Element element) {
+        try {
+            return tooltip(new TooltipConfigurationFactory().content(element.getOuterHTML())
+                    .followCursor(TC_FOLLOW_CURSOR.HORIZONTAL)
+                    .theme("light-border").allowHTML(true).maxWidthNone().get());
+        } catch (Exception e) {
+            LoggerFactory.getLogger(getClass()).error("设置tooltip失败。", e);
         }
-        if (text != null && !text.isBlank()) Tooltips.getCurrent().setTooltip(get(), tooltipConfiguration);
-        else Tooltips.getCurrent().removeTooltip(get());
         return (E) this;
     }
 
+    default E tooltipHtml(String text) {
+        return tooltip(new TooltipConfigurationFactory().content(text)
+                .followCursor(TC_FOLLOW_CURSOR.HORIZONTAL).maxWidthNone().allowHTML(true).get());
+    }
+
     default E tooltip(TooltipConfiguration tooltipConfiguration) {
-        return tooltip(tooltipConfiguration.getContent(), tooltipConfiguration);
+        if (tooltipConfiguration.getContent() == null || tooltipConfiguration.getContent().isBlank()) {
+            Tooltips.getCurrent().removeTooltip(get());
+            return (E) this;
+        }
+
+        if (tooltipConfiguration.getTheme() == null || tooltipConfiguration.getTheme().isBlank()) {
+            tooltipConfiguration.setTheme("light");
+        }
+
+        Tooltips.getCurrent().setTooltip(get(), tooltipConfiguration);
+        return (E) this;
+    }
+
+    @Deprecated
+    default E tooltip(String text, TooltipConfiguration tooltipConfiguration) {
+        tooltipConfiguration.setContent(text);
+        return tooltip(tooltipConfiguration);
     }
 }
