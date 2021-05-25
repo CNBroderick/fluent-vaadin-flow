@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-29 10:12:39
+ * Modify date：2021-05-24 13:54:55
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.layout.app.MainAppLayout
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -34,6 +34,8 @@ import org.bklab.flow.components.navigation.drawer.NaviMenu;
 import org.bklab.flow.layout.FlexBoxLayout;
 import org.bklab.flow.util.css.Display;
 import org.bklab.flow.util.css.Overflow;
+import org.bklab.flow.util.css.Shadow;
+import org.bklab.flow.util.lumo.LumoStyles;
 import org.bklab.flow.util.lumo.UIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,6 +179,8 @@ public abstract class MainAppLayout extends FlexBoxLayout implements RouterLayou
         UIUtils.setDisplay(Display.FLEX, viewContainer);
         UIUtils.setFlexGrow(1, viewContainer);
         UIUtils.setOverflow(Overflow.HIDDEN, viewContainer);
+        UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, viewContainer);
+        UIUtils.setShadow(Shadow.S, viewContainer);
 
         column = new FlexBoxLayout(viewContainer);
         column.addClassName(CLASS_NAME + "__column");
