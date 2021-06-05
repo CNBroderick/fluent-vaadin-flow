@@ -1,6 +1,6 @@
-# Fluent Vaadin Flow
+Fluent Vaadin Flow
 
-**Inherits common Vaadin components --Broderick Labs** 
+**Inherits common Vaadin components --Broderick Labs**
 
 **If have any question can contact me via : **
 

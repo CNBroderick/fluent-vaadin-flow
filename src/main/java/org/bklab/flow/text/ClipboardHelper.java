@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-19 16:57:06
+ * Modify date：2021-06-01 11:31:48
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.text.ClipboardHelper
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -50,12 +50,12 @@ public class ClipboardHelper {
 
     private static String getJsExpression() {
         //language=JavaScript
-        return "try{console.log('start copy '+$0+' which title is '+$1);const el=document.createElement('textarea');el.value=$0;" +
+        return "try{const el=document.createElement('textarea');el.value=$0;" +
                "el.setAttribute('readonly','');el.style.position='absolute';el.style.left='-9999px';document.body.appendChild(el);" +
                "const selected=document.getSelection().rangeCount>0?document.getSelection().getRangeAt(0):false;el.select();" +
                "document.execCommand('copy');document.body.removeChild(el);if(selected){document.getSelection().removeAllRanges();" +
-               "document.getSelection().addRange(selected);}return{'success':true,'message':'复制'+$1+'['+$0+']成功'}}" +
-               "catch(e){console.log('复制失败：');console.log(e);return{'success':false,'message':'复制'+$1+'['+$0+']失败，原因：\\n'+e}}";
+               "document.getSelection().addRange(selected);}return{'success':true,'message':'复制'+$1+'['+($0.length > 16 ? $0.substring(0,16) + '...' : $0)+']成功'}}" +
+               "catch(e){console.log('复制失败：');console.log(e);return{'success':false,'message':'复制'+$1+'['+($0.length > 16 ? $0.substring(0,16) + '...' : $0)+']失败，原因：\\n'+e}}";
     }
 
     public <C extends Component & ClickNotifier<C>> ClipboardHelper extend(Map<C, String> map) {

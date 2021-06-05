@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-05-17 13:23:46
+ * Modify date：2021-06-05 14:27:48
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.base.HasStyleFactory
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -305,6 +305,10 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
     }
 
     default E tooltip(String text) {
+        if (text == null) {
+            Tooltips.getCurrent().removeTooltip(get());
+            return (E) this;
+        }
         return tooltip(new TooltipConfigurationFactory().theme("light-border")
                 .followCursor(TC_FOLLOW_CURSOR.HORIZONTAL)
                 .maxWidthNone().content(text).get());
@@ -322,6 +326,10 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
     }
 
     default E tooltipHtml(String text) {
+        if (text == null) {
+            Tooltips.getCurrent().removeTooltip(get());
+            return (E) this;
+        }
         return tooltip(new TooltipConfigurationFactory().content(text)
                 .followCursor(TC_FOLLOW_CURSOR.HORIZONTAL).maxWidthNone().allowHTML(true).get());
     }

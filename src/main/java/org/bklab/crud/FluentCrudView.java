@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-05-25 13:06:58
+ * Modify date：2021-05-26 09:36:26
  * _____________________________
  * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.crud.FluentCrudView
@@ -81,8 +81,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     private final List<Consumer<Exception>> exceptionConsumers = new ArrayList<>();
     private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
     protected final EmptyLayout emptyLayout = new EmptyLayout("暂无数据");
-    protected FluentButton searchButton = (FluentButton) new FluentButton(VaadinIcon.SEARCH, "查询")
-            .primary().asFactory().clickListener(e -> reloadGridData()).get();
+    protected FluentButton searchButton = new FluentButton(VaadinIcon.SEARCH, "查询", e -> reloadGridDataAndRecalculateColumnWidths()).primary();
     protected boolean hasGridMenu = true;
     protected boolean hasPagination = true;
     protected Function<T, Collection<T>> childProvider = null;
@@ -377,7 +376,6 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
                 logger.warn("afterReloadListeners throws an error.", e);
             }
         });
-        grid.recalculateColumnWidths();
     }
 
     public void reloadGridData() {
@@ -386,6 +384,11 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         parameterMap.forEach((k, v) -> Optional.ofNullable(v).map(Supplier::get).ifPresent(v1 -> map.put(k, v1)));
         Optional.ofNullable(queryEntities(map)).ifPresent(this.entities::addAll);
         this.reloadGridDataInMemory();
+    }
+
+    public void reloadGridDataAndRecalculateColumnWidths() {
+        reloadGridData();
+        getGrid().recalculateColumnWidths();
     }
 
     public void switchEntityPage(Predicate<T> predicate) {
