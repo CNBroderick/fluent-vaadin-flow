@@ -2,7 +2,7 @@
   ~ Copyright (c) 2008 - 2021. - Broderick Labs.
   ~ Author: Broderick Johansson
   ~ E-mail: z@bkLab.org
-  ~ Modify date：2021-06-04 11:00:53
+  ~ Modify date：2021-06-17 09:29:09
   ~ _____________________________
   ~ Project name: fluent-vaadin-flow
   ~ Class name：D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-20/pom.xml
@@ -14,13 +14,13 @@
 
     <groupId>org.bklab</groupId>
     <artifactId>fluent-vaadin-flow</artifactId>
-    <version>20.0.1</version>
+    <version>20.0.3</version>
     <name>fluent-vaadin-flow</name>
     <description>Broderick Labs for fluent Vaadin flow. Inherits common Vaadin components.</description>
     <packaging>jar</packaging>
 
     <properties>
-        <vaadin.version>20.0.1</vaadin.version>
+        <vaadin.version>20.0.3</vaadin.version>
 
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>

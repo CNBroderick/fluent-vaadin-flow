@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-29 09:42:32
+ * Modify date：2021-06-29 10:01:53
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.components.navigation.bar.AppBar
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -74,20 +74,17 @@ public class AppBar extends Header {
 
 	public AppBar(String title, NaviTab... tabs) {
 		setClassName(CLASS_NAME);
-
-		initMenuIcon();
-		initContextIcon();
-		initTitle(title);
-		initSearch();
-		initAvatar();
-		initActionItems();
-		initContainer();
+		init(title);
 		initTabs(tabs);
 	}
 
 	public AppBar(String title, Class<? extends Component> defaultNavigate, NaviTab... tabs) {
 		setClassName(CLASS_NAME);
+		init(title);
+		initTabs(defaultNavigate, tabs);
+	}
 
+	private void init(String title) {
 		initMenuIcon();
 		initContextIcon();
 		initTitle(title);
@@ -95,7 +92,7 @@ public class AppBar extends Header {
 		initAvatar();
 		initActionItems();
 		initContainer();
-		initTabs(defaultNavigate, tabs);
+		setMinHeight("3em");
 	}
 
 	public AppBar lightTheme() {
@@ -222,6 +219,10 @@ public class AppBar extends Header {
 
 	public Optional<String> getTitle() {
 		return Optional.ofNullable(this.title.getText());
+	}
+
+	public H1 getTitleComponent() {
+		return title;
 	}
 
 	/* === TITLE === */
@@ -407,7 +408,7 @@ public class AppBar extends Header {
 		logout = new ButtonFactory()
 				.className(CLASS_NAME + "__logout")
 				.icon(VaadinIcon.SIGN_OUT).visible(false)
-				.lumoLarge().lumoTertiary().attributeTitle("退出登录").get();
+				.lumoLarge().lumoTertiary().tooltip("退出登录").get();
 		logout.getStyle().set("color", "var(--lumo-contrast-60pct)");
 
 		this.userIconMenu = new ContextMenu(avatar);
