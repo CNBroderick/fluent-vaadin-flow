@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-07-30 14:08:16
+ * Modify date：2021-07-30 14:43:20
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.form.render.FormTextFieldRender
@@ -11,7 +11,6 @@
 
 package org.bklab.flow.form.render;
 
-import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
@@ -45,16 +44,19 @@ public class FormTextFieldRender implements IFormComponentRender<String, TextFie
             textField.maxLength(field.getMaxLength());
         }
 
+        if (field.getMinLength() > 0) {
+            textField.minLength(field.getMinLength());
+        }
+
         Optional.ofNullable(field.getConfig()).ifPresent(config -> {
             textField.required(config.isRequired());
             List<FormConfigurationRegList> regList = config.getRegList();
             if (regList != null && !regList.isEmpty()) {
                 textField.valueChangeMode(ValueChangeMode.EAGER);
-                textField.valueChangeListener(valueChangeEvent -> checkValueRegex(field, config, valueChangeEvent));
+                textField.valueChangeListener(valueChangeEvent -> validate(field, config, valueChangeEvent.getSource()));
             }
             Optional.ofNullable(config.getRenderKey()).ifPresent(textField::id);
         });
-
 
         Optional.ofNullable(field.getSlot()).ifPresent(slot -> {
             prependComponent(textField.get(), new Span(slot.getPrepend()));
@@ -109,30 +111,9 @@ public class FormTextFieldRender implements IFormComponentRender<String, TextFie
         }
     }
 
-    private void checkValueRegex(FormConfigurationField field, FormConfigurationConfig config,
-                                 AbstractField.ComponentValueChangeEvent<TextField, String> valueChangeEvent) {
-
-        TextField source = valueChangeEvent.getSource();
-        String value = valueChangeEvent.getValue();
-        if (value == null || value.isBlank()) {
-            source.setErrorMessage(config.isRequired() ? "请填写“" + config.getLabel() + "”" : null);
-            return;
-        }
-
-        for (FormConfigurationRegList list : config.getRegList()) {
-            try {
-                String pattern = list.getPattern();
-                if (pattern != null && !pattern.isBlank()) {
-                    if (value.matches(pattern)) continue;
-                    source.setErrorMessage(list.getMessage());
-                    return;
-                }
-            } catch (Exception e) {
-                log.error("check value regex [%s] for form [%s] field [%s] throw an error."
-                        .formatted(list.getPattern(), field.getName(), config.getLabel()), e);
-            }
-        }
-        source.setErrorMessage(null);
+    @Override
+    public boolean validate(FormConfigurationField field, FormConfigurationConfig config, TextField source) {
+        return validateText(field, config, source);
     }
 
     @Override
