@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-14 15:05:00
+ * Modify date：2021-05-21 14:21:31
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.components.menu.FluentMenuItem
@@ -13,6 +13,7 @@ package org.bklab.flow.components.menu;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.contextmenu.MenuItem;
@@ -25,6 +26,7 @@ import com.vaadin.flow.function.SerializableConsumer;
 import org.bklab.flow.factory.IconFactory;
 import org.bklab.flow.factory.SpanFactory;
 import org.bklab.flow.text.ClipboardHelper;
+import org.bklab.flow.util.lumo.LumoStyles;
 
 @Tag("fluent-menu-item")
 @CssImport("./styles/org/bklab/component/menu/fluent-menu-item.css")
@@ -115,6 +117,23 @@ public class FluentMenuItem extends Span {
 
     public FluentMenuItem clipboard(String content, String title, SerializableConsumer<ClipboardHelper.OnClipboardResult> resultConsumer) {
         ClipboardHelper.getInstance().extend(this, content, title, resultConsumer);
+        return this;
+    }
+
+    public FluentMenuItem colorError() {
+        return color(LumoStyles.Color.Error._100);
+    }
+
+    public FluentMenuItem color(String color) {
+        getStyle().set("color", color);
+        getChildren().forEach(a -> {
+            if (a instanceof HasStyle) ((HasStyle) a).getStyle().set("color", color);
+        });
+        return this;
+    }
+
+    public FluentMenuItem classNames(String... classNames) {
+        addClassNames(classNames);
         return this;
     }
 

@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-29 10:12:39
+ * Modify date：2021-06-29 14:33:32
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.layout.app.MainAppLayout
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -34,6 +34,7 @@ import org.bklab.flow.components.navigation.drawer.NaviMenu;
 import org.bklab.flow.layout.FlexBoxLayout;
 import org.bklab.flow.util.css.Display;
 import org.bklab.flow.util.css.Overflow;
+import org.bklab.flow.util.lumo.LumoStyles;
 import org.bklab.flow.util.lumo.UIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -173,10 +174,11 @@ public abstract class MainAppLayout extends FlexBoxLayout implements RouterLayou
 
         viewContainer = new Main();
         viewContainer.addClassName(CLASS_NAME + "__view-container");
-        viewContainer.getStyle().set("margin", "0.3em");
+        viewContainer.getStyle().set("margin", "var(--lumo-space-xs)").set("padding", "var(--lumo-space-s)");
         UIUtils.setDisplay(Display.FLEX, viewContainer);
         UIUtils.setFlexGrow(1, viewContainer);
         UIUtils.setOverflow(Overflow.HIDDEN, viewContainer);
+        UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, viewContainer);
 
         column = new FlexBoxLayout(viewContainer);
         column.addClassName(CLASS_NAME + "__column");
@@ -208,10 +210,11 @@ public abstract class MainAppLayout extends FlexBoxLayout implements RouterLayou
 
         naviDrawer.getMenu().getNaviItems().forEach(a -> a.addClickListener(event -> appBar.reset()));
 
+
         // Tabbed navigation
         if (navigationTabs) {
             tabBar = new TabBar();
-            UIUtils.setTheme(Lumo.DARK, tabBar);
+            UIUtils.setTheme(Lumo.LIGHT, tabBar);
 
             // Shift-click to add a new tab
             for (NaviItem item : naviDrawer.getMenu().getNaviItems()) {
@@ -225,7 +228,7 @@ public abstract class MainAppLayout extends FlexBoxLayout implements RouterLayou
 
             // Default navigation
         } else {
-            UIUtils.setTheme(Lumo.DARK, appBar);
+            UIUtils.setTheme(Lumo.LIGHT, appBar);
             setAppHeaderInner(appBar);
         }
     }

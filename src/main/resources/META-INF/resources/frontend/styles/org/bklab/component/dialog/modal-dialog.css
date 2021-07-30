@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-07-30 09:10:37
+ * _____________________________
+ * Project name: fluent-vaadin-flow.main
+ * Class name：D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-20/src/main/resources/META-INF/resources/frontend/styles/org/bklab/component/dialog/modal-dialog.css
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 .modal-dialog-toolbar {
     margin-top: 1em;
     color: rgba(0, 0, 0, 0.65);
@@ -38,7 +49,7 @@
 }
 
 .modal-dialog-no-footer {
-    height: calc(100% - 5em);
+    height: calc(100% - 4.8em);
 }
 
 .modal-dialog-footer {

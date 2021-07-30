@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-06-03 17:10:52
+ * _____________________________
+ * Project name: fluent-vaadin-flow.main
+ * Class name：org.bklab.flow.layout.tab.FluentTabView
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.layout.tab;
 
 import com.vaadin.flow.component.Component;
@@ -6,6 +17,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import org.bklab.flow.factory.DivFactory;
+import org.bklab.flow.layout.ToolBar;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,6 +26,7 @@ import java.util.function.Supplier;
 
 @Tag("fluent-tab-view")
 public class FluentTabView extends Div {
+    private final ToolBar toolBar = new ToolBar();
     private final Tabs tabs = new Tabs();
     private final Map<String, FluentTab> fluentTabMap = new LinkedHashMap<>();
     private final Div content = new DivFactory().width("calc(100% - 2em)").border()
@@ -30,8 +43,12 @@ public class FluentTabView extends Div {
                 content.add(selectedTab.getComponent());
             }
         });
+        toolBar.left(tabs);
+        add(toolBar, content);
+    }
 
-        add(tabs, content);
+    public ToolBar getToolBar() {
+        return toolBar;
     }
 
     public FluentTabView addTab(String id, String caption, Supplier<Component> componentSupplier) {

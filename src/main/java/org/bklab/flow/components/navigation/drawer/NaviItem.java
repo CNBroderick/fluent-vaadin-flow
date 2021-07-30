@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-02 09:33:40
+ * Modify date：2021-07-30 09:10:37
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.components.navigation.drawer.NaviItem
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 package org.bklab.flow.components.navigation.drawer;
@@ -28,6 +28,7 @@ import org.bklab.flow.util.lumo.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CssImport("./styles/components/navi-item.css")
 public class NaviItem extends ListItem {
@@ -40,6 +41,7 @@ public class NaviItem extends ListItem {
 	public Button expandCollapse;
 	private int level = 0;
 	private boolean subItemsVisible;
+	private RouterLink routerLink;
 
 	public NaviItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
 		this(text, navigationTarget);
@@ -59,7 +61,7 @@ public class NaviItem extends ListItem {
 		this.navigationTarget = navigationTarget;
 
 		if (navigationTarget != null) {
-			RouterLink routerLink = new RouterLink(null, navigationTarget);
+			routerLink = new RouterLink(null, navigationTarget);
 			routerLink.add(new Span(text));
 			routerLink.setClassName(CLASS_NAME + "__link");
 			routerLink.setHighlightCondition(HighlightConditions.sameLocation());
@@ -133,6 +135,10 @@ public class NaviItem extends ListItem {
 
 	public String getText() {
 		return text;
+	}
+
+	public Optional<RouterLink> getRouterLink() {
+		return Optional.ofNullable(routerLink);
 	}
 
 	@Override

@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-25 15:20:54
+ * Modify date：2021-07-30 09:10:37
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.factory.CheckboxGroupFactory
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -51,7 +51,8 @@ public class CheckboxGroupFactory<T> extends FlowFactory<CheckboxGroup<T>, Check
     }
 
     public CheckboxGroupFactory<T> value(Set<T> value) {
-        get().setValue(value);
+        if (value == null) get().clear();
+        else get().setValue(value);
         return this;
     }
 

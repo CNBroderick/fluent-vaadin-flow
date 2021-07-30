@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-06 16:22:14
+ * Modify date：2021-05-07 12:57:05
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.login.BklabSignupForm
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Class name：org.bklab.flow.login.BklabSignupForm
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
-package org.bklab.login;
+package org.bklab.flow.login;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
@@ -28,7 +28,7 @@ import com.vaadin.flow.templatemodel.TemplateModel;
  * does not overwrite or otherwise change this file.
  */
 @Tag("bklab-signup-form")
-@JsModule("./src/org/bklab/login/bklab-signup-form.js")
+@JsModule("./src/org/bklab/flow/login/bklab-signup-form.js")
 public class BklabSignupForm extends PolymerTemplate<BklabSignupForm.BklabSignupFormModel> {
 
     @Id("mail")

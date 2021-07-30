@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-27 13:58:07
+ * Modify date：2021-07-30 09:10:37
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.factory.FormLayoutFactory
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -12,18 +12,19 @@
 package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.data.renderer.TextRenderer;
 import org.bklab.flow.FlowFactory;
 import org.bklab.flow.base.ClickNotifierFactory;
 import org.bklab.flow.base.GeneratedVaadinFormLayoutFactory;
 import org.bklab.flow.base.HasComponentsFactory;
 import org.bklab.flow.base.HasSizeFactory;
+import org.bklab.flow.util.number.DigitalFormatter;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FormLayoutFactory extends FlowFactory<FormLayout, FormLayoutFactory> implements
         GeneratedVaadinFormLayoutFactory<FormLayout, FormLayoutFactory>,
@@ -74,6 +75,50 @@ public class FormLayoutFactory extends FlowFactory<FormLayout, FormLayoutFactory
 
     public FormLayoutFactory formItem(boolean canAdd, Component field, Component label) {
         return canAdd ? formItem(field, label) : this;
+    }
+
+    public FormLayoutFactory formItemReadField(String value, String label) {
+        return formItem(new TextFieldFactory().value(value).tooltip(value).widthFull().readOnly().lumoSmall().get(), label);
+    }
+
+    public FormLayoutFactory formItemReadField(String value, String tooltip, String label) {
+        return formItem(new TextFieldFactory().value(value).tooltip(tooltip).widthFull().readOnly().lumoSmall().get(), label);
+    }
+
+    public FormLayoutFactory formItemReadArea(String value, String label) {
+        return formItem(new TextAreaFactory().value(value).tooltip(value).widthFull().readOnly().lumoSmall().get(), label);
+    }
+
+    public FormLayoutFactory formItemReadField(long value, String label) {
+        return formItemReadField(new DigitalFormatter(value).toInteger(), label);
+    }
+
+    public FormLayoutFactory formItemReadField(double value, String label) {
+        return formItemReadField(new DigitalFormatter(value).toFormatted(), label);
+    }
+
+    public FormLayoutFactory formItemReadComboBox(String value, String label) {
+        return formItem(new ComboBoxFactory<String>().items(value).value(value).widthFull().readOnly().lumoSmall().get(), label);
+    }
+
+    public FormLayoutFactory formItemReadRadioGroup(Collection<String> items, String value, String label) {
+        return formItemReadRadioGroup(items, value, a -> a, label);
+    }
+
+    public FormLayoutFactory formItemReadCheckboxGroup(Collection<String> items, Collection<String> value, String label) {
+        return formItemReadCheckboxGroup(items, value, a -> a, label);
+    }
+
+    public <R> FormLayoutFactory formItemReadRadioGroup(Collection<R> items, R value, ItemLabelGenerator<R> function, String label) {
+        return formItem(new RadioButtonGroupFactory<R>().items(items).renderer(new TextRenderer<>(function)).value(value)
+                .valueChangeListener(e -> Optional.ofNullable(value).ifPresentOrElse(e.getSource()::setValue, e.getSource()::clear))
+                .lumoSmall().get(), label);
+    }
+
+    public <R> FormLayoutFactory formItemReadCheckboxGroup(Collection<R> items, Collection<R> value, ItemLabelGenerator<R> function, String label) {
+        Set<R> set = value == null ? Collections.emptySet() : Collections.unmodifiableSet(new LinkedHashSet<>(value));
+        return formItem(new CheckboxGroupFactory<R>().items(items).itemLabelGenerator(function).value(set)
+                .valueChangeListener(e -> e.getSource().setValue(set)).lumoSmall().get(), label);
     }
 
     public FormLayoutFactory colspan(Component component, int colspan) {

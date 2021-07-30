@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-05-28 09:52:58
+ * _____________________________
+ * Project name: fluent-vaadin-flow.main
+ * Class name：org.bklab.flow.exception.consumer.FluentExceptionConsumer
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.exception.consumer;
 
 import org.bklab.flow.dialog.ErrorDialog;
@@ -16,11 +27,7 @@ public class FluentExceptionConsumer implements Consumer<Exception> {
 
     @Override
     public void accept(Exception exception) {
-        String exceptionClassName = exception.getClass().getName();
-
-        IFluentExceptionMessageRender messageRender = renders.stream()
-                .filter(render -> Arrays.stream(render.className()).anyMatch(exceptionClassName::endsWith))
-                .findFirst().orElse(null);
+        IFluentExceptionMessageRender messageRender = findMessageRender(exception);
 
         if (messageRender != null) {
             String message = messageRender.message(exception);
@@ -33,10 +40,19 @@ public class FluentExceptionConsumer implements Consumer<Exception> {
         LoggerFactory.getLogger(getExceptionClass(exception)).error("错误", exception);
     }
 
+    public IFluentExceptionMessageRender findMessageRender(Exception exception) {
+        String exceptionClassName = exception.getClass().getName();
+        return renders.stream()
+                .filter(render -> Arrays.stream(render.className()).anyMatch(exceptionClassName::endsWith))
+                .findFirst().orElse(null);
+    }
+
     private Class<?> getExceptionClass(Exception exception) {
         StackTraceElement[] stackTrace = exception.getStackTrace();
         if (stackTrace.length > 2) return stackTrace[2].getClass();
         if (stackTrace.length > 0) return stackTrace[0].getClass();
         return getClass();
     }
+
+
 }

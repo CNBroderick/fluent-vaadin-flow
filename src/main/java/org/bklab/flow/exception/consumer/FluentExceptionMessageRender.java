@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-05-28 09:52:58
+ * _____________________________
+ * Project name: fluent-vaadin-flow.main
+ * Class name：org.bklab.flow.exception.consumer.FluentExceptionMessageRender
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.exception.consumer;
 
 import org.apache.http.HttpStatus;
@@ -5,7 +16,7 @@ import org.apache.http.HttpStatus;
 import java.util.Arrays;
 import java.util.List;
 
-class FluentExceptionMessageRender {
+public class FluentExceptionMessageRender {
 
     public static final List<IFluentExceptionMessageRender> exceptionMessageRenders = Arrays.asList(
             new SC_REQUEST_TIMEOUT(),

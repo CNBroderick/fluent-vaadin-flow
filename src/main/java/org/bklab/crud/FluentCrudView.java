@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-23 15:50:47
+ * Modify date：2021-05-26 09:36:26
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.crud.FluentCrudView
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -12,7 +12,6 @@
 package org.bklab.crud;
 
 import com.vaadin.flow.component.AttachEvent;
-import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
@@ -21,7 +20,6 @@ import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.treegrid.TreeGrid;
 import com.vaadin.flow.data.event.SortEvent;
 import com.vaadin.flow.data.provider.DataProvider;
@@ -29,11 +27,11 @@ import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.provider.hierarchy.HierarchicalDataProvider;
 import com.vaadin.flow.data.provider.hierarchy.TreeData;
 import com.vaadin.flow.data.provider.hierarchy.TreeDataProvider;
-import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.shared.Registration;
 import org.bklab.crud.core.ICrudViewExcelExportSupporter;
+import org.bklab.crud.core.ICrudViewKeywordSupporter;
 import org.bklab.crud.core.IFluentCrudViewCommonField;
 import org.bklab.crud.menu.FluentCrudMenuButton;
 import org.bklab.crud.menu.ICrudViewMenuColumnSupporter;
@@ -44,7 +42,6 @@ import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.components.pagination.PageSwitchEvent;
 import org.bklab.flow.components.pagination.Pagination;
 import org.bklab.flow.components.pagination.layout.MiddleCustomPaginationLayout;
-import org.bklab.flow.components.textfield.KeywordField;
 import org.bklab.flow.dialog.ErrorDialog;
 import org.bklab.flow.layout.EmptyLayout;
 import org.bklab.flow.layout.ToolBar;
@@ -64,6 +61,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         ICrudViewMenuColumnSupporter<T, G, FluentCrudView<T, G>>,
         ICrudViewExcelExportSupporter<T, G, FluentCrudView<T, G>>,
         IOperationMenuComponentSupporter<T, G, FluentCrudView<T, G>>,
+        ICrudViewKeywordSupporter<T, G, FluentCrudView<T, G>>,
         HasReturnThis<FluentCrudView<T, G>>,
         BeforeEnterObserver {
 
@@ -83,8 +81,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     private final List<Consumer<Exception>> exceptionConsumers = new ArrayList<>();
     private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
     protected final EmptyLayout emptyLayout = new EmptyLayout("暂无数据");
-    protected FluentButton searchButton = (FluentButton) new FluentButton(VaadinIcon.SEARCH, "查询")
-            .primary().asFactory().clickListener(e -> reloadGridData()).get();
+    protected FluentButton searchButton = new FluentButton(VaadinIcon.SEARCH, "查询", e -> reloadGridDataAndRecalculateColumnWidths()).primary();
     protected boolean hasGridMenu = true;
     protected boolean hasPagination = true;
     protected Function<T, Collection<T>> childProvider = null;
@@ -242,29 +239,6 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         pagination.refresh();
     }
 
-    /**
-     * @param name        inMemoryEntityFilter map key
-     * @param placeholder text field placeholder
-     * @param predicate   test entity and stripedKeywordString is valid
-     *
-     * @return keyword field
-     */
-    public KeywordField createInMemoryFilter(String name, String placeholder, BiPredicate<T, String> predicate) {
-        BiConsumer<TextField, ComponentEvent<?>> consumer = (filed, event) -> {
-            filed.getOptionalValue().map(String::strip).filter(s -> !s.isBlank()).ifPresentOrElse(
-                    keyword -> inMemoryEntityFilter.put(name, entity -> predicate.test(entity, keyword)),
-                    () -> inMemoryEntityFilter.remove(name));
-            reloadGridDataInMemory();
-        };
-
-        KeywordField keywordField = new KeywordField(consumer);
-        keywordField.setValueChangeMode(ValueChangeMode.EAGER);
-        keywordField.addValueChangeListener(event -> consumer.accept(keywordField, event));
-
-        if (placeholder != null) keywordField.setPlaceholder(placeholder);
-        return keywordField;
-    }
-
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
         this.queryParameterUtil = new QueryParameterUtil(beforeEnterEvent);
@@ -387,27 +361,6 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         return this;
     }
 
-    protected KeywordField addKeywordField() {
-        KeywordField keywordField = new KeywordField((c, v) -> reloadGridData());
-        parameterMap.put("keyword", () -> Optional.ofNullable(keywordField.getValue()).map(k -> k.trim().isEmpty() ? null : k.trim()).orElse(null));
-        return keywordField;
-    }
-
-    protected FluentCrudView<T, G> addKeywordFieldToLeft() {
-        header.left(addKeywordField());
-        return this;
-    }
-
-    protected FluentCrudView<T, G> addKeywordFieldToMiddle() {
-        header.middle(addKeywordField());
-        return this;
-    }
-
-    protected FluentCrudView<T, G> addKeywordFieldToRight() {
-        header.right(addKeywordField());
-        return this;
-    }
-
     public void reloadGridDataInMemory() {
         List<T> entities = this.entities.stream().filter(t ->
                 inMemoryEntityFilter.values().stream().filter(Objects::nonNull).allMatch(p -> p.test(t))
@@ -423,7 +376,6 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
                 logger.warn("afterReloadListeners throws an error.", e);
             }
         });
-        grid.recalculateColumnWidths();
     }
 
     public void reloadGridData() {
@@ -434,9 +386,28 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         this.reloadGridDataInMemory();
     }
 
+    public void reloadGridDataAndRecalculateColumnWidths() {
+        reloadGridData();
+        getGrid().recalculateColumnWidths();
+    }
+
     public void switchEntityPage(Predicate<T> predicate) {
         IntStream.range(0, inMemoryFilteredEntities.size()).filter(i -> predicate.test(inMemoryFilteredEntities.get(i)))
                 .findFirst().ifPresent(i -> pagination.setCurrentPage(i / pagination.getPageSize() + 1).refresh());
+    }
+
+    public FluentCrudView<T, G> setEntitiesDirectly(Collection<T> items) {
+        entities.clear();
+        entities.addAll(items);
+        return this;
+    }
+
+    public Map<String, Predicate<T>> getInMemoryEntityFilter() {
+        return inMemoryEntityFilter;
+    }
+
+    public Map<String, Supplier<Object>> getParameterMap() {
+        return parameterMap;
     }
 
     @Override

@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-20 11:07:22
+ * Modify date：2021-06-24 15:13:14
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.base.HasStyleFactory
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -13,9 +13,13 @@ package org.bklab.flow.base;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasStyle;
+import com.vaadin.flow.dom.Element;
 import dev.mett.vaadin.tooltip.Tooltips;
+import dev.mett.vaadin.tooltip.config.TC_FOLLOW_CURSOR;
 import dev.mett.vaadin.tooltip.config.TooltipConfiguration;
 import org.bklab.flow.IFlowFactory;
+import org.bklab.flow.factory.TooltipConfigurationFactory;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("unchecked")
 public interface HasStyleFactory<C extends Component & HasStyle, E extends HasStyleFactory<C, E>> extends IFlowFactory<C> {
@@ -301,16 +305,52 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
     }
 
     default E tooltip(String text) {
-        if (text != null && !text.isBlank()) Tooltips.getCurrent().setTooltip(get(), text);
+        if (text == null || text.isBlank()) {
+            Tooltips.getCurrent().removeTooltip(get());
+            return (E) this;
+        }
+        return tooltip(new TooltipConfigurationFactory().theme("light-border")
+                .followCursor(TC_FOLLOW_CURSOR.HORIZONTAL)
+                .maxWidthNone().content(text).get());
+    }
+
+    default E tooltip(Element element) {
+        try {
+            return tooltip(new TooltipConfigurationFactory().content(element.getOuterHTML())
+                    .followCursor(TC_FOLLOW_CURSOR.HORIZONTAL)
+                    .theme("light-border").allowHTML(true).maxWidthNone().get());
+        } catch (Exception e) {
+            LoggerFactory.getLogger(getClass()).error("设置tooltip失败。", e);
+        }
         return (E) this;
     }
 
-    default E tooltip(String text, TooltipConfiguration tooltipConfiguration) {
-        if (text != null && !text.isBlank()) Tooltips.getCurrent().setTooltip(get(), tooltipConfiguration);
-        return (E) this;
+    default E tooltipHtml(String text) {
+        if (text == null || text.isBlank()) {
+            Tooltips.getCurrent().removeTooltip(get());
+            return (E) this;
+        }
+        return tooltip(new TooltipConfigurationFactory().content(text)
+                .followCursor(TC_FOLLOW_CURSOR.HORIZONTAL).maxWidthNone().allowHTML(true).get());
     }
 
     default E tooltip(TooltipConfiguration tooltipConfiguration) {
-        return tooltip(tooltipConfiguration.getContent(), tooltipConfiguration);
+        if (tooltipConfiguration.getContent() == null || tooltipConfiguration.getContent().isBlank()) {
+            Tooltips.getCurrent().removeTooltip(get());
+            return (E) this;
+        }
+
+        if (tooltipConfiguration.getTheme() == null || tooltipConfiguration.getTheme().isBlank()) {
+            tooltipConfiguration.setTheme("light");
+        }
+
+        Tooltips.getCurrent().setTooltip(get(), tooltipConfiguration);
+        return (E) this;
+    }
+
+    @Deprecated
+    default E tooltip(String text, TooltipConfiguration tooltipConfiguration) {
+        tooltipConfiguration.setContent(text);
+        return tooltip(tooltipConfiguration);
     }
 }

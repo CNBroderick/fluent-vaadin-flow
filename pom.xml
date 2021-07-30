@@ -2,10 +2,10 @@
   ~ Copyright (c) 2008 - 2021. - Broderick Labs.
   ~ Author: Broderick Johansson
   ~ E-mail: z@bkLab.org
-  ~ Modify date：2021-04-15 10:23:55
+  ~ Modify date：2021-07-30 09:10:37
   ~ _____________________________
   ~ Project name: fluent-vaadin-flow
-  ~ Class name：D:/broderick/develop/bklab/fluent-vaadin-flow-20/pom.xml
+  ~ Class name：D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-20/pom.xml
   ~ Copyright (c) 2008 - 2021. - Broderick Labs.
   -->
 
@@ -14,13 +14,13 @@
 
     <groupId>org.bklab</groupId>
     <artifactId>fluent-vaadin-flow</artifactId>
-    <version>20.0.0.alpha7</version>
+    <version>20.0.5</version>
     <name>fluent-vaadin-flow</name>
     <description>Broderick Labs for fluent Vaadin flow. Inherits common Vaadin components.</description>
     <packaging>jar</packaging>
 
     <properties>
-        <vaadin.version>20.0.0.alpha7</vaadin.version>
+        <vaadin.version>20.0.5</vaadin.version>
 
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
@@ -184,6 +184,12 @@
             <artifactId>webdrivermanager</artifactId>
             <version>4.3.1</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jsoup</groupId>
+                    <artifactId>jsoup</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
