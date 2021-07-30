@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-01 12:53:31
+ * Modify date：2021-07-30 09:10:37
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.factory.RadioButtonGroupFactory
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 package org.bklab.flow.factory;
@@ -82,7 +82,8 @@ public class RadioButtonGroupFactory<T> extends FlowFactory<RadioButtonGroup<T>,
 
     @Override
     public RadioButtonGroupFactory<T> value(T value) {
-        get().setValue(value);
+        if (value == null) get().clear();
+        else get().setValue(value);
         return this;
     }
 

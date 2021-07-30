@@ -1,17 +1,19 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-11-09 10:46:02
+ * Modify date：2021-07-30 09:10:37
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow.main
  * Class name：org.bklab.flow.dialog.AskDialog
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 package org.bklab.flow.dialog;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -25,6 +27,7 @@ import org.bklab.flow.layout.TmbVerticalLayout;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings("DuplicatedCode")
 public class AskDialog extends FluentDialog {
     private final Button confirm;
     private final LmrHorizontalLayout bottom;
@@ -32,6 +35,8 @@ public class AskDialog extends FluentDialog {
     private String header;
     private String message;
     private boolean hasConfirmed = false;
+    private String confirmUrl = null;
+    private String confirmTarget = "_self";
 
     {
         setDraggable(true);
@@ -78,6 +83,22 @@ public class AskDialog extends FluentDialog {
         return this;
     }
 
+    public AskDialog confirmUrl(String confirmUrl) {
+        this.confirmUrl = confirmUrl;
+        return this;
+    }
+
+    public AskDialog confirmTarget(String confirmTarget) {
+        this.confirmTarget = confirmTarget;
+        return this;
+    }
+
+    public AskDialog confirmUrl(String confirmUrl, String confirmTarget) {
+        this.confirmUrl = confirmUrl;
+        this.confirmTarget = confirmTarget;
+        return this;
+    }
+
     public AskDialog build() {
         removeAll();
 
@@ -88,7 +109,14 @@ public class AskDialog extends FluentDialog {
 
         icon.getStyle().set("min-width", "1.8em");
 
-        bottom.right(confirm, new ButtonFactory().lumoSmall().text("取消").clickListener(x -> close()).get());
+        Component confirmComponent = confirm;
+        if (confirmUrl != null && !confirmUrl.isBlank()) {
+            Anchor anchor = new Anchor(confirmUrl, confirm);
+            anchor.setTarget(confirmTarget);
+            confirmComponent = anchor;
+        }
+
+        bottom.right(confirmComponent, new ButtonFactory().text("取消").lumoSmall().clickListener(x -> close()).get());
         if (header == null) return buildNoHeader();
 
         Span message = new Span(this.message);
