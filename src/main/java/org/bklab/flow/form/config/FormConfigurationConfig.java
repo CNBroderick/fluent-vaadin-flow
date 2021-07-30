@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-07-30 11:05:06
+ * Modify date：2021-07-30 15:30:44
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.form.config.FormConfigurationConfig
@@ -33,7 +33,7 @@ public class FormConfigurationConfig implements Serializable {
 
     private String tagIcon;
 
-    private String defaultValue;
+    private Object defaultValue;
 
     private boolean required;
 

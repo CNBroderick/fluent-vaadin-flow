@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-07-30 14:44:40
+ * Modify date：2021-07-30 16:50:03
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.form.render.IFormComponentRender
@@ -11,6 +11,7 @@
 
 package org.bklab.flow.form.render;
 
+import com.alibaba.fastjson.JSON;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.HasValue;
@@ -26,7 +27,36 @@ public interface IFormComponentRender<T, C extends Component> {
 
     T getValue(C component);
 
+    default T getObjectValue(Object component) {
+        if (component == null) return null;
+        try {
+            //noinspection unchecked
+            return getValue((C) component);
+        } catch (Exception e) {
+            LoggerFactory.getLogger(getClass()).error("getting [%s] value throw an error.".formatted(component.getClass().getName()), e);
+            return null;
+        }
+    }
+
     boolean setValue(FormConfigurationField field, C component, T value);
+
+    default boolean setObjectValue(FormConfigurationField field, Object component, Object value) {
+        if (value == null) {
+            if (component instanceof HasValue) {
+                ((HasValue<?, ?>) component).clear();
+                return true;
+            }
+            return false;
+        }
+        try {
+            //noinspection unchecked
+            return setValue(field, (C) component, (T) value);
+        } catch (Exception e) {
+            LoggerFactory.getLogger(getClass()).error("setting field [%s] value throw an error, value type is [%s] and its value is:\n%s\n"
+                    .formatted(field.getModel(), value.getClass().getName(), JSON.toJSONString(value, true)), e);
+        }
+        return false;
+    }
 
     default boolean validate(FormConfigurationField field, FormConfigurationConfig config, C source) {
         return true;

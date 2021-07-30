@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-07-30 14:43:20
+ * Modify date：2021-07-30 15:08:54
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.form.render.FormTextAreaRender
@@ -11,6 +11,7 @@
 
 package org.bklab.flow.form.render;
 
+import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,10 @@ public class FormTextAreaRender implements IFormComponentRender<String, TextArea
 
         Optional.ofNullable(field.getStyle()).ifPresent(style -> style.forEach(textArea::style));
 
+        Optional.ofNullable(field.getAutosize()).ifPresent(autosize -> {
+            if (autosize.getMinRows() > 0) textArea.minHeight(autosize.getMinRows() + 1, Unit.REM);
+            if (autosize.getMaxRows() > 0) textArea.maxHeight(autosize.getMaxRows() + 1, Unit.REM);
+        });
 
         return null;
     }

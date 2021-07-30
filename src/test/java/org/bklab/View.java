@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date：2021-07-30 17:19:45
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name：org.bklab.View
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab;
 
 import com.vaadin.flow.component.Component;
@@ -28,6 +39,7 @@ public class View extends MainAppLayout {
         naviMenu.addNaviItem(VaadinIcon.DATABASE, "暂无数据", EmptyView.class);
         naviMenu.addNaviItem(VaadinIcon.PACKAGE, "翻页工具", PaginationView.class);
         naviMenu.addNaviItem(VaadinIcon.PACKAGE, "颜色管理", CrudView.class);
+        naviMenu.addNaviItem(VaadinIcon.PACKAGE, "动态表单", FluentGenerateFormLayoutView.class);
     }
 
     @Override
