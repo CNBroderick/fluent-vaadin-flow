@@ -13,7 +13,7 @@
     "@polymer/polymer": "3.2.0",
     "@vaadin/flow-frontend": "./target/flow-frontend",
     "@vaadin/form": "./target/flow-frontend/form",
-    "@vaadin/router": "1.7.2",
+    "@vaadin/router": "1.7.4",
     "@vaadin/vaadin-accordion": "20.0.0",
     "@vaadin/vaadin-app-layout": "20.0.0",
     "@vaadin/vaadin-board": "20.0.0",
@@ -64,7 +64,8 @@
     "@vaadin/vaadin-avatar": "20.0.0",
     "@vaadin/vaadin-messages": "20.0.0",
     "construct-style-sheets-polyfill": "2.4.16",
-    "open": "^7.2.1"
+    "open": "^7.2.1",
+    "lit": "2.0.0-rc.1"
   },
   "devDependencies": {
     "@types/validator": "13.1.0",
@@ -73,8 +74,8 @@
     "css-loader": "4.2.1",
     "extract-loader": "5.1.0",
     "html-webpack-plugin": "4.5.1",
-    "lit-css-loader": "0.0.4",
-    "typescript": "4.2.3",
+    "lit-css-loader": "0.1.0",
+    "typescript": "4.3.3",
     "validator": "13.1.17",
     "webpack": "4.46.0",
     "webpack-cli": "3.3.11",
@@ -97,7 +98,7 @@
   },
   "vaadin": {
     "dependencies": {
-      "@vaadin/router": "1.7.2",
+      "@vaadin/router": "1.7.4",
       "@polymer/polymer": "3.2.0",
       "@vaadin/vaadin-crud": "20.0.0",
       "@vaadin/vaadin-grid": "20.0.0",
@@ -158,21 +159,22 @@
       "@vaadin/vaadin-avatar": "20.0.0",
       "@vaadin/vaadin-messages": "20.0.0",
       "construct-style-sheets-polyfill": "2.4.16",
-      "open": "^7.2.1"
+      "open": "^7.2.1",
+      "lit": "2.0.0-rc.1"
     },
     "devDependencies": {
       "compression-webpack-plugin": "4.0.1",
       "webpack-cli": "3.3.11",
       "webpack": "4.46.0",
       "html-webpack-plugin": "4.5.1",
-      "typescript": "4.2.3",
+      "typescript": "4.3.3",
       "webpack-merge": "4.2.2",
       "webpack-dev-server": "3.11.0",
       "chokidar": "^3.5.0",
       "validator": "13.1.17",
       "@types/validator": "13.1.0",
       "css-loader": "4.2.1",
-      "lit-css-loader": "0.0.4",
+      "lit-css-loader": "0.1.0",
       "extract-loader": "5.1.0",
       "file-loader": "6.2.0",
       "extra-watch-webpack-plugin": "1.0.3",
