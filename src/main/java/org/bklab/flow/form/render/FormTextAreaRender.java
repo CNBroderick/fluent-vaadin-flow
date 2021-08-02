@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-07-30 15:08:54
+ * Modify date: 2021-08-02 11:07:56
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.form.render.FormTextAreaRender
+ * Class name: org.bklab.flow.form.render.FormTextAreaRender
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -59,7 +59,7 @@ public class FormTextAreaRender implements IFormComponentRender<String, TextArea
             if (autosize.getMaxRows() > 0) textArea.maxHeight(autosize.getMaxRows() + 1, Unit.REM);
         });
 
-        return null;
+        return textArea.get();
     }
 
     @Override

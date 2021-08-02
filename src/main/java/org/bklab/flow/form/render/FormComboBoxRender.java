@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-07-30 14:13:45
+ * Modify date: 2021-08-02 11:07:56
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.form.render.FormComboBoxRender
+ * Class name: org.bklab.flow.form.render.FormComboBoxRender
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -24,7 +24,7 @@ public class FormComboBoxRender implements IFormComponentRender<String, ComboBox
     @Override
     public ComboBox<FormComponentSlotOption> build(FormConfigurationField field) {
         ComboBoxFactory<FormComponentSlotOption> comboBox = new ComboBoxFactory<FormComponentSlotOption>()
-                .lumoSmall().widthFull()
+                .lumoSmall().widthFull().itemLabelGenerator(FormComponentSlotOption::getLabel)
                 .clearButtonVisible(field.isClearable())
                 .readOnly(field.isReadonly())
                 .enabled(!field.isDisabled())

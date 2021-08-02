@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-07-30 17:09:06
+ * Modify date: 2021-08-02 11:07:56
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.form.FluentGenerateFormLayout
+ * Class name: org.bklab.flow.form.FluentGenerateFormLayout
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasEnabled;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Span;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -29,9 +30,8 @@ import org.bklab.flow.form.config.FormConfigurationField;
 import org.bklab.flow.form.render.FluentFormRenderManager;
 import org.bklab.flow.form.render.IFormComponentRender;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Setter
@@ -83,8 +83,23 @@ public class FluentGenerateFormLayout extends FormLayout implements Buildable<Fl
             return;
         }
 
+        Component component = null;
+        try {
+            component = render.build(field);
+        } catch (Exception e) {
+            String message = "Build field [%s] thrown an error: %s.".formatted(config.getTag() + " " + config.getTagIcon(), e.getMessage());
+            if (strictMode) {
+                e.printStackTrace();
+                new ErrorDialog(message, e).build().open();
+                throw new UnsupportedOperationException(message, e);
+            }
+            log.warn(message, e);
+        }
 
-        Component component = render.build(field);
+        if (component == null) {
+            component = new Span("Not support field %s[%s] which type is '%s %s'."
+                    .formatted(config.getLabel(), field.getModel(), config.getTag(), config.getTagIcon()));
+        }
 
         if (config.isShowLabel()) {
             String label = config.getLabel();
@@ -97,6 +112,12 @@ public class FluentGenerateFormLayout extends FormLayout implements Buildable<Fl
         }
 
         formFieldMap.put(field.getModel(), new FormField(field, component, render));
+    }
+
+    public Set<String> validate() {
+        return formFieldMap.values().stream()
+                .filter(f -> !f.validate()).map(a -> a.field.getConfig().getLabel())
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public String getValue() {
@@ -129,6 +150,10 @@ public class FluentGenerateFormLayout extends FormLayout implements Buildable<Fl
             this.field = field;
             this.component = component;
             this.render = render;
+        }
+
+        public boolean validate() {
+            return render.validate(field, component);
         }
 
         public Object getValue() {

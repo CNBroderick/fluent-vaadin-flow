@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-07-30 16:50:03
+ * Modify date: 2021-08-02 11:07:56
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.form.render.IFormComponentRender
+ * Class name: org.bklab.flow.form.render.IFormComponentRender
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -56,6 +56,11 @@ public interface IFormComponentRender<T, C extends Component> {
                     .formatted(field.getModel(), value.getClass().getName(), JSON.toJSONString(value, true)), e);
         }
         return false;
+    }
+
+    default boolean validate(FormConfigurationField field, Object source) {
+        //noinspection unchecked
+        return validate(field, field.getConfig(), (C) source);
     }
 
     default boolean validate(FormConfigurationField field, FormConfigurationConfig config, C source) {

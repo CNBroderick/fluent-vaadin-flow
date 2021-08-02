@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-07-30 17:19:45
+ * Modify date: 2021-08-02 11:07:56
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.FluentGenerateFormLayoutView
+ * Class name: org.bklab.FluentGenerateFormLayoutView
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -22,7 +22,9 @@ import org.bklab.flow.form.FluentGenerateFormLayout;
 import org.bklab.flow.layout.EmptyLayout;
 import org.bklab.flow.layout.TitleLayout;
 
-@Route("form")
+import java.util.Set;
+
+@Route(value = "form", layout = View.class)
 @PageTitle("FluentGenerateFormLayout --Broderick Labs")
 public class FluentGenerateFormLayoutView extends TitleLayout {
 
@@ -31,30 +33,31 @@ public class FluentGenerateFormLayoutView extends TitleLayout {
     public FluentGenerateFormLayoutView() {
         super("Fluent Generate Form");
 
-        Div preview = new DivFactory(new EmptyLayout("no form config data.")).border().width("70%").heightFull().get();
+        Div preview = new DivFactory(new EmptyLayout("no form config data.")).border().width("70%").padding("2em 0").heightFull().get();
 
         TextArea data = new TextAreaFactory()
                 .placeholder("please paste your form json in there. the generate websites can be enter by top right links.")
-                .width("30%").minWidth("20vw").lumoSmall().heightFull().get();
+                .widthFull().minWidth("20vw").lumoSmall().height("40vh").get();
 
         TextArea value = new TextAreaFactory()
-                .placeholder("please paste your form json in there. the generate websites can be enter by top right links.")
-                .width("30%").minWidth("20vw").lumoSmall().heightFull().get();
+                .placeholder("this form value will be display in there.")
+                .widthFull().minWidth("20vw").lumoSmall().height("40vh").get();
 
         Div dataLayout = new TitleLayout("Form Config").right(
-                new AnchorFactory("https://mrhj.gitee.io/form-generator/#/", "China Generate Server").target("_blank").get(),
-                new AnchorFactory("https://jakhuang.github.io/form-generator", "International Generate Server").target("_blank").get(),
-                new ButtonFactory("generate", VaadinIcon.CHECK, e -> saveLayout(data.getValue(), preview)).lumoPrimary().lumoTertiaryInline().get()
+                new ButtonFactory("generate", VaadinIcon.CHECK, e -> saveLayout(data.getValue(), preview)).lumoPrimary().get()
         ).content(data).asFactory().height("50%").get();
 
         Div valueLayout = new TitleLayout("Form Config").right(
-                new ButtonFactory("set form value", VaadinIcon.EDIT, e -> saveValue(value.getValue())).lumoPrimary().lumoTertiaryInline().get(),
-                new ButtonFactory("get form value", VaadinIcon.BOOK, e -> saveLayout(data.getValue(), preview)).lumoPrimary().lumoTertiaryInline().get()
-        ).content(data).asFactory().height("50%").get();
+                new ButtonFactory("set form value", VaadinIcon.EDIT, e -> saveValue(value.getValue())).lumoPrimary().get(),
+                new ButtonFactory("get form value", VaadinIcon.BOOK, e -> getValue(value)).lumoPrimary().get()
+        ).content(value).asFactory().height("50%").get();
 
-        Div config = new DivFactory(data, value).border().width("30%").minWidth("20vw").heightFull().get();
+        Div config = new DivFactory(dataLayout, valueLayout).border().width("30%").minWidth("40em").heightFull().get();
 
-        add(new HorizontalLayoutFactory(config, preview).sizeFull().get());
+        content(new HorizontalLayoutFactory(config, preview).sizeFull().get()).right(
+                new AnchorFactory("https://mrhj.gitee.io/form-generator/#/", "China Generate Server").target("_blank").get(),
+                new AnchorFactory("https://jakhuang.github.io/form-generator", "International Generate Server").target("_blank").get()
+        );
     }
 
     private void saveValue(String value) {
@@ -67,8 +70,13 @@ public class FluentGenerateFormLayoutView extends TitleLayout {
 
     private void getValue(TextArea value) {
         try {
-            value.setValue(formLayout.getValue());
+            Set<String> invalids = formLayout.validate();
+            if (invalids.isEmpty()) value.setValue(formLayout.getValue());
+            else {
+                new ErrorDialog("请检查" + String.join("、", invalids) + "是否输入正确。").build().open();
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             new ErrorDialog("Error: " + e.getMessage(), e).build().open();
         }
     }
@@ -76,6 +84,8 @@ public class FluentGenerateFormLayoutView extends TitleLayout {
     private void saveLayout(String config, Div div) {
         try {
             formLayout = FluentGenerateFormLayout.create(config).strictMode(true).build();
+            div.removeAll();
+            div.add(formLayout);
         } catch (Exception e) {
             div.removeAll();
             new ErrorDialog("Error: " + e.getMessage(), e).build().open();

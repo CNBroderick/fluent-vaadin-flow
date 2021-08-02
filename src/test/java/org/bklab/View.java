@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-07-30 17:19:45
+ * Modify date: 2021-08-02 11:07:56
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.View
+ * Class name: org.bklab.View
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -24,6 +24,11 @@ import org.bklab.flow.layout.app.MainAppLayout;
 @Route("")
 @PageTitle("布克约森实验室")
 public class View extends MainAppLayout {
+
+    static {
+
+
+    }
 
     public View() {
         appBar.lightTheme();
