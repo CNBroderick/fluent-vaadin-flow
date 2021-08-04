@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-08-02 15:05:18
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name: org.bklab.flow.IFluentFlowFactory
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow;
 
 import com.vaadin.flow.component.Component;
@@ -34,12 +45,25 @@ public interface IFluentFlowFactory<C extends Component, E extends IFluentFlowFa
     }
 
     default E peek(Consumer<C> consumer) {
-        consumer.accept(get());
+        if (consumer != null) consumer.accept(get());
         return thisObject();
     }
 
     default E peek(boolean canPeek, Consumer<C> consumer) {
         return canPeek ? thisObject() : peek(consumer);
+    }
+
+    default E peekThis(boolean canPeek, Consumer<E> consumer) {
+        return canPeek ? thisObject() : peekThis(consumer);
+    }
+
+    default E peekThisWhenItNotNull(Object checkObject, Consumer<E> consumer) {
+        return checkObject == null ? thisObject() : peekThis(consumer);
+    }
+
+    default E peekThis(Consumer<E> consumer) {
+        if (consumer != null) consumer.accept(thisObject());
+        return thisObject();
     }
 
     default E peek(Predicate<C> canPeek, Consumer<C> consumer) {

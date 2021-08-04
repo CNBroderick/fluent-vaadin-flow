@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-08-02 14:43:31
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-21/src/main/resources/META-INF/resources/frontend/styles/org/bklab/component/menu/fluent-menu-item.css
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 vaadin-context-menu-item[fluent-menu-item]::before {
     font-size: var(--lumo-font-size-xs);
     width: 0.2em;
@@ -8,7 +19,7 @@ vaadin-context-menu-item[fluent-menu-item] {
     padding-bottom: 0;
 }
 
-.fluent-menu-item-iron-icon {
+.fluent-menu-item-vaadin-icon {
     padding: 0 var(--lumo-space-m);
     color: #999999;
     width: var(--lumo-font-size-xs);

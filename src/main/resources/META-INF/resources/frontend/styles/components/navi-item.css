@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-02 09:33:44
+ * Modify date: 2021-08-04 11:38:14
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：D:/broderick/develop/vaadin/16/fluent-vaadin-flow/frontend/styles/components/navi-item.css
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-21/src/main/resources/META-INF/resources/frontend/styles/components/navi-item.css
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 .navi-item {
@@ -73,18 +73,18 @@
     color: var(--lumo-body-text-color);
 }
 
-.navi-item__link:not([highlight]) iron-icon {
+.navi-item__link:not([highlight]) vaadin-icon {
     color: var(--lumo-tertiary-text-color);
 }
 
 /* Icon */
-.navi-item__link iron-icon {
+.navi-item__link vaadin-icon {
     height: var(--lumo-icon-size-s);
     flex-shrink: 0;
     margin: 0 var(--lumo-space-l) 0 0;
     transition: margin var(--transition-duration-s);
     width: var(--lumo-icon-size-s);
-    padding-left: var(--lumo-space-l);
+    margin-left: var(--lumo-space-l);
 }
 
 /* Text */
