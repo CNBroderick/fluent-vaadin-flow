@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-22 10:27:43
+ * Modify date: 2021-08-02 15:05:51
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.crud.menu.ICrudViewMenuColumnSupporter
+ * Class name: org.bklab.crud.menu.ICrudViewMenuColumnSupporter
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -19,6 +19,8 @@ import com.vaadin.flow.function.ValueProvider;
 import org.bklab.crud.FluentCrudView;
 import org.bklab.flow.components.button.FluentButton;
 import org.bklab.flow.factory.ButtonFactory;
+import org.bklab.flow.factory.SpanFactory;
+import org.bklab.flow.util.lumo.LumoStyles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,27 @@ public interface ICrudViewMenuColumnSupporter<T, G extends Grid<T>, C extends Fl
 
     default C addMenuButtonColumn(Function<T, String> buttonNameFunction, Function<T, String> tooltipFunction, IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
         return addMenuColumn(entity -> FluentButton.linkButton(buttonNameFunction.apply(entity)).tooltip(tooltipFunction.apply(entity)), menuEntityBiConsumer);
+    }
+
+    default Grid.Column<T> addMenuSpanColumn(Function<T, String> buttonNameFunction, Function<T, String> tooltipFunction, IFluentMenuBuilder<T, G> menuEntityBiConsumer) {
+        return getCrudViewGrid().addComponentColumn(createMenuColumnComponentProvider(t -> new SpanFactory(buttonNameFunction
+                .apply(t)).style("color", LumoStyles.Color.Primary._100).style("cursor", "pointer")
+                .peekThisWhenItNotNull(tooltipFunction, span -> span.tooltip(tooltipFunction.apply(t))).get(), menuEntityBiConsumer));
+    }
+
+    default Grid.Column<T> addMenuSpanColumn(Function<T, String> buttonNameFunction, IFluentMenuBuilder<T, G> menuEntityBiConsumer, String replaceColumnKey) {
+        return addMenuSpanColumn(buttonNameFunction, null, menuEntityBiConsumer, replaceColumnKey);
+    }
+
+    default Grid.Column<T> addMenuSpanColumn(Function<T, String> buttonNameFunction, Function<T, String> tooltipFunction,
+                                             IFluentMenuBuilder<T, G> menuEntityBiConsumer, String replaceColumnKey) {
+        Grid.Column<T> column = addMenuSpanColumn(buttonNameFunction, tooltipFunction, menuEntityBiConsumer);
+        Grid.Column<T> target = getCrudViewGrid().getColumnByKey(replaceColumnKey);
+        if (target != null) {
+            gridColumnAt(column, target, 1);
+            target.setVisible(false);
+        }
+        return column;
     }
 
     default C addMenuColumn(Supplier<Component> menuContentSupplier, IFluentMenuBuilder<T, G> menuEntityBiConsumer) {

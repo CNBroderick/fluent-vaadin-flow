@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-08-04 13:01:15
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name: org.bklab.flow.grid.FluentCommonGrid
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.grid;
 
 import com.vaadin.flow.component.button.Button;
@@ -10,12 +21,10 @@ import org.bklab.flow.factory.GridFactory;
 import org.bklab.flow.factory.SpanFactory;
 import org.bklab.flow.util.number.DigitalFormatter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -81,15 +90,20 @@ public interface FluentCommonGrid<T> extends Supplier<Grid<T>> {
 
     default Grid.Column<T> addDateColumn(Function<T, LocalDate> function, String header, String key) {
         return get().addColumn(r -> Optional.ofNullable(function.apply(r))
-                .map(DateTimeFormatter.ofPattern("uuuu-MM-dd")::format).orElse(null))
+                        .map(DateTimeFormatter.ofPattern("uuuu-MM-dd")::format).orElse(null))
                 .setComparator(Comparator.comparingLong(r -> Optional.ofNullable(function.apply(r))
                         .map(LocalDate::toEpochDay).orElse(0L)))
                 .setKey(key).setHeader(header);
     }
 
+    default Grid.Column<T> addJavaUtilDateColumn(Function<T, Date> date, String header, String key) {
+        return addDateTimeColumn(r -> Optional.ofNullable(date.apply(r)).map(d -> d.toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDateTime()).orElse(null), header, key);
+    }
+
     default Grid.Column<T> addTimeColumn(Function<T, LocalTime> function, String header, String key) {
         return get().addColumn(r -> Optional.ofNullable(function.apply(r))
-                .map(DateTimeFormatter.ofPattern("HH:mm:ss")::format).orElse(null))
+                        .map(DateTimeFormatter.ofPattern("HH:mm:ss")::format).orElse(null))
                 .setComparator(Comparator.comparingLong(r -> Optional.ofNullable(function.apply(r))
                         .map(LocalTime::toNanoOfDay).orElse(0L)))
                 .setKey(key).setHeader(header);

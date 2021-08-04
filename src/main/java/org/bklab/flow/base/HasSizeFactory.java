@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-23 15:50:47
+ * Modify date：2021-07-30 15:07:01
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.base.HasSizeFactory
@@ -13,6 +13,7 @@ package org.bklab.flow.base;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasSize;
+import com.vaadin.flow.component.Unit;
 import org.bklab.flow.IFlowFactory;
 
 @SuppressWarnings("unchecked")
@@ -37,8 +38,23 @@ public interface HasSizeFactory<T extends Component & HasSize, E extends HasSize
         return (E) this;
     }
 
+    default E minHeight(float minHeight, Unit unit) {
+        get().setMinHeight(minHeight, unit);
+        return (E) this;
+    }
+
+    default E maxHeight(float minHeight, Unit unit) {
+        get().setMaxHeight(minHeight, unit);
+        return (E) this;
+    }
+
     default E height(String height) {
         get().setHeight(height);
+        return (E) this;
+    }
+
+    default E height(float minHeight, Unit unit) {
+        get().setHeight(minHeight, unit);
         return (E) this;
     }
 
@@ -85,6 +101,21 @@ public interface HasSizeFactory<T extends Component & HasSize, E extends HasSize
 
     default E maxWidth(String maxWidth) {
         get().setMaxWidth(maxWidth);
+        return (E) this;
+    }
+
+    default E width(float width, Unit unit) {
+        get().setWidth(width, unit);
+        return (E) this;
+    }
+
+    default E maxWidth(float maxWidth, Unit unit) {
+        get().setMaxWidth(maxWidth, unit);
+        return (E) this;
+    }
+
+    default E minWidth(float minWidth, Unit unit) {
+        get().setMinWidth(minWidth, unit);
         return (E) this;
     }
 

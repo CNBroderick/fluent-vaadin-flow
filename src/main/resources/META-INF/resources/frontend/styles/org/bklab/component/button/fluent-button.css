@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-08-04 11:36:20
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-21/src/main/resources/META-INF/resources/frontend/styles/org/bklab/component/button/fluent-button.css
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 .fluent-button {
     line-height: 1.5em;
     position: relative;
@@ -150,14 +161,14 @@ fluent-button.fluent-button.fluent-button__primary:hover {
     text-decoration: none;
 }
 
-.fluent-button iron-icon {
-    height: 14px;
-    width: 14px;
+.fluent-button vaadin-icon {
+    height: 1.6em;
+    width: 1.6em;
     padding-right: 0.5em;
     padding-bottom: 2px;
 }
 
-.fluent-button .fluent-button__icon-only iron-icon {
+.fluent-button .fluent-button__icon-only vaadin-icon {
     padding-right: 0;
     padding-bottom: 0;
 }

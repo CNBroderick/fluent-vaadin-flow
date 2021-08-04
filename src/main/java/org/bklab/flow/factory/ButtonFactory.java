@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-06-17 20:42:39
+ * Modify date：2021-07-30 17:16:44
  * _____________________________
  * Project name: fluent-vaadin-flow
  * Class name：org.bklab.flow.factory.ButtonFactory
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 package org.bklab.flow.factory;
@@ -38,12 +38,20 @@ public class ButtonFactory extends FlowFactory<Button, ButtonFactory> implements
         this(new Button(text, icon, clickListener));
     }
 
+    public ButtonFactory(String text, VaadinIcon icon, ComponentEventListener<ClickEvent<Button>> clickListener) {
+        this(new Button(text, icon.create(), clickListener));
+    }
+
     public ButtonFactory(String text, ComponentEventListener<ClickEvent<Button>> clickListener) {
         this(new Button(text, clickListener));
     }
 
     public ButtonFactory(String text, Component icon) {
         this(new Button(text, icon));
+    }
+
+    public ButtonFactory(String text, VaadinIcon icon) {
+        this(new Button(text, icon.create()));
     }
 
     public ButtonFactory() {
