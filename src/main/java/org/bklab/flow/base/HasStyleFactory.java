@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-06-24 15:13:14
+ * Modify date: 2021-08-10 09:30:00
  * _____________________________
- * Project name: fluent-vaadin-flow.main
- * Class name：org.bklab.flow.base.HasStyleFactory
+ * Project name: fluent-vaadin-flow
+ * Class name: org.bklab.flow.base.HasStyleFactory
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -199,8 +199,13 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
         return (E) this;
     }
 
+    @Deprecated
     default E marginAutoEnd() {
-        get().getStyle().set("margin-end", "auto");
+        return marginAutoBottom();
+    }
+
+    default E marginAutoBottom() {
+        get().getStyle().set("margin-bottom", "auto");
         return (E) this;
     }
 
