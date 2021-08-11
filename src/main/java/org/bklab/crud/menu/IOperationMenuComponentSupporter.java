@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-05-26 09:37:12
+ * Modify date: 2021-08-10 09:30:32
  * _____________________________
- * Project name: fluent-vaadin-flow.main
- * Class name：org.bklab.crud.menu.IOperationMenuComponentSupporter
+ * Project name: fluent-vaadin-flow
+ * Class name: org.bklab.crud.menu.IOperationMenuComponentSupporter
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -48,7 +48,7 @@ public interface IOperationMenuComponentSupporter<T, G extends Grid<T>, C extend
     }
 
     default Button createOperationMenuButton(BiConsumer<C, ContextMenu> menuBuilder, boolean dynamic) {
-        Button button = new FluentButton(VaadinIcon.MENU).iconOnly().noPadding().tooltip("点击显示操作菜单").asFactory().alignSelfBaseline().border("0").get();
+        Button button = new FluentButton(VaadinIcon.MENU).iconOnly().noPadding().tooltip("点击显示操作菜单").asFactory().alignSelfCenter().border("0").get();
         return extendOperationItemsComponent(button, menuBuilder, dynamic);
     }
 

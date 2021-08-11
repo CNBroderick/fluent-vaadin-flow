@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-05-21 14:21:31
+ * Modify date: 2021-08-04 14:43:37
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.components.menu.FluentMenuItem
+ * Class name: org.bklab.flow.components.menu.FluentMenuItem
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -42,7 +42,7 @@ public class FluentMenuItem extends Span {
 
     public FluentMenuItem(Icon icon, String text) {
         add(icon, new Span(text));
-        icon.addClassName("fluent-menu-item-iron-icon");
+        icon.addClassName("fluent-menu-item-vaadin-icon");
     }
 
     public static void addSeparator(ContextMenu contextMenu) {

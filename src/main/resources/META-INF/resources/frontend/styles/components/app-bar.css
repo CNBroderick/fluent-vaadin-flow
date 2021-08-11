@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-07-02 09:33:44
+ * Modify date: 2021-08-10 09:37:03
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：D:/broderick/develop/vaadin/16/fluent-vaadin-flow/frontend/styles/components/app-bar.css
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-21/src/main/resources/META-INF/resources/frontend/styles/components/app-bar.css
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 .app-bar {
     background-color: var(--lumo-base-color);
@@ -21,6 +21,7 @@
     padding-left: var(--lumo-space-r-l);
     padding-right: var(--lumo-space-r-s);
     transition: padding var(--transition-duration-m);
+    height: var(--app-bar-height);
 }
 
 .app-bar__container:not(:first-child) {
@@ -83,6 +84,7 @@
     flex-shrink: 0;
     height: var(--lumo-size-s);
     margin-left: var(--lumo-space-m);
+    margin-right: var(--lumo-space-m);
     width: var(--lumo-size-s);
 }
 
