@@ -2,15 +2,16 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-14 14:00:53
+ * Modify date: 2021-09-07 16:41:12
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.dialog.ErrorDialog
+ * Class name: org.bklab.flow.dialog.ErrorDialog
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 package org.bklab.flow.dialog;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -25,6 +26,9 @@ import java.util.Optional;
 public class ErrorDialog extends MessageDialog {
 
     private final Button copyButton;
+
+    private String message;
+    private String detail;
 
     {
         Icon icon = VaadinIcon.CLOSE_CIRCLE_O.create();
@@ -55,6 +59,8 @@ public class ErrorDialog extends MessageDialog {
     public ErrorDialog(String message, String detail) {
         message(message);
         if (detail != null) addCopyButton(detail);
+        this.message = message;
+        this.detail = detail;
     }
 
     public ErrorDialog(String... message) {
@@ -86,5 +92,16 @@ public class ErrorDialog extends MessageDialog {
     public ErrorDialog hasCopyButton() {
         copyButton.setVisible(true);
         return this;
+    }
+
+    @Override
+    public void open() {
+        UI ui = UI.getCurrent();
+        if (ui == null) {
+            System.out.println("ui instance not available. message: \n" + message + "\ndetail:\n" + detail);
+            return;
+        }
+
+        super.open();
     }
 }

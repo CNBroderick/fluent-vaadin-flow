@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-09-07 16:41:12
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name: org.bklab.flow.util.url.QueryParameterBuilder
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.util.url;
 
 import com.vaadin.flow.component.Component;
@@ -36,14 +47,20 @@ public class QueryParameterBuilder implements SerializableSupplier<QueryParamete
 
     public QueryParameterBuilder add(String name, Object... params) {
         this.map.put(name, params == null || params.length < 1
-                ? Collections.emptyList()
-                : Stream.of(params).map(String::valueOf).collect(Collectors.toList()));
+                           ? Collections.emptyList()
+                           : Stream.of(params).map(String::valueOf).collect(Collectors.toList()));
         return this;
     }
 
-    public QueryParameterBuilder encode(String name, Object ... params) {
+    public QueryParameterBuilder encode(String name, Object... params) {
         return add(name, Arrays.stream(params).map(String::valueOf)
                 .map(s -> URLEncoder.encode(s, StandardCharsets.UTF_8))
+                .collect(Collectors.toList()).toArray(new Object[]{}));
+    }
+
+    public QueryParameterBuilder encode64(String name, Object... params) {
+        return add(name, Arrays.stream(params).map(String::valueOf)
+                .map(s -> Base64.getEncoder().encodeToString(s.getBytes(StandardCharsets.UTF_8)))
                 .collect(Collectors.toList()).toArray(new Object[]{}));
     }
 
@@ -54,7 +71,7 @@ public class QueryParameterBuilder implements SerializableSupplier<QueryParamete
     @SafeVarargs
     public final <T> QueryParameterBuilder add(Predicate<T> add, String name, T... params) {
         return add(name, params == null ? Collections.emptyList()
-                : Stream.of(params).filter(add).collect(Collectors.toList()));
+                                        : Stream.of(params).filter(add).collect(Collectors.toList()));
     }
 
     public QueryParameterBuilder peek(Consumer<QueryParameterBuilder> consumer) {

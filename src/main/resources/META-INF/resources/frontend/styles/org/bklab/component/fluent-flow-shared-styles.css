@@ -1,21 +1,120 @@
-.centered-content {
-    margin: 0 auto;
-    max-width: 250px;
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-09-07 16:41:12
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-21/src/main/resources/META-INF/resources/frontend/styles/org/bklab/component/fluent-flow-shared-styles.css
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
+.v-loading-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    right: 50%;
+    bottom: 50%;
+    pointer-events: auto;
+    z-index: 2147483647;
+    transition-duration: 0ms !IMPORTANT;
 }
 
+.v-loading-indicator:before {
+    width: 50px;
+    height: 50px;
 
-.has-spacing-div-container {
-    align-items: baseline;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    margin: -38px 0 0 -38px;
+
+    border-radius: 100%;
+    content: "";
+    animation: fadein 0.3s ease-out 0.2s normal 1 both;
+    transition: none;
+    transition-duration: 0ms;
 }
 
-.has-spacing-div-container:not(:last-child) {
-    padding-right: 0.5em;
+.v-loading-indicator[style*='none'] {
+    animation: none;
+    transition: none;
+    transition-duration: 0ms !IMPORTANT;
 }
 
-.has-spacing-div-container-r {
-    align-items: baseline;
+.v-loading-indicator.first:before {
+    background-image: url("/images/loading.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+
+    width: 50px;
+    height: 50px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    margin: -38px 0 0 -38px;
+
+    border-radius: 100%;
+    content: "";
+    animation: fadein 0.3s ease-out 0.2s normal 1 both;
+    transition: none;
+    transition-duration: 0ms;
 }
 
-.has-spacing-div-container-r:not(:first-child) {
-    padding-left: 0.5em;
+.v-loading-indicator.second:before {
+    background-image: url("/images/loading.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+
+    width: 50px;
+    height: 50px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    margin: -38px 0 0 -38px;
+
+    border-radius: 100%;
+    content: "";
+    animation: fadein 0.3s ease-out 0.2s normal 1 both;
+    transition: none;
+    transition-duration: 0ms;
+}
+
+.v-loading-indicator.third:before {
+    background-image: url("/images/loading.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+
+    width: 50px;
+    height: 50px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    margin: -38px 0 0 -38px;
+
+    border-radius: 100%;
+    content: "";
+    animation: fadein 0.3s ease-out 0.2s normal 1 both;
+    transition: none;
+    transition-duration: 0ms;
+}
+
+@keyframes bouncedelay {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1.0);
+    }
+}
+
+.v-loading-indicator, .v-status-message {
+    background-color: transparent;
 }

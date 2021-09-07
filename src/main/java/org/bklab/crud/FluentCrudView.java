@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-05-26 09:36:26
+ * Modify date: 2021-09-07 16:41:12
  * _____________________________
- * Project name: fluent-vaadin-flow.main
- * Class name：org.bklab.crud.FluentCrudView
+ * Project name: fluent-vaadin-flow
+ * Class name: org.bklab.crud.FluentCrudView
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -13,6 +13,7 @@ package org.bklab.crud;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.HasValue;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridSortOrder;
@@ -50,6 +51,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -112,10 +115,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected void beforeInitGrid() {
     }
 
-    public FluentCrudView<T, G> useRefreshIconButton() {
-        searchButton.reset().noPadding().link().iconOnly().asFactory().tooltip("刷新").icon(VaadinIcon.REFRESH.create()).text(null);
-        return this;
-    }
+    private Future<Void> future = null;
 
     public FluentCrudView<T, G> noRefreshIconButton() {
         searchButton.setVisible(false);
@@ -378,11 +378,43 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         });
     }
 
+    public FluentCrudView<T, G> useRefreshIconButton() {
+        searchButton.reset().noPadding().link().iconOnly().asFactory()
+                .visible(true).tooltip("刷新").icon(VaadinIcon.REFRESH.create()).text(null);
+        return this;
+    }
+
     public void reloadGridData() {
         this.entities.clear();
         Map<String, Object> map = new LinkedHashMap<>();
         parameterMap.forEach((k, v) -> Optional.ofNullable(v).map(Supplier::get).ifPresent(v1 -> map.put(k, v1)));
         Optional.ofNullable(queryEntities(map)).ifPresent(this.entities::addAll);
+        this.reloadGridDataInMemory();
+    }
+
+    public void reloadGridDataAsynchronous() {
+        this.entities.clear();
+        Map<String, Object> map = new LinkedHashMap<>();
+        parameterMap.forEach((k, v) -> Optional.ofNullable(v).map(Supplier::get).ifPresent(v1 -> map.put(k, v1)));
+        UI ui = UI.getCurrent();
+        if (ui == null) {
+            Optional.ofNullable(queryEntities(map)).ifPresent(this.entities::addAll);
+            this.reloadGridDataInMemory();
+            return;
+        }
+
+        AtomicInteger interval = new AtomicInteger(-1);
+        if (future != null && !future.isDone()) {
+            future.cancel(true);
+        }
+
+        future = ui.access(() -> {
+            interval.set(ui.getPollInterval());
+            ui.setPollInterval(500);
+            Optional.ofNullable(queryEntities(map)).ifPresent(this.entities::addAll);
+            ui.setPollInterval(interval.get());
+            future = null;
+        });
         this.reloadGridDataInMemory();
     }
 
