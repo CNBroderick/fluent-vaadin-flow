@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-11-30 16:54:54
+ * _____________________________
+ * Project name: fluent-vaadin-flow-22
+ * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-22/src/main/resources/META-INF/resources/frontend/styles/components/pagination/pagination-page-size.css
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 .pagination-page-size {
     -webkit-tap-highlight-color: transparent;
     --antd-wave-shadow-color: #1890ff;
@@ -15,20 +26,18 @@
     font-feature-settings: 'tnum';
     position: relative;
     cursor: pointer;
-    display: inline-block;
     width: auto;
     margin-right: 8px;
 
     background-color: white;
     border: 1px solid #d9d9d9;
     border-radius: 2px;
-    border-right-width: 1px !important;
     min-width: 4em;
     max-width: 10em;
 }
 
-.vaadin-text-field-container [part="input-field"]{
-
+:host(.pagination-page-size) [part="input-field"] {
+    background-color: white;
 }
 
 .pagination-page-size[part="input-field"] {

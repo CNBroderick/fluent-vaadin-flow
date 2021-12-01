@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-09-07 11:22:06
+ * _____________________________
+ * Project name: fluent-vaadin-flow
+ * Class name: org.bklab.flow.factory.GridFactory
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.Component;
@@ -23,6 +34,7 @@ import org.bklab.flow.base.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class GridFactory<T> extends FlowFactory<Grid<T>, GridFactory<T>> implements
         HasStyleFactory<Grid<T>, GridFactory<T>>,
@@ -60,6 +72,15 @@ public class GridFactory<T> extends FlowFactory<Grid<T>, GridFactory<T>> impleme
         return this;
     }
 
+    public GridFactory<T> columnAlign(ColumnTextAlign align, String... keys) {
+        if (keys != null) {
+            for (String key : keys) {
+                Optional.ofNullable(get().getColumnByKey(key)).ifPresent(c -> c.setTextAlign(align));
+            }
+        }
+        return this;
+    }
+
     public GridFactory<T> columnAlignCenter() {
         get().getColumns().forEach(c -> c.setTextAlign(ColumnTextAlign.CENTER));
         return this;
@@ -76,24 +97,15 @@ public class GridFactory<T> extends FlowFactory<Grid<T>, GridFactory<T>> impleme
     }
 
     public GridFactory<T> columnAlignStart(String... keys) {
-        for (String key : keys) {
-            get().getColumnByKey(key).setTextAlign(ColumnTextAlign.START);
-        }
-        return this;
+        return columnAlign(ColumnTextAlign.START, keys);
     }
 
     public GridFactory<T> columnAlignCenter(String... keys) {
-        for (String key : keys) {
-            get().getColumnByKey(key).setTextAlign(ColumnTextAlign.CENTER);
-        }
-        return this;
+        return columnAlign(ColumnTextAlign.CENTER, keys);
     }
 
     public GridFactory<T> columnAlignEnd(String... keys) {
-        for (String key : keys) {
-            get().getColumnByKey(key).setTextAlign(ColumnTextAlign.END);
-        }
-        return this;
+        return columnAlign(ColumnTextAlign.END, keys);
     }
 
     public GridFactory<T> sort(List<GridSortOrder<T>> sort) {

@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-19 13:27:19
+ * Modify date: 2021-08-27 09:25:21
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.util.url.QueryParameterUtil
+ * Class name: org.bklab.flow.util.url.QueryParameterUtil
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -72,6 +72,10 @@ public class QueryParameterUtil {
 
     public String decode(String name) {
         return Optional.ofNullable(get(name)).map(value -> URLDecoder.decode(value, StandardCharsets.UTF_8)).orElse(null);
+    }
+
+    public String decode64(String name) {
+        return Optional.ofNullable(get(name)).map(value -> new String(Base64.getDecoder().decode(value), StandardCharsets.UTF_8)).orElse(null);
     }
 
     public Optional<String> getOptional(String name) {

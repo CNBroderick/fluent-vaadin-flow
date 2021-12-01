@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-20 15:25:24
+ * Modify date: 2021-11-30 17:04:41
  * _____________________________
- * Project name: fluent-vaadin-flow
- * Class name：org.bklab.ComponentDemoView
+ * Project name: fluent-vaadin-flow-22
+ * Class name: org.bklab.ComponentDemoView
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -16,11 +16,13 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
 import org.bklab.flow.components.selector.button.ButtonSelector;
 import org.bklab.flow.components.slider.PaperSlider;
 import org.bklab.flow.dialog.ErrorDialog;
 import org.bklab.flow.dialog.MessageDialog;
 import org.bklab.flow.dialog.ModalDialog;
+import org.bklab.flow.dialog.timerange.DateTimeRangeDialog;
 import org.bklab.flow.factory.ButtonFactory;
 import org.bklab.flow.factory.NotificationFactory;
 import org.bklab.flow.layout.ToolBar;
@@ -28,6 +30,7 @@ import org.bklab.flow.text.TitleLabel;
 
 import java.util.function.Consumer;
 
+@RouteAlias("")
 @Route(value = "components", layout = View.class)
 @PageTitle("工具栏&对话框 --Broderick Labs")
 public class ComponentDemoView extends Div {
@@ -40,6 +43,8 @@ public class ComponentDemoView extends Div {
         add(span, paperSlider);
         span.setText("初始值：" + paperSlider);
         HorizontalLayout layout = new HorizontalLayout();
+        DateTimeRangeDialog dateTimeRangeDialog = new DateTimeRangeDialog().build();
+        layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("日期选择对话框").clickListener(e -> dateTimeRangeDialog.open()).get());
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("普通对话框").clickListener(e -> new MessageDialog().message("这是一个则消息").header("提示").build().open()).get());
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("成功对话框").clickListener(e -> new MessageDialog().message("这是一个则成功消息").header("成功").forSuccess().build().open()).get());
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("警告对话框").clickListener(e -> new MessageDialog().message("这是一个则警告消息").header("警告").forWarning().build().open()).get());

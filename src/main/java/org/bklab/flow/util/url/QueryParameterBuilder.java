@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-09-30 16:18:41
+ * _____________________________
+ * Project name: fluent-vaadin-flow-22
+ * Class name: org.bklab.flow.util.url.QueryParameterBuilder
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.util.url;
 
 import com.vaadin.flow.component.Component;
@@ -8,6 +19,7 @@ import com.vaadin.flow.router.QueryParameters;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -36,14 +48,20 @@ public class QueryParameterBuilder implements SerializableSupplier<QueryParamete
 
     public QueryParameterBuilder add(String name, Object... params) {
         this.map.put(name, params == null || params.length < 1
-                ? Collections.emptyList()
-                : Stream.of(params).map(String::valueOf).collect(Collectors.toList()));
+                           ? Collections.emptyList()
+                           : Stream.of(params).map(String::valueOf).collect(Collectors.toList()));
         return this;
     }
 
-    public QueryParameterBuilder encode(String name, Object ... params) {
+    public QueryParameterBuilder encode(String name, Object... params) {
         return add(name, Arrays.stream(params).map(String::valueOf)
                 .map(s -> URLEncoder.encode(s, StandardCharsets.UTF_8))
+                .collect(Collectors.toList()).toArray(new Object[]{}));
+    }
+
+    public QueryParameterBuilder encode64(String name, Object... params) {
+        return add(name, Arrays.stream(params).map(String::valueOf)
+                .map(s -> Base64.getEncoder().encodeToString(s.getBytes(StandardCharsets.UTF_8)))
                 .collect(Collectors.toList()).toArray(new Object[]{}));
     }
 
@@ -54,7 +72,7 @@ public class QueryParameterBuilder implements SerializableSupplier<QueryParamete
     @SafeVarargs
     public final <T> QueryParameterBuilder add(Predicate<T> add, String name, T... params) {
         return add(name, params == null ? Collections.emptyList()
-                : Stream.of(params).filter(add).collect(Collectors.toList()));
+                                        : Stream.of(params).filter(add).collect(Collectors.toList()));
     }
 
     public QueryParameterBuilder peek(Consumer<QueryParameterBuilder> consumer) {
@@ -79,5 +97,17 @@ public class QueryParameterBuilder implements SerializableSupplier<QueryParamete
     public <C extends Class<? extends Component>> QueryParameterBuilder navigate(UI ui, C target) {
         ui.getInternals().getRouter().getRegistry().getTargetUrl(target).ifPresent(uri -> ui.navigate(uri, get()));
         return this;
+    }
+
+    public <C extends Class<? extends Component>> Optional<String> createTargetFullUrl(C target) {
+        return UI.getCurrent().getInternals().getRouter().getRegistry().getTargetUrl(target).map(url -> url + "?" + get().getQueryString());
+    }
+
+    public <C extends Class<? extends Component>> boolean open(UI ui, C target) {
+        AtomicBoolean success = new AtomicBoolean(true);
+        ui.getInternals().getRouter().getRegistry().getTargetUrl(target).ifPresentOrElse(
+                uri -> ui.getPage().open(uri + "?" + get().getQueryString(), "_blank"),
+                () -> success.set(false));
+        return success.get();
     }
 }

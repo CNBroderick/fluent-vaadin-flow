@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date: 2021-08-10 09:30:00
+ * Modify date: 2021-12-01 09:22:45
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow-22
  * Class name: org.bklab.flow.base.HasStyleFactory
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -19,7 +19,10 @@ import dev.mett.vaadin.tooltip.config.TC_FOLLOW_CURSOR;
 import dev.mett.vaadin.tooltip.config.TooltipConfiguration;
 import org.bklab.flow.IFlowFactory;
 import org.bklab.flow.factory.TooltipConfigurationFactory;
+import org.bklab.flow.util.text.ObjectToStringFormatter;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 @SuppressWarnings("unchecked")
 public interface HasStyleFactory<C extends Component & HasStyle, E extends HasStyleFactory<C, E>> extends IFlowFactory<C> {
@@ -307,6 +310,10 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
     default E hasClassName(String hasClassName) {
         get().hasClassName(hasClassName);
         return (E) this;
+    }
+
+    default E tooltip(Map<String, Object> attributes) {
+        return tooltip(new ObjectToStringFormatter().serialize(attributes));
     }
 
     default E tooltip(String text) {

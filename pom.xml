@@ -2,10 +2,10 @@
   ~ Copyright (c) 2008 - 2021. - Broderick Labs.
   ~ Author: Broderick Johansson
   ~ E-mail: z@bkLab.org
-  ~ Modify date: 2021-08-04 13:06:25
+  ~ Modify date: 2021-12-01 09:22:02
   ~ _____________________________
-  ~ Project name: fluent-vaadin-flow
-  ~ Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-21/pom.xml
+  ~ Project name: fluent-vaadin-flow-22
+  ~ Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-22/pom.xml
   ~ Copyright (c) 2008 - 2021. - Broderick Labs.
   -->
 
@@ -14,22 +14,22 @@
 
     <groupId>org.bklab</groupId>
     <artifactId>fluent-vaadin-flow</artifactId>
-    <version>21.0.0.beta1</version>
+    <version>22.0.0.beta3</version>
     <name>fluent-vaadin-flow</name>
     <description>Broderick Labs for fluent Vaadin flow. Inherits common Vaadin components.</description>
     <packaging>jar</packaging>
 
     <properties>
-        <vaadin.version>21.0.0.beta1</vaadin.version>
+        <vaadin.version>22.0.0.rc1</vaadin.version>
 
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <maven.javadoc.skip>false</maven.javadoc.skip>
 
-        <jetty.version>9.4.31.v20200723</jetty.version>
+        <jetty.version>9.4.43.v20210629</jetty.version>
     </properties>
     <organization>
         <name>Broderick Johansson</name>
@@ -124,31 +124,36 @@
         <dependency>
             <groupId>com.github.appreciated</groupId>
             <artifactId>iron-overlay-behavior</artifactId>
-            <version>2.0.0.beta3</version>
+            <version>2.0.0</version>
         </dependency>
-
         <dependency>
             <groupId>dev.mett.vaadin</groupId>
             <artifactId>tooltip</artifactId>
-            <version>2.1.1</version>
+            <version>2.2.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.appreciated</groupId>
             <artifactId>vaadin-iron-dropdown</artifactId>
             <version>0.5.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.6</version>
+            <version>2.8.8</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.76</version>
+            <version>1.2.78</version>
         </dependency>
 
         <dependency>
@@ -181,31 +186,8 @@
             <artifactId>vaadin</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-testbench</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>2.0.0-alpha1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.14.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.14.1</version>
             <scope>test</scope>
         </dependency>
 

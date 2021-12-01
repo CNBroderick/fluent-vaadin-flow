@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-25 11:25:31
+ * Modify date: 2021-08-23 14:10:00
  * _____________________________
  * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.dialog.search.AdvanceSearchField
+ * Class name: org.bklab.flow.dialog.search.AdvanceSearchField
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -34,10 +34,10 @@ public class AdvanceSearchField<E extends Dialog> extends TextField {
         this.dialog = dialog;
         asFactory().lumoSmall().minWidth("200px").width("25vw").maxWidth("50vw").readOnly().value(placeholder);
 
-        clearButton = new ButtonFactory().icon(new IconFactory(VaadinIcon.CLOSE).color("var(--lumo-secondary-text-color)").size("13px").get())
+        clearButton = new ButtonFactory().icon(new IconFactory(VaadinIcon.CLOSE).color("var(--lumo-secondary-text-color)").get())
                 .lumoIcon().visible(false).lumoSmall().lumoTertiaryInline().get();
 
-        openButton = new FluentButton(new IconFactory(VaadinIcon.FILTER).color("var(--lumo-secondary-text-color)").size("13px").get())
+        openButton = new FluentButton(new IconFactory(VaadinIcon.FILTER).color("var(--lumo-secondary-text-color)").get())
                 .asFactory().border("0").enabled(true).padding("0").clickListener(e -> dialog.open()).get();
         addValueChangeListener(e -> clearButton.setVisible(e.getValue() != null && !placeholder.equals(e.getValue())));
         dialog.addOpenedChangeListener(e -> openButton.setEnabled(!e.isOpened()));
