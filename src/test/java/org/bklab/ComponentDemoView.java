@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date: 2021-11-30 17:04:41
+ * Modify date: 2021-12-01 17:28:34
  * _____________________________
  * Project name: fluent-vaadin-flow-22
  * Class name: org.bklab.ComponentDemoView
@@ -44,7 +44,13 @@ public class ComponentDemoView extends Div {
         span.setText("初始值：" + paperSlider);
         HorizontalLayout layout = new HorizontalLayout();
         DateTimeRangeDialog dateTimeRangeDialog = new DateTimeRangeDialog().build();
-        layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("日期选择对话框").clickListener(e -> dateTimeRangeDialog.open()).get());
+        layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("日期选择对话框").clickListener(e -> {
+            try {
+                dateTimeRangeDialog.open();
+            } catch (Exception exception) {
+                new ErrorDialog(exception).build().open();
+            }
+        }).get());
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("普通对话框").clickListener(e -> new MessageDialog().message("这是一个则消息").header("提示").build().open()).get());
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("成功对话框").clickListener(e -> new MessageDialog().message("这是一个则成功消息").header("成功").forSuccess().build().open()).get());
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("警告对话框").clickListener(e -> new MessageDialog().message("这是一个则警告消息").header("警告").forWarning().build().open()).get());
