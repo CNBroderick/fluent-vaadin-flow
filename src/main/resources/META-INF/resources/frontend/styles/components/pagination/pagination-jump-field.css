@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-11-30 16:54:54
+ * _____________________________
+ * Project name: fluent-vaadin-flow-22
+ * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-22/src/main/resources/META-INF/resources/frontend/styles/components/pagination/pagination-jump-field.css
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 .pagination-jump-field {
 }
 
@@ -11,6 +22,14 @@
     vertical-align: middle;
     border: 1px solid #d9d9d9;
     margin: 0 0.5em;
+}
+
+:host(.pagination-jump-field) [part="input-field"] {
+    background-color: white;
+}
+
+:host([theme~="pagination"]) .vaadin-field-container {
+    background-color: white;
 }
 
 .pagination-jump-field__jump-text:hover {

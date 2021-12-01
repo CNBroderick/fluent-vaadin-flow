@@ -1,6 +1,18 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-11-30 13:51:47
+ * _____________________________
+ * Project name: fluent-vaadin-flow-22
+ * Class name: org.bklab.flow.dialog.timerange.TimeRangeSupplier
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.dialog.timerange;
 
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -46,6 +58,30 @@ public class TimeRangeSupplier implements ITimeRangeSupplier {
 
     }
 
+    public static ITimeRangeSupplier recently(String name, Duration duration) {
+        return new ITimeRangeSupplier() {
+            @Override
+            public String getName() {
+                return name;
+            }
+
+            @Override
+            public LocalDateTime getMin() {
+                return LocalDateTime.now().minus(duration);
+            }
+
+            @Override
+            public LocalDateTime getMax() {
+                return LocalDateTime.now();
+            }
+
+            @Override
+            public String getLabel() {
+                return name;
+            }
+        };
+    }
+
     public static ITimeRangeSupplier recently(String suffix, long duration) {
         return new ITimeRangeSupplier() {
             @Override
@@ -60,6 +96,7 @@ public class TimeRangeSupplier implements ITimeRangeSupplier {
                     case "小时" -> LocalDateTime.now().minusHours(duration);
                     case "天" -> LocalDateTime.now().minusDays(duration);
                     case "月" -> LocalDateTime.now().minusMonths(duration);
+                    case "年" -> LocalDateTime.now().minusYears(duration);
                     default -> throw new IllegalStateException("Unexpected value: " + suffix);
                 };
             }

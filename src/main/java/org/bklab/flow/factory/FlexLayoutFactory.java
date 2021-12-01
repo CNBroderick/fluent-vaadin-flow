@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2020-06-24 13:22:07
+ * Modify date: 2021-11-16 13:52:41
  * _____________________________
- * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.factory.FlexLayoutFactory
- * Copyright (c) 2008 - 2020. - Broderick Labs.
+ * Project name: fluent-vaadin-flow-22
+ * Class name: org.bklab.flow.factory.FlexLayoutFactory
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
 package org.bklab.flow.factory;
@@ -36,12 +36,6 @@ public class FlexLayoutFactory extends FlowFactory<FlexLayout, FlexLayoutFactory
 
     public FlexLayoutFactory flexBasis(String width, HasElement... elementContainers) {
         get().setFlexBasis(width, elementContainers);
-        return this;
-    }
-
-    @Deprecated
-    public FlexLayoutFactory wrapMode(FlexLayout.WrapMode wrapMode) {
-        get().setWrapMode(wrapMode);
         return this;
     }
 

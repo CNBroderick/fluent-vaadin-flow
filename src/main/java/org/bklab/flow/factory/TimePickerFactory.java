@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-12-01 09:22:48
+ * _____________________________
+ * Project name: fluent-vaadin-flow-22
+ * Class name: org.bklab.flow.factory.TimePickerFactory
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.factory;
 
 import com.vaadin.flow.component.AbstractField;
@@ -87,24 +98,22 @@ public class TimePickerFactory extends FlowFactory<TimePicker, TimePickerFactory
     }
 
     @Deprecated
-    public TimePickerFactory max(String max) {
-        get().setMax(max);
-        return this;
+    public TimePickerFactory minTime(LocalTime minTime) {
+        return min(minTime);
     }
 
-    public TimePickerFactory minTime(LocalTime minTime) {
-        get().setMinTime(minTime);
+    public TimePickerFactory min(LocalTime minTime) {
+        get().setMin(minTime);
         return this;
     }
 
     @Deprecated
-    public TimePickerFactory min(String min) {
-        get().setMin(min);
-        return this;
+    public TimePickerFactory maxTime(LocalTime maxTime) {
+        return max(maxTime);
     }
 
-    public TimePickerFactory maxTime(LocalTime maxTime) {
-        get().setMaxTime(maxTime);
+    public TimePickerFactory max(LocalTime maxTime) {
+        get().setMax(maxTime);
         return this;
     }
 

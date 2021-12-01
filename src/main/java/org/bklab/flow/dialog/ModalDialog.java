@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date：2021-04-25 14:31:10
+ * Modify date: 2021-11-19 09:40:48
  * _____________________________
- * Project name: fluent-vaadin-flow
- * Class name：org.bklab.flow.dialog.ModalDialog
+ * Project name: fluent-vaadin-flow-22
+ * Class name: org.bklab.flow.dialog.ModalDialog
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -99,12 +99,12 @@ public class ModalDialog extends Dialog {
     }
 
     public ModalDialog addPrimaryButton(String text, ComponentEventListener<ClickEvent<Button>> listener) {
-        footerRight(new FluentButton(text, listener));
+        footerRight(new FluentButton(text, listener).primary());
         return this;
     }
 
     public ModalDialog addPrimaryButton(VaadinIcon icon, String text, ComponentEventListener<ClickEvent<Button>> listener) {
-        footerRight(new FluentButton(icon, text, listener));
+        footerRight(new FluentButton(icon, text, listener).primary());
         return this;
     }
 

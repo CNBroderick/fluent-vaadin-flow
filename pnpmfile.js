@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-12-01 09:22:48
+ * _____________________________
+ * Project name: fluent-vaadin-flow-22
+ * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-22/pnpmfile.js
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 /**
  * NOTICE: this is an auto-generated file
  *
@@ -22,17 +33,17 @@ module.exports = {
 };
 
 function readPackage(pkg) {
-  const {dependencies} = pkg;
-  
-  if (dependencies) {
-    for (let k in versions) {
-      if (dependencies[k] && dependencies[k] !== versions[k]) {
-        pkg.dependencies[k] = versions[k];
-      }
-    }
-  }
+    const {dependencies} = pkg;
 
-  // Forcing chokidar version for now until new babel version is available
+    if (dependencies) {
+        for (let k in versions) {
+            if (dependencies[k] && dependencies[k] !== versions[k]) {
+                pkg.dependencies[k] = versions[k];
+            }
+        }
+    }
+
+    // Forcing chokidar version for now until new babel version is available
   // check out https://github.com/babel/babel/issues/11488
   if (pkg.dependencies.chokidar) {
     pkg.dependencies.chokidar = '^3.4.0';

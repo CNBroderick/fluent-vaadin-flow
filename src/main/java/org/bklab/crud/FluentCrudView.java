@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date: 2021-09-07 16:41:12
+ * Modify date: 2021-11-18 11:56:06
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow-22
  * Class name: org.bklab.crud.FluentCrudView
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -79,7 +79,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     protected final List<T> entities = new ArrayList<>();
     protected final List<T> inMemoryFilteredEntities = new ArrayList<>();
     protected final Map<String, Predicate<T>> inMemoryEntityFilter = new LinkedHashMap<>();
-    protected final Pagination pagination = new Pagination().onePageSize(20).limit(10).customLayout(new MiddleCustomPaginationLayout());
+    protected final Pagination pagination = createPagination();
     protected final List<Consumer<List<T>>> afterReloadListeners = new ArrayList<>();
     private final List<Consumer<Exception>> exceptionConsumers = new ArrayList<>();
     private final List<FluentCrudMenuButton<T, G>> menuButtons = new ArrayList<>();
@@ -110,6 +110,10 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
         beforeInitGrid();
         this.grid = createGrid();
         grid.addClassName(CLASS_NAME + "__grid");
+    }
+
+    public Pagination createPagination() {
+        return new Pagination().onePageSize(20).limit(10).customLayout(new MiddleCustomPaginationLayout());
     }
 
     protected void beforeInitGrid() {

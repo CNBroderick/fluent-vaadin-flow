@@ -2,10 +2,10 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date: 2021-08-23 11:43:33
+ * Modify date: 2021-11-16 14:39:36
  * _____________________________
- * Project name: fluent-vaadin-flow
- * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-21/src/main/resources/META-INF/resources/frontend/src/org/bklab/flow/login/fluent-login-modal-view.ts
+ * Project name: fluent-vaadin-flow-22
+ * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-22/src/main/resources/META-INF/resources/frontend/src/org/bklab/flow/login/fluent-login-modal-view.ts
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
 
@@ -66,8 +66,7 @@ export class FluentLoginModalView extends LitElement {
                                   class="bklab-login-copyright">
           <a href="https://bbkki.com" class="bklab-login-copyright"
              style="align-self: center; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; align-items: center; flex-direction: row;"
-             target="_blank"><span style="margin: var(--lumo-space-s);" id="span">Broderick Labs</span><span
-              style="word-break: break-all; display: flex; text-align: center; margin: var(--lumo-space-s);">布克约森实验室</span></a>
+             target="_blank"></a>
         </vaadin-horizontal-layout>
       </vaadin-vertical-layout>
     `;
