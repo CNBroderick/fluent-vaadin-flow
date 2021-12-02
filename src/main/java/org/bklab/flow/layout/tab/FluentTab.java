@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-12-02 09:46:47
+ * _____________________________
+ * Project name: fluent-vaadin-flow-22
+ * Class name: org.bklab.flow.layout.tab.FluentTab
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.layout.tab;
 
 import com.vaadin.flow.component.Component;
@@ -53,6 +64,11 @@ public class FluentTab extends Tab {
 
     public FluentTab enableCache() {
         this.cacheMode = true;
+        return this;
+    }
+
+    public FluentTab enableCache(boolean enable) {
+        this.cacheMode = enable;
         return this;
     }
 

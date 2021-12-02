@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date: 2021-12-01 16:15:18
+ * Modify date: 2021-12-02 17:19:55
  * _____________________________
  * Project name: fluent-vaadin-flow-22
  * Class name: org.bklab.flow.layout.tab.FluentTabView
@@ -33,6 +33,7 @@ public class FluentTabView extends Div implements HasFlowFactory<Div, DivFactory
     private final Map<String, FluentTab> fluentTabMap = new LinkedHashMap<>();
     private final Div content = new DivFactory().width("calc(100% - 2em)").border()
             .padding("0.5em").margin("0.5em").height("calc(100% - 5em)").overflowYScroll().get();
+    private FluentTab current;
 
     public FluentTabView() {
         setSizeFull();
@@ -41,6 +42,7 @@ public class FluentTabView extends Div implements HasFlowFactory<Div, DivFactory
         tabs.addSelectedChangeListener(e -> {
             if (e.isFromClient() && e.getSelectedTab() instanceof FluentTab) {
                 FluentTab selectedTab = (FluentTab) e.getSelectedTab();
+                this.current = selectedTab;
                 content.removeAll();
                 content.add(selectedTab.getComponent());
             }
@@ -57,6 +59,10 @@ public class FluentTabView extends Div implements HasFlowFactory<Div, DivFactory
         return addTab(new FluentTab(id, caption, componentSupplier));
     }
 
+    public FluentTabView addTab(String id, String caption, boolean cacheable, Supplier<Component> componentSupplier) {
+        return addTab(new FluentTab(id, caption, componentSupplier).enableCache(cacheable));
+    }
+
     public FluentTabView addTab(String id, Supplier<Component> componentSupplier) {
         return addTab(id, id, componentSupplier);
     }
@@ -68,6 +74,19 @@ public class FluentTabView extends Div implements HasFlowFactory<Div, DivFactory
         fluentTabMap.put(fluentTab.id, fluentTab);
         tabs.add(fluentTab);
         return this;
+    }
+
+    public FluentTabView removeCache() {
+        getFluentTabMap().values().forEach(tab -> tab.component = null);
+        if (current != null) {
+            content.removeAll();
+            content.add(current.getComponent());
+        }
+        return this;
+    }
+
+    public FluentTab getCurrent() {
+        return current;
     }
 
     public FluentTabView cacheAll() {

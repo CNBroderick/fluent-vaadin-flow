@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date: 2021-12-01 17:28:34
+ * Modify date: 2021-12-02 16:25:29
  * _____________________________
  * Project name: fluent-vaadin-flow-22
  * Class name: org.bklab.ComponentDemoView
@@ -28,6 +28,8 @@ import org.bklab.flow.factory.NotificationFactory;
 import org.bklab.flow.layout.ToolBar;
 import org.bklab.flow.text.TitleLabel;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 @RouteAlias("")
@@ -41,16 +43,13 @@ public class ComponentDemoView extends Div {
         Span span = new Span();
         PaperSlider paperSlider = new PaperSlider(0, 60, 49).valueChangeListener(e -> span.setText("当前值：" + e.getValue()));
         add(span, paperSlider);
+        add(new DateTimeRangeDialog()
+                .globalMinTime(LocalDateTime.of(2021, 9, 1, 0, 0, 0))
+                .globalMaxTime(LocalDateTime.of(2021, 12, 5, 0, 0, 0))
+                .globalMaxDuration(Duration.ofDays(7))
+                .build().createFiled());
         span.setText("初始值：" + paperSlider);
         HorizontalLayout layout = new HorizontalLayout();
-        DateTimeRangeDialog dateTimeRangeDialog = new DateTimeRangeDialog().build();
-        layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("日期选择对话框").clickListener(e -> {
-            try {
-                dateTimeRangeDialog.open();
-            } catch (Exception exception) {
-                new ErrorDialog(exception).build().open();
-            }
-        }).get());
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("普通对话框").clickListener(e -> new MessageDialog().message("这是一个则消息").header("提示").build().open()).get());
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("成功对话框").clickListener(e -> new MessageDialog().message("这是一个则成功消息").header("成功").forSuccess().build().open()).get());
         layout.add(new ButtonFactory().lumoSmall().lumoPrimary().text("警告对话框").clickListener(e -> new MessageDialog().message("这是一个则警告消息").header("警告").forWarning().build().open()).get());
