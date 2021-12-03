@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-12-02 15:58:37
+ * _____________________________
+ * Project name: fluent-vaadin-flow-22
+ * Class name: D:/broderick/develop/bklab/fluent-vaadin-flow/fluent-vaadin-flow-22/src/main/resources/META-INF/resources/frontend/styles/org/bklab/component/fluent-vaadin-flow-shared-styles.js
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 // eagerly import theme styles so as we can override them
 import '@vaadin/vaadin-lumo-styles/all-imports';
 
@@ -46,7 +57,7 @@ $_documentContainer.innerHTML = `
   </style>
 </custom-style>
 
-<dom-module id="text-field-style" theme-for="vaadin-text-field vaadin-text-area vaadin-password-field">
+<dom-module id="text-field-style" theme-for="vaadin-text-field vaadin-date-picker vaadin-time-picker vaadin-combo-box vaadin-text-area vaadin-password-field">
   <template>
     <style>
       [part="input-field"] {

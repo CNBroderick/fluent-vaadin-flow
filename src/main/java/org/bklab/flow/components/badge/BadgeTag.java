@@ -1,5 +1,17 @@
+/*
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ * Author: Broderick Johansson
+ * E-mail: z@bkLab.org
+ * Modify date: 2021-12-01 17:01:51
+ * _____________________________
+ * Project name: fluent-vaadin-flow-22
+ * Class name: org.bklab.flow.components.badge.BadgeTag
+ * Copyright (c) 2008 - 2021. - Broderick Labs.
+ */
+
 package org.bklab.flow.components.badge;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Span;
 import dev.mett.vaadin.tooltip.Tooltips;
@@ -18,6 +30,11 @@ public class BadgeTag extends Span {
 
     public BadgeTag(String text, BadgeTagStyle style) {
         super(text);
+        addClassName(style.style);
+    }
+
+    public BadgeTag(Component component, BadgeTagStyle style) {
+        super(component);
         addClassName(style.style);
     }
 

@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date: 2021-12-01 09:22:45
+ * Modify date: 2021-12-02 09:55:59
  * _____________________________
  * Project name: fluent-vaadin-flow-22
  * Class name: org.bklab.flow.base.HasStyleFactory
@@ -19,6 +19,7 @@ import dev.mett.vaadin.tooltip.config.TC_FOLLOW_CURSOR;
 import dev.mett.vaadin.tooltip.config.TooltipConfiguration;
 import org.bklab.flow.IFlowFactory;
 import org.bklab.flow.factory.TooltipConfigurationFactory;
+import org.bklab.flow.util.lumo.FontWeight;
 import org.bklab.flow.util.text.ObjectToStringFormatter;
 import org.slf4j.LoggerFactory;
 
@@ -134,8 +135,7 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
     }
 
     default E margin(int margin) {
-        get().getStyle().set("margin", margin == 0 ? "0" : margin + "px");
-        return (E) this;
+        return margin(margin == 0 ? "0" : margin + "px");
     }
 
     default E margin(String margin) {
@@ -150,6 +150,43 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
 
     default E margin(String top, String right, String bottom, String left) {
         get().getStyle().set("margin", top + " " + right + " " + bottom + " " + left);
+        return (E) this;
+    }
+
+
+    default E marginTop(int margin) {
+        return margin(margin == 0 ? "0" : margin + "px");
+    }
+
+    default E marginTop(String margin) {
+        get().getStyle().set("margin-top", margin);
+        return (E) this;
+    }
+
+    default E marginLeft(int margin) {
+        return margin(margin == 0 ? "0" : margin + "px");
+    }
+
+    default E marginLeft(String margin) {
+        get().getStyle().set("margin-left", margin);
+        return (E) this;
+    }
+
+    default E marginRight(int margin) {
+        return margin(margin == 0 ? "0" : margin + "px");
+    }
+
+    default E marginRight(String margin) {
+        get().getStyle().set("margin-right", margin);
+        return (E) this;
+    }
+
+    default E marginBottom(int margin) {
+        return margin(margin == 0 ? "0" : margin + "px");
+    }
+
+    default E marginBottom(String margin) {
+        get().getStyle().set("margin-bottom", margin);
         return (E) this;
     }
 
@@ -207,6 +244,11 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
         return marginAutoBottom();
     }
 
+    default E marginAuto() {
+        get().getStyle().set("margin", "auto");
+        return (E) this;
+    }
+
     default E marginAutoBottom() {
         get().getStyle().set("margin-bottom", "auto");
         return (E) this;
@@ -260,6 +302,19 @@ public interface HasStyleFactory<C extends Component & HasStyle, E extends HasSt
     default E fontSizeXXXL() {
         get().getStyle().set("font-size", "var(--lumo-font-size-xxxl)");
         return (E) this;
+    }
+
+    default E fontWeight(String fontWeight) {
+        get().getStyle().set("font-weight", fontWeight);
+        return (E) this;
+    }
+
+    default E fontWeight(FontWeight fontWeight) {
+        return fontWeight(fontWeight.getValue());
+    }
+
+    default E fontWeight(int fontWeight) {
+        return fontWeight(fontWeight + "");
     }
 
     default E cursorPointer() {
