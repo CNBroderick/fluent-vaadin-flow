@@ -134,7 +134,23 @@
     "vite": "v2.7.0-beta.7",
     "vite-plugin-checker": "0.3.4",
     "workbox-core": "6.2.0",
-    "workbox-precaching": "6.2.0"
+    "workbox-precaching": "6.2.0",
+    "compression-webpack-plugin": "4.0.1",
+    "esbuild-loader": "2.15.1",
+    "webpack-cli": "4.9.0",
+    "css-loader": "4.2.1",
+    "file-loader": "6.2.0",
+    "fork-ts-checker-webpack-plugin": "6.2.1",
+    "extra-watch-webpack-plugin": "1.0.3",
+    "lit-css-loader": "0.1.0",
+    "loader-utils": "2.0.0",
+    "webpack": "4.46.0",
+    "html-webpack-plugin": "4.5.1",
+    "chokidar": "^3.5.0",
+    "webpack-merge": "4.2.2",
+    "webpack-dev-server": "4.1.1",
+    "extract-loader": "5.1.0",
+    "workbox-webpack-plugin": "6.2.0"
   },
   "vaadin": {
     "dependencies": {
@@ -266,7 +282,23 @@
       "vite": "v2.7.0-beta.7",
       "vite-plugin-checker": "0.3.4",
       "workbox-core": "6.2.0",
-      "workbox-precaching": "6.2.0"
+      "workbox-precaching": "6.2.0",
+      "compression-webpack-plugin": "4.0.1",
+      "esbuild-loader": "2.15.1",
+      "webpack-cli": "4.9.0",
+      "css-loader": "4.2.1",
+      "file-loader": "6.2.0",
+      "fork-ts-checker-webpack-plugin": "6.2.1",
+      "extra-watch-webpack-plugin": "1.0.3",
+      "lit-css-loader": "0.1.0",
+      "loader-utils": "2.0.0",
+      "webpack": "4.46.0",
+      "html-webpack-plugin": "4.5.1",
+      "chokidar": "^3.5.0",
+      "webpack-merge": "4.2.2",
+      "webpack-dev-server": "4.1.1",
+      "extract-loader": "5.1.0",
+      "workbox-webpack-plugin": "6.2.0"
     },
     "hash": "e299351258b4f7a1366ec9433216626c1c318f514561d8720bc0006d58eefa61"
   }
