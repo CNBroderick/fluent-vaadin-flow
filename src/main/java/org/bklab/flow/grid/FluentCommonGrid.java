@@ -2,9 +2,9 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date: 2021-08-04 13:01:15
+ * Modify date: 2021-12-03 15:41:17
  * _____________________________
- * Project name: fluent-vaadin-flow
+ * Project name: fluent-vaadin-flow-22
  * Class name: org.bklab.flow.grid.FluentCommonGrid
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  */
@@ -80,9 +80,15 @@ public interface FluentCommonGrid<T> extends Supplier<Grid<T>> {
                 .setKey(key).setHeader(header);
     }
 
+    default Grid.Column<T> addNumberColumn(Function<T, Double> function, int scale, String suffix, String header, String key) {
+        return get().addColumn(r -> new DigitalFormatter(function.apply(r), scale).toFormatted() + " " + suffix)
+                .setComparator(Comparator.comparingDouble(function::apply))
+                .setKey(key).setHeader(header);
+    }
+
     default Grid.Column<T> addDateTimeColumn(Function<T, LocalDateTime> function, String header, String key) {
         return get().addColumn(r -> Optional.ofNullable(function.apply(r))
-                .map(DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")::format).orElse(null))
+                        .map(DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")::format).orElse(null))
                 .setComparator(Comparator.comparingLong(r -> Optional.ofNullable(function.apply(r))
                         .map(t -> t.toEpochSecond(ZoneOffset.ofHours(8))).orElse(0L)))
                 .setKey(key).setHeader(header);
