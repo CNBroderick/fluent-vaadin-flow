@@ -2,7 +2,7 @@
  * Copyright (c) 2008 - 2021. - Broderick Labs.
  * Author: Broderick Johansson
  * E-mail: z@bkLab.org
- * Modify date: 2021-12-03 15:41:17
+ * Modify date: 2021-12-03 15:44:04
  * _____________________________
  * Project name: fluent-vaadin-flow-22
  * Class name: org.bklab.flow.grid.FluentCommonGrid
@@ -80,9 +80,9 @@ public interface FluentCommonGrid<T> extends Supplier<Grid<T>> {
                 .setKey(key).setHeader(header);
     }
 
-    default Grid.Column<T> addNumberColumn(Function<T, Double> function, int scale, String suffix, String header, String key) {
+    default Grid.Column<T> addNumberColumn(Function<T, Number> function, int scale, String suffix, String header, String key) {
         return get().addColumn(r -> new DigitalFormatter(function.apply(r), scale).toFormatted() + " " + suffix)
-                .setComparator(Comparator.comparingDouble(function::apply))
+                .setComparator(Comparator.comparingDouble(f -> Optional.ofNullable(function.apply(f)).map(Number::doubleValue).orElse(Double.MIN_VALUE)))
                 .setKey(key).setHeader(header);
     }
 
