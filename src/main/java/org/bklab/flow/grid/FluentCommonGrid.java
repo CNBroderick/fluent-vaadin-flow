@@ -80,8 +80,12 @@ public interface FluentCommonGrid<T> extends Supplier<Grid<T>> {
                 .setKey(key).setHeader(header);
     }
 
+    default Grid.Column<T> addNumberColumn(Function<T, Number> function, int scale, String header, String key) {
+        return addNumberColumn(function, scale, "", header, key);
+    }
+
     default Grid.Column<T> addNumberColumn(Function<T, Number> function, int scale, String suffix, String header, String key) {
-        return get().addColumn(r -> new DigitalFormatter(function.apply(r), scale).toFormatted() + " " + suffix)
+        return get().addColumn(r -> Optional.ofNullable(function.apply(r)).map(a -> new DigitalFormatter(a, scale).toFormatted() + " " + suffix).orElse(""))
                 .setComparator(Comparator.comparingDouble(f -> Optional.ofNullable(function.apply(f)).map(Number::doubleValue).orElse(Double.MIN_VALUE)))
                 .setKey(key).setHeader(header);
     }
