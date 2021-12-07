@@ -26,7 +26,7 @@ public class DigitalFormatter {
     }
 
     public DigitalFormatter(Number number, int scale) {
-        this.number = new BigDecimal(number.toString()).setScale(scale, RoundingMode.HALF_UP);
+        this.number = new BigDecimal(number == null ? "0" : number.toString()).setScale(scale, RoundingMode.HALF_UP);
     }
 
     public DigitalFormatter(String number, int scale) {
