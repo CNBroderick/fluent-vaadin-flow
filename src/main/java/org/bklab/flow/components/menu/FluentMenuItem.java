@@ -73,9 +73,17 @@ public class FluentMenuItem extends Span {
         return createCopy(text).clipboard(content, title, resultConsumer);
     }
 
+    public static FluentMenuItem forCopy(VaadinIcon vaadinIcon, String text, String content) {
+        return createCopy(vaadinIcon, text).clipboard(content);
+    }
+
     private static FluentMenuItem createCopy(String text) {
+        return createCopy(VaadinIcon.COPY_O, text);
+    }
+
+    private static FluentMenuItem createCopy(VaadinIcon vaadinIcon, String text) {
         FluentMenuItem fluentMenuItem = new FluentMenuItem();
-        Icon icon = new IconFactory(VaadinIcon.COPY_O).color("#999999").size("var(--lumo-font-size-xs)").padding("0 var(--lumo-space-m)").get();
+        Icon icon = new IconFactory(vaadinIcon).color("#999999").size("var(--lumo-font-size-xs)").padding("0 var(--lumo-space-m)").get();
         fluentMenuItem.add(new SpanFactory(icon, new Span(text)).displayFlex().get());
         return fluentMenuItem;
     }
