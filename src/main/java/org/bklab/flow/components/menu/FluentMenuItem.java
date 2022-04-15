@@ -30,7 +30,7 @@ import org.bklab.flow.util.lumo.LumoStyles;
 
 @Tag("fluent-menu-item")
 @CssImport("./styles/org/bklab/component/menu/fluent-menu-item.css")
-@CssImport(id = "vaadin-context-menu-overlay-transparent", value = "./styles/org/bklab/component/menu/vaadin-context-menu-overlay.css", themeFor = "vaadin-context-menu-overlay")
+@CssImport(value = "./styles/org/bklab/component/menu/vaadin-context-menu-overlay.css", themeFor = "vaadin-context-menu-overlay")
 public class FluentMenuItem extends Span {
 
     private FluentMenuItem() {

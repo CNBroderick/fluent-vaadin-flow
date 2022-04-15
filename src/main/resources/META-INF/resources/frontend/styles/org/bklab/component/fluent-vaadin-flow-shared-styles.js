@@ -11,8 +11,7 @@
 
 // eagerly import theme styles so as we can override them
 import '@vaadin/vaadin-lumo-styles/all-imports';
-
-import '@vaadin/vaadin-charts/theme/vaadin-chart-default-theme';
+import '@vaadin/vaadin-charts/theme/vaadin-chart-base-theme';
 
 const $_documentContainer = document.createElement('template');
 

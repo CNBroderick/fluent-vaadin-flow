@@ -31,7 +31,7 @@ public class FluentComponentGrid<T> extends Grid<T> {
     private final Map<T, Map<FluentColumnRender<T, ?>, FluentGridItem<T, ?>>> entityRowMap = new LinkedHashMap<>();
 
     public FluentComponentGrid() {
-        setHeightByRows(true);
+        setAllRowsVisible(true);
         setWidthFull();
         setMinHeight("200px");
         super.setItems(listDataProvider);
