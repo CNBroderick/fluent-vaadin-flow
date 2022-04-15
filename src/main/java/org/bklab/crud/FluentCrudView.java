@@ -179,7 +179,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
 
             grid.getStyle().remove("height");
             grid.getStyle().remove("min-height");
-            grid.setHeightByRows(true);
+            grid.setAllRowsVisible(true);
             grid.setHeight("unset");
             if (grid instanceof TreeGrid) {
                 grid.setItems(new TreeDataProvider<>(new TreeData<>()));
@@ -193,7 +193,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     private FluentCrudView<T, G> toggleNotEmpty() {
-        grid.setHeightByRows(false);
+        grid.setAllRowsVisible(false);
         grid.setHeightFull();
         emptyLayout.setVisible(false);
         footer.setVisible(true);
@@ -223,8 +223,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     public FluentCrudView<T, G> removeContextMenu(T entity, BiPredicate<T, T> sameEntityBiPredicate) {
-        menuButtons.stream().filter(m -> m.isThisEntity(entity, sameEntityBiPredicate))
-                .collect(Collectors.toList()).forEach(menuButtons::remove);
+        menuButtons.stream().filter(m -> m.isThisEntity(entity, sameEntityBiPredicate)).toList().forEach(menuButtons::remove);
         return this;
     }
 
@@ -237,7 +236,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
                 return compare;
             }
             return 0;
-        }).collect(Collectors.toList());
+        }).toList();
         inMemoryFilteredEntities.clear();
         inMemoryFilteredEntities.addAll(filteredEntities);
         pagination.refresh();
@@ -289,7 +288,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     public void deleteEntity(T entity, BiPredicate<T, T> isEquals) {
-        List<T> instance = this.entities.stream().filter(t -> isEquals.test(t, entity)).collect(Collectors.toList());
+        List<T> instance = this.entities.stream().filter(t -> isEquals.test(t, entity)).toList();
         this.entities.removeAll(instance);
         this.inMemoryFilteredEntities.removeAll(entities);
         this.pagination.totalData(this.entities.size()).build();
@@ -313,7 +312,7 @@ public abstract class FluentCrudView<T, G extends Grid<T>> extends VerticalLayou
     }
 
     private void replaceSameEntity(Collection<T> collection, T entity, Predicate<T> isEquals) {
-        List<T> instances = collection.stream().map(t -> isEquals.test(t) ? entity : t).collect(Collectors.toList());
+        List<T> instances = collection.stream().map(t -> isEquals.test(t) ? entity : t).toList();
         collection.clear();
         collection.addAll(instances);
     }

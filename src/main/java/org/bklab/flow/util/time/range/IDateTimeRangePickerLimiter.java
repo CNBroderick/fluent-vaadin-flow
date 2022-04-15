@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public sealed interface IDateTimeRangePickerLimiter permits DateTimeRangePickerSplitLimiter {
+public interface IDateTimeRangePickerLimiter {
 
     Registration limit(Duration globalMaxDuration, LocalDateTime globalMinTime, LocalDateTime globalMaxTime);
 

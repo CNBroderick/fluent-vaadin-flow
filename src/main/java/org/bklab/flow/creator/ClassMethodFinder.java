@@ -1,7 +1,6 @@
 package org.bklab.flow.creator;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.ReflectPermission;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,25 +11,6 @@ public class ClassMethodFinder {
 
     public ClassMethodFinder(Class<?> cls) {
         this.cls = cls;
-    }
-
-
-    /**
-     * Checks whether can control member accessible.
-     *
-     * @return If can control member accessible, it return {@literal true}
-     * @since 3.5.0
-     */
-    private boolean canControlMemberAccessible() {
-        try {
-            SecurityManager securityManager = System.getSecurityManager();
-            if (null != securityManager) {
-                securityManager.checkPermission(new ReflectPermission("suppressAccessChecks"));
-            }
-        } catch (SecurityException e) {
-            return false;
-        }
-        return true;
     }
 
     public Method[] getClassMethods() {
@@ -64,12 +44,10 @@ public class ClassMethodFinder {
                 String signature = getSignature(currentMethod);
                 //检查是否在子类中已经添加过该方法，如果在子类中已经添加过，则表示子类覆盖了该方法，无须再向uniqueMethods集合中添加该方法了
                 if (!uniqueMethods.containsKey(signature)) {
-                    if (canControlMemberAccessible()) {
-                        try {
-                            currentMethod.setAccessible(true);
-                        } catch (Exception e) {
-                            // Ignored. This is only a final precaution, nothing we can do.
-                        }
+                    try {
+                        currentMethod.setAccessible(true);
+                    } catch (Exception e) {
+                        // Ignored. This is only a final precaution, nothing we can do.
                     }
                     uniqueMethods.put(signature, currentMethod);
                 }

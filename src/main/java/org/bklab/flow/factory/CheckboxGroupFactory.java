@@ -66,9 +66,8 @@ public class CheckboxGroupFactory<T> extends FlowFactory<CheckboxGroup<T>, Check
         return this;
     }
 
-    @Deprecated
     public CheckboxGroupFactory<T> items(Stream<T> items) {
-        get().setItems(items);
+        get().setItems(DataProvider.fromStream(items));
         return this;
     }
 
@@ -88,8 +87,8 @@ public class CheckboxGroupFactory<T> extends FlowFactory<CheckboxGroup<T>, Check
         return this;
     }
 
-    public CheckboxGroupFactory<T> dataProvider(DataProvider<T, ?> dataProvider) {
-        get().setDataProvider(dataProvider);
+    public CheckboxGroupFactory<T> dataProvider(DataProvider<T, Void> dataProvider) {
+        get().setItems(dataProvider);
         return this;
     }
 

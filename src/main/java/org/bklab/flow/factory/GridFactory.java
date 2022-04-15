@@ -351,7 +351,11 @@ public class GridFactory<T> extends FlowFactory<Grid<T>, GridFactory<T>> impleme
     }
 
     public GridFactory<T> heightByRows(boolean heightByRows) {
-        get().setHeightByRows(heightByRows);
+        return allRowsVisible(heightByRows);
+    }
+
+    public GridFactory<T> allRowsVisible(boolean heightByRows) {
+        get().setAllRowsVisible(heightByRows);
         return this;
     }
 
